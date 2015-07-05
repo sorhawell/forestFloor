@@ -1,0 +1,47 @@
+useDynLib(forestFloor)
+
+importFrom(Rcpp, evalCpp)
+import(kknn)
+
+importFrom(stats,
+           cor,
+           prcomp,
+           predict)
+
+#graphicals
+importFrom(graphics,
+           par,
+           plot,
+           points)
+importFrom(grDevices,
+           rgb2hsv,
+           hsv)           
+import(rgl)
+
+importFrom(ggplot2,
+           aes_string,
+           ggplot,
+           ggplotGrob,
+           geom_point,
+           xlab,
+           ylab)
+
+importFrom(gridExtra,grid.arrange)
+
+
+S3method(plot,forestFloor)
+S3method(print,forestFloor)
+
+export(forestFloor,
+       plot.forestFloor,
+       print.forestFloor,
+       box.outliers,
+       recTree,
+       vec.plot,
+       convolute_ff,
+       convolute_ff2,
+       convolute_grid,
+       show3d_new,
+       fcol,
+       ggPlotForestFloor,
+       ggplotGrob)
