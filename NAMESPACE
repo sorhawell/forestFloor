@@ -13,6 +13,7 @@ importFrom(graphics,
            par,
            plot,
            points)
+
 importFrom(grDevices,
            rgb2hsv,
            hsv)           
@@ -44,4 +45,5 @@ export(forestFloor,
        show3d_new,
        fcol,
        ggPlotForestFloor,
-       ggplotGrob)
+       ggplotGrob,
+       forestFloor_multiClass)
