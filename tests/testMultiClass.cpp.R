@@ -7,7 +7,7 @@ iris
 X = iris[,!names(iris) %in% "Species"]
 Y = iris[,"Species"]
 as.numeric(Y)
-rf = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T)
+rf = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=1000)
 ff = forestFloor_multiClass(rf,X)
 pred = sapply(1:3,function(i) apply(ff$FCarray[,,i],1,sum))+1/3
 rfPred = predict(rf,type="vote",norm.votes=T)
@@ -20,8 +20,7 @@ plot(ff,compute_GOF=T,plot_GOF=T,cex=.7,
                    c("#00FF0050"),
                    c("#0000FF35")))
 
-a
-# 
+
 # #plot all effect 2D only
 # pars = plot_K3(ff,Xvars=0,restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,
 #                fig3d=F,includeTotal=T,auto.alpha=.4,set_pars=T)
