@@ -30,3 +30,29 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+// multiTree
+int multiTree(int vars, int obs, int ntree, int nClasses, NumericMatrix X, IntegerVector Y, IntegerMatrix leftDaughter, IntegerMatrix rightDaughter, IntegerMatrix nodestatus, NumericMatrix xbestsplit, NumericMatrix nodepred, IntegerMatrix bestvar, IntegerMatrix inbag, IntegerVector varLevels, IntegerVector OOBtimes, NumericVector localIncrements);
+RcppExport SEXP forestFloor_multiTree(SEXP varsSEXP, SEXP obsSEXP, SEXP ntreeSEXP, SEXP nClassesSEXP, SEXP XSEXP, SEXP YSEXP, SEXP leftDaughterSEXP, SEXP rightDaughterSEXP, SEXP nodestatusSEXP, SEXP xbestsplitSEXP, SEXP nodepredSEXP, SEXP bestvarSEXP, SEXP inbagSEXP, SEXP varLevelsSEXP, SEXP OOBtimesSEXP, SEXP localIncrementsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type vars(varsSEXP);
+    Rcpp::traits::input_parameter< int >::type obs(obsSEXP);
+    Rcpp::traits::input_parameter< int >::type ntree(ntreeSEXP);
+    Rcpp::traits::input_parameter< int >::type nClasses(nClassesSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type leftDaughter(leftDaughterSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type rightDaughter(rightDaughterSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type nodestatus(nodestatusSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type xbestsplit(xbestsplitSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type nodepred(nodepredSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type bestvar(bestvarSEXP);
+    Rcpp::traits::input_parameter< IntegerMatrix >::type inbag(inbagSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type varLevels(varLevelsSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type OOBtimes(OOBtimesSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type localIncrements(localIncrementsSEXP);
+    __result = Rcpp::wrap(multiTree(vars, obs, ntree, nClasses, X, Y, leftDaughter, rightDaughter, nodestatus, xbestsplit, nodepred, bestvar, inbag, varLevels, OOBtimes, localIncrements));
+    return __result;
+END_RCPP
+}
