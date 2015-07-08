@@ -7,7 +7,7 @@ iris
 X = iris[,!names(iris) %in% "Species"]
 Y = iris[,"Species"]
 as.numeric(Y)
-rf = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=1000)
+rf = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
 ff = forestFloor_multiClass(rf,X)
 pred = sapply(1:3,function(i) apply(ff$FCarray[,,i],1,sum))+1/3
 rfPred = predict(rf,type="vote",norm.votes=T)
