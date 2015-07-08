@@ -109,14 +109,23 @@ forestFloor_multiClass = function(rfo,X) {
   )
   print("finished cpp")
   
+
+  #restructure to feature contributions obs X var X class
+  localIncrements = unlist(lapply(c(1:(nClasses-1),0),function(i) {
+    localIncrements[(1:length(localIncrements))%%(nClasses)==i]
+  }))
+  
+  
   #writing out list
   imp = as.matrix(rfo$importance)[,1]
   out = list(X=X,Y=rfo$y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
-             FCmatrix = array(localIncrements,dim = c(nClasses,obs,vars))
+             FCarray = array(localIncrements,dim=c(obs,vars,nClasses)),
+             sumOfInbags = apply(rf$inbag,1,sum)
              #  all = mget(ls()) #export everything in list
   )
-  class(out) = "forestFloor_class"
+
+  class(out) = "forestFloor_multiClass"
   return(out)
 }

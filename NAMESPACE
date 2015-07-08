@@ -29,9 +29,14 @@ importFrom(ggplot2,
 
 importFrom(gridExtra,grid.arrange)
 
-
-S3method(plot,forestFloor)
+#methods for forestFloor regression
+S3method(plot, forestFloor)
 S3method(print,forestFloor)
+
+#methods for forestFloor classification
+S3method(plot,  forestFloor_multiClass)
+#S3method(plot3d,forestFloor_multiClass)
+
 
 export(forestFloor,
        plot.forestFloor,
@@ -46,4 +51,7 @@ export(forestFloor,
        fcol,
        ggPlotForestFloor,
        ggplotGrob,
-       forestFloor_multiClass)
+       forestFloor_multiClass,
+       plot.forestFloor_multiClass)#,
+       #plot3d.forestFloor_multiClass,
+       #plot_ffmc_K3)
