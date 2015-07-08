@@ -6,7 +6,7 @@ Date: 2015-07-06
 Author: Soeren Havelund Welling
 Maintainer: Soeren Havelund Welling <SOWE@DTU.DK>
 Depends:
-Suggests: randomForest, trimTrees
+Suggests: randomForest, trimTrees, utils
 Description: Enables users to form appropriate visualizations of high dimensional mapping curvatures of random forests.
 SystemRequirements: OpenGL, GLU Library, zlib
 License: GPL-2
