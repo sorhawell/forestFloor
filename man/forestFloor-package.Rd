@@ -2,7 +2,7 @@
 \alias{forestFloorPackage}
 \docType{package}
 \title{
-forestFloor: visualize the randomForest topology
+forestFloor: visualize the random forest topology
 }
 \description{
 forrestFloor visualizes cross-validated topology-maps of randomForests(RF).
@@ -18,7 +18,7 @@ forrestFloor visualizes cross-validated topology-maps of randomForests(RF).
 Package: \tab forestFloor\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
-Date: \tab 2014-12-07\cr
+Date: \tab 2015-12-07\cr
 License: \tab GPL-2\cr
 }
 }

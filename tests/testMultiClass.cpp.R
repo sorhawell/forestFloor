@@ -20,6 +20,9 @@ plot(ff,compute_GOF=T,plot_GOF=T,cex=.7,
                    c("#00FF0050"),
                    c("#0000FF35")))
 
+show3d_forestFloor_multiClass(ff,1:2,3:4)
+library(rgl)
+decorate3d(xlab="1",ylab="2",zlab="3",add=T)
 
 # #plot all effect 2D only
 # pars = plot_K3(ff,Xvars=0,restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,

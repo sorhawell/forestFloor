@@ -35,8 +35,6 @@ S3method(print,forestFloor)
 
 #methods for forestFloor classification
 S3method(plot,  forestFloor_multiClass)
-#S3method(plot3d,forestFloor_multiClass)
-
 
 export(forestFloor,
        plot.forestFloor,
@@ -52,6 +50,6 @@ export(forestFloor,
        ggPlotForestFloor,
        ggplotGrob,
        forestFloor_multiClass,
-       plot.forestFloor_multiClass)#,
-       #plot3d.forestFloor_multiClass,
+       plot.forestFloor_multiClass,#,
+       show3d_forestFloor_multiClass)
        #plot_ffmc_K3)
