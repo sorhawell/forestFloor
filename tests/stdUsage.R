@@ -1,15 +1,15 @@
 library(forestFloor)
 library(randomForest)
 #simulate data
-obs=2500
+obs=5000
 vars = 6 
 
 X = data.frame(replicate(vars,rnorm(obs)))
-Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 1 * rnorm(obs))
+Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + .5 * rnorm(obs))
 
 
 #grow a forest, remeber to include inbag
-rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=500,ntree=100)
+rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=1500,ntree=500)
 
 #compute topology
 ff = forestFloor(rfo,X)
@@ -33,16 +33,16 @@ ff = convolute_ff(ff,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
 plot(ff,col=Col,plot_GOF=TRUE)
 
 #in 3D the interaction between X3 and X reveals itself completely
-show3d_new(ff,3:4,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
+show3d(ff,3:4,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
 
 #although no interaction, a joined additive effect of X1 and X2
 #colour by FC-component FC1 and FC2 summed
 Col = fcol(ff,1:2,orderByImportance=FALSE,X.m=FALSE,RGB=TRUE)
 plot(ff,col=Col) 
-show3d_new(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
+show3d(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
 
 #...or two-way gradient is formed from FC-component X1 and X2.
 Col = fcol(ff,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8) 
 plot(ff,col=Col) 
-show3d_new(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE)
+show3d(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE)
 

@@ -1,4 +1,3 @@
-
 #sub function to fix categorical features
 as.numeric.factor <- function(x,drop.levels=TRUE) {
   if(is.numeric(x)) return(x) ## if already numeric, do onothing

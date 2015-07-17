@@ -34,7 +34,13 @@ S3method(plot, forestFloor)
 S3method(print,forestFloor)
 
 #methods for forestFloor classification
+S3method(show3d,  forestFloor_multiClass)
+S3method(show3d,  forestFloor)
+
 S3method(plot,  forestFloor_multiClass)
+S3method(plot,  forestFloor)
+
+
 
 export(forestFloor,
        plot.forestFloor,
@@ -45,11 +51,14 @@ export(forestFloor,
        convolute_ff,
        convolute_ff2,
        convolute_grid,
-       show3d_new,
+       #show3d_new,
        fcol,
        ggPlotForestFloor,
        ggplotGrob,
        forestFloor_multiClass,
-       plot.forestFloor_multiClass,#,
-       show3d_forestFloor_multiClass)
+       #plot.forestFloor_multiClass,#,
+       #show3d_forestFloor_multiClass),
+       show3d,
+       append.overwrite.alists)
+
        #plot_ffmc_K3)

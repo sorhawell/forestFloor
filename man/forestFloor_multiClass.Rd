@@ -76,7 +76,8 @@ this version
 }
 
 \seealso{
-\code{\link{plot.forestFloor}}, \code{\link{show3d_new}}
+  \code{\link{plot.forestFloor_mulitiClass}},
+  \code{\link{show3d.forestFloor_mulitiClass}}
 }
 
 \examples{

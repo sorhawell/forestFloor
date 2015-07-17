@@ -4,11 +4,11 @@
 \description{Method to plot3d an object of forestFloor_multiClass}
 
 \usage{
-show3d_forestFloor_multiClass(x,Xvars,FCvars=NULL,label.seq=NULL,
+\method{show3d}{forestFloor_multiClass(x,Xvars,FCvars=NULL,label.seq=NULL,
 user.grid.args=list(NULL),user.rgl.args=list(),compute_GOF=FALSE,
 user.gof.args=list(NULL))
 }
-
+}
 \arguments{
 \item{x}{
 foretFloor-object, also abbrivated ff.

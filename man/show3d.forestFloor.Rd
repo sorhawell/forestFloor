@@ -1,33 +1,33 @@
-\name{show3d_new}
-\alias{show3d_new}
+\name{show3d.forestFloor}
+\alias{show3d.forestFloor}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-make 3d-plot of forestFloor topology
+make 3d-plot of forestFloor (regression/binary)
 }
 \description{
-2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(gaussian-kNN by kknn package) and plotted alongside the datapoints. 3D grphic device is rgl.
+2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(gaussian-kNN by kknn package) and plotted alongside the datapoints. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor for regression and show3d_forestFloor_multiClass for classification.
 
 }
 \usage{
-show3d_new(ff,
-           Xi  = 1:2,
-           FCi = NULL,
-           col = "#12345678",    
-           sortByImportance = TRUE,
-           surface=TRUE,   
-           combineFC = sum,  
-           zoom=1.2,       
-           grid.lines=30,  
-           limit=3, 
-           kknnGrid.args = alist(),  
-           plot.rgl.args = alist(),  
-           surf.rgl.args = alist()   
-           )
+\method{show3d}{forestFloor}  (x,
+                               Xi  = 1:2,
+                               FCi = NULL,
+                               col = "#12345678",    
+                               sortByImportance = TRUE,
+                               surface=TRUE,   
+                               combineFC = sum,  
+                               zoom=1.2,       
+                               grid.lines=30,  
+                               limit=3, 
+                               kknnGrid.args = alist(),  
+                               plot.rgl.args = alist(),  
+                               surf.rgl.args = alist(),   
+                               ...)
 
 }
 \arguments{
   
-  \item{ff}{
+  \item{x}{
   forestFloor" class object
   }
   \item{Xi}{
@@ -74,8 +74,8 @@ show3d_new(ff,
     test=gridX         #do not change \cr
     ) \cr
   see kknn{kknn} to understand paremters. k is set by default automatically to a half times the square root of observations, which often gives a reasonable balance between robustness and  apdeptness. k neighbors and distance kernel can be changed be passing kknnGrid.args = alist(k=5,kernel="triangular",scale=FALSE), hereby will default k and default kernel be overwritten. Moreover the scale argument was not specified by this wrapper and therefore not conflicting, the argument is simply appended.
-  
   }
+  
   \item{plot.rgl.args}{
   pass argument to rgl::plot3d, can override any argument of this wrapper, defines plotting space and plot points.
   See plot3d for documentation of graphical arguments.
@@ -107,6 +107,11 @@ show3d_new(ff,
   see rgl::persp3d for other graphical arguments
   notice the surface is added onto plotting of points, thus can e.g. labels not be changed from here.
   }
+
+  \item{...}{
+  not used at the moment
+  }
+
 }
 \details{
 show3d plot one or more combined feature contributions in the context of two features with points representing each data point.
@@ -160,17 +165,17 @@ Col = fcol(ff,3)
 plot(ff,col=Col) 
 
 #in 3D the interaction between X3 and X reveals itself completely
-show3d_new(ff,3:4,col=Col,plot.rgl=list(size=5)) 
+show3d(ff,3:4,col=Col,plot.rgl=list(size=5)) 
 
 #although no interaction, a joined additive effect of X1 and X2
 Col = fcol(ff,1:2,X.m=FALSE,RGB=TRUE) #colour by FC-component FC1 and FC2 summed
 plot(ff,col=Col) 
-show3d_new(ff,1:2,col=Col,plot.rgl=list(size=5)) 
+show3d(ff,1:2,col=Col,plot.rgl=list(size=5)) 
 
 #...or two-way gradient is formed from FC-component X1 and X2.
 Col = fcol(ff,1:2,X.matrix=TRUE,alpha=0.8) 
 plot(ff,col=Col) 
-show3d_new(ff,1:2,col=Col,plot.rgl=list(size=5))
+show3d(ff,1:2,col=Col,plot.rgl=list(size=5))
 
 }
 }
