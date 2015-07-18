@@ -619,7 +619,6 @@ fcol = function(ff,
   return(colours)
 }
 
-
 forestFloor = function(rfo,X,calc_np=FALSE) { 
   
   #check the RFobject have a inbag
