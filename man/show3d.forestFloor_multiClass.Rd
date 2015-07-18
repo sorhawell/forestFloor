@@ -1,14 +1,14 @@
-\name{show3d_forestFloor_multiClass}
-\alias{show3d_forestFloor_multiClass}
-\title{Metod: show3d_forestFloor_multiClass}
+\name{show3d.forestFloor_multiClass}
+\alias{show3d.forestFloor_multiClass}
+\title{Metod: show3d.forestFloor_multiClass}
 \description{Method to plot3d an object of forestFloor_multiClass}
 
 \usage{
-\method{show3d}{forestFloor_multiClass(x,Xvars,FCvars=NULL,label.seq=NULL,
-user.grid.args=list(NULL),user.rgl.args=list(),compute_GOF=FALSE,
-user.gof.args=list(NULL))
+\method{show3d}{forestFloor_multiClass}(x,Xvars,FCvars=NULL,label.seq=NULL,
+  user.grid.args=list(NULL),user.rgl.args=list(),compute_GOF=FALSE,
+  user.gof.args=list(NULL),...)
 }
-}
+
 \arguments{
 \item{x}{
 foretFloor-object, also abbrivated ff.
@@ -38,6 +38,10 @@ Booleen TRUE/FALSE. Should the goodness of fit be computed? If false, no GOF inp
 
 \item{user.gof.args}{
 argument list passed to internal function ff2, which can modify how goodness-of-fit is computed. Number of neighobers and kernel can be set manually with e.g. list(kmax=40,kernel="gaussion"). Default pars should work already in most cases. Function ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
+}
+
+\item{...}{
+Not used
 }
 
 }

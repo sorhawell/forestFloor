@@ -4,8 +4,10 @@ show3d = function(x,...) {
 
 
 ##3d plot of forestFloor_multiClass
-show3d.forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user.grid.args=list(NULL),user.rgl.args=list(),
-                                         compute_GOF=FALSE,user.gof.args=list(NULL),...) {
+show3d.forestFloor_multiClass = function(
+  x,Xvars,FCvars=NULL,label.seq=NULL,user.grid.args=list(NULL),
+  user.rgl.args=list(),compute_GOF=FALSE,user.gof.args=list(NULL),...) {
+  
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCvars)) FCvars = Xvars
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
@@ -36,15 +38,14 @@ show3d.forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user
     mean_gof = round(mean(label_gofs),digits=2)
   }
   
-  
   with(x, {
     for(i in label.seq) {
-      if(length(FCvars)>1) FCcombined = apply(FCarray[,FCvars,i],1,sum) else FCcombined = FCarray[,FCvars,i]
-      
-      
-      
-      
-      
+      if(length(FCvars)>1) {
+        FCcombined = apply(FCarray[,FCvars,i],1,sum)
+      } else {
+        FCcombined = FCarray[,FCvars,i]    
+      }
+        
       std.rgl.args = list(X[,Xvars[1]],
                           X[,Xvars[2]],
                           FCcombined,

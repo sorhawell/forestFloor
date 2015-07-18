@@ -1,16 +1,17 @@
 \name{plot.forestFloor_multiClass}
 \alias{plot.forestFloor_multiClass}
 \title{
-Metod: plot.forestFloor_multiClass
+plot.forestFloor_multiClass
 }
 \description{
-Method to plot an object of forestFloor_multiClass.
+A method to plot an object of forestFloor_multiClass.
 }
 \usage{
 \method{plot}{forestFloor_multiClass} (x,
 plot_seq = NULL, label.seq = NULL, limitY = TRUE,colLists = NULL,
 order_by_importance = TRUE, fig.columns = NULL, plot_GOF = FALSE,
-GOF_col = NULL, jitter_these_cols = NULL, jitter.factor = NULL, compute_GOF = F, ...) 
+GOF_col = NULL, jitter_these_cols = NULL, jitter.factor = NULL,
+compute_GOF = F, ...) 
 }
 
 %- maybe also 'usage' for other objects documented here.

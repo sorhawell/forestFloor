@@ -1,10 +1,10 @@
 \name{plot.forestFloor}
 \alias{plot.forestFloor}
 \title{
-Metod: plot.forestFloor
+plot.forestFloor
 }
 \description{
-Method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions.
+A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions.
 }
 \usage{
 \method{plot}{forestFloor} (x,

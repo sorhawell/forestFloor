@@ -6,10 +6,9 @@
 ForestFloor: Visualize topologies of randomForest model
 }
 \description{
-((multiClass BETA))
 The function forestFloor computes a feature contribution matrix from a randomForest model-fit and outputs a forestFloor S3 class object, including importance and the orginal training set. The output object is the basis all visualizations.
-
 }
+
 \usage{
 forestFloor_multiClass(rfo,X)
 }
@@ -76,8 +75,8 @@ this version
 }
 
 \seealso{
-  \code{\link{plot.forestFloor_mulitiClass}},
-  \code{\link{show3d.forestFloor_mulitiClass}}
+  \code{\link{plot.forestFloor_multiClass}},
+  \code{\link{show3d.forestFloor_multiClass}}
 }
 
 \examples{

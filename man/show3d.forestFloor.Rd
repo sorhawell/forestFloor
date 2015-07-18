@@ -1,28 +1,27 @@
 \name{show3d.forestFloor}
 \alias{show3d.forestFloor}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 make 3d-plot of forestFloor (regression/binary)
 }
 \description{
 2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(gaussian-kNN by kknn package) and plotted alongside the datapoints. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor for regression and show3d_forestFloor_multiClass for classification.
-
 }
 \usage{
-\method{show3d}{forestFloor}  (x,
-                               Xi  = 1:2,
-                               FCi = NULL,
-                               col = "#12345678",    
-                               sortByImportance = TRUE,
-                               surface=TRUE,   
-                               combineFC = sum,  
-                               zoom=1.2,       
-                               grid.lines=30,  
-                               limit=3, 
-                               kknnGrid.args = alist(),  
-                               plot.rgl.args = alist(),  
-                               surf.rgl.args = alist(),   
-                               ...)
+\method{show3d}{forestFloor} (x,
+                              Xi  = 1:2,
+                              FCi = NULL,
+                              col = "#12345678",    
+                              sortByImportance = TRUE,
+                              surface=TRUE,   
+                              combineFC = sum,  
+                              zoom=1.2,       
+                              grid.lines=30,  
+                              limit=3, 
+                              kknnGrid.args = alist(),  
+                              plot.rgl.args = alist(),  
+                              surf.rgl.args = alist(),   
+                              ...)
 
 }
 \arguments{
