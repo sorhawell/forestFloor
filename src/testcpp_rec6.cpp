@@ -542,7 +542,8 @@ int multiTree(int  vars,               //local 3  nvar
             NumericVector localIncrements)    // 15 inbag obsXtrees
 {
   
-  ////Rprintff("pars ok \n");
+  //Rprintf("obs is %d \n",obs);
+  //Rprintf("nclasses is %d \n",nClasses);
   
   //declare internal function variables
   IntegerVector innodes_root(obs);        //list of OOBs 
@@ -557,20 +558,22 @@ int multiTree(int  vars,               //local 3  nvar
   
   //iterate each tree and compute and sum to localIncrements
   for(int i_tree=0;i_tree<ntree;i_tree++){
-    ////Rprintff("263 \n");
+    Rprintf("560 \n");
     //make ranges of Out Of Bag and inbag observations in root of tree
     OOB_count = 0;  //reset OOB_count for this new tree
     IB_count  = 0 ; 
     root_classCount =  root_classCount * 0; //reset counter
     
     for(int i_obs=0;i_obs<obs;i_obs++) {  // for all observations 
-      ////Rprintff("270");
+      //Rprintf("%d-%d \n ",i_obs,obs);
+      
       this_bagcount = inbag(i_obs,i_tree);// how many time was obs used in tree, 0,1,2,3...
       if(this_bagcount==0) {              // if obs was used 0 times, it is OOB
+        //Rprintf(" 572");
         innodes_root[OOB_count] = i_obs;  // add observation_indice to list
         OOB_count++;
       } else {
-      ////Rprintff("276");  
+      //Rprintf(" 576");  
         for(times_inbag = this_bagcount;times_inbag>0;times_inbag--) {
           ////Rprintff("278");
           train_innodes_root[IB_count] = i_obs;
@@ -582,8 +585,8 @@ int multiTree(int  vars,               //local 3  nvar
         }  
       }     
     }
-    
-    for(int u =0; u<3;u++) {
+    //Rprintf("finish inbag OOB \n");
+    for(int u =0; u<nClasses;u++) {
     double IB_countDouble = IB_count;
     root_pred(u) = root_classCount(u) / IB_countDouble;
     ////Rprintff(" c%d pred%f ",  root_classCount(u),root_pred(u));
