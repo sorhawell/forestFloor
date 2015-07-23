@@ -21,7 +21,7 @@ fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE,
 \arguments{
   
   \item{ff}{
-  a obejct of class "forestFloor" or a matrix or a data.frame. No missing values. No factors(for now).
+  a obejct of class "forestFloor_regression" or "forestFloor_multiClass" or a matrix or a data.frame. No missing values. X.matrix must be set TRUE for "forestFloor_multiClass" as colouring by multiClass feature contributions is not supported.
   }
   \item{cols}{
   vector of indices of columns to colour by, will refer to ff$X if X.matrix=T and else ff$FCmatrix. If ff itself is a matrix or data.frame, indices will refer to these coloums

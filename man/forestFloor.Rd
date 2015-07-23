@@ -50,7 +50,7 @@ Node predictions, the average target value of inbag samples in any terminal or i
 }
 
 \value{
-  the forestFloor function outputs an object of class "forestFloor" with following elements:
+  the forestFloor function outputs(depending on type rf.fit) an object of either class "forestFloor_regression" or "forestFloor_multiClass" with following elements:
 
 \item{X}{
   a copy of the training data or feature space matrix/data.frame, X. The copy is passed from the input of this function. X is used in all visualization to expand the feature contributions over the features of which they were recorded.
@@ -71,9 +71,15 @@ Node predictions, the average target value of inbag samples in any terminal or i
 }
 
 \item{FC_matrix}{
-  feature contributions in a matrix. \cr
+  [ONLY forestFloor_regression.] feature contributions in a matrix. \cr
   n_row observations and n_column features - same dimensions as X.
 }
+
+\item{FC_array}{
+  [ONLY forestFloor_multiClass.] feature contributions in a array. \cr
+  n_row observations and n_column features and n_layer classes. First two dimensions will match dimensions of X.
+}
+
 
 }
 

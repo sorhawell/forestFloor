@@ -143,9 +143,7 @@ Booleen TRUE/FALSE. Should the goodness of fit be computed? If false, no GOF inp
 
 \details{
 show3d plot one or more combined feature contributions in the context of two features with points representing each data point.
-The input object must be a "forestFloor" or "forestFloor_multiClass" S3 class object , and should at least contain $X the data.frame of training data, $FCmatrix the feature contributions matrix. Usually this object are formed with the function forestFloor having a random forest model as input.
-Actual visualization differs for each class.
-
+The input object must be a "forestFloor_regression" or "forestFloor_multiClass" S3 class object , and should at least contain $X the data.frame of training data, $FCmatrix the feature contributions matrix. Usually this object are formed with the function forestFloor having a random forest model fit as inpu. Actual visualization differs for each class.
 }
 
 \value{
