@@ -372,6 +372,10 @@ fcol = function(ff,
                 outlier.lim = 3,
                 RGB.exp = NULL) {
   
+  if(!X.matrix) if(class(ff)=="forestFloor_multiClass")
+    stop("cannot colour by feature contributions for object of class
+         'forestFloor_multiClass'. Set X.matrix=TRUE")
+  
   ##ssf8.1: is between function
   ib <- function(x, low, high) (x -low) * (high-x) > 0
   ##ssf8.2: move center range of vector at mid with new width of span
