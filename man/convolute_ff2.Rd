@@ -12,20 +12,20 @@ Only one convolution - but any kind. Whereas convolute_ff rather do batches of f
 
 \usage{
 convolute_ff2(ff,
-              Xvars,
-              FCvars = NULL,
+              Xi,
+              FCi = NULL,
               k.fun=function() round(sqrt(n.obs)/2),
               userArgs.kknn = alist(kernel="gaussian")            )
 }
 \arguments{
   
 \item{ff}{
-  forestFloor object(class="forestFloor") concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
+  forestFloor object class "forestFloor_regression" or "forestFloor_multiClass" concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
 }
-\item{Xvars}{
+\item{Xi}{
   integer vector, of col indices of ff$X to convolute by
 }
-\item{FCvars}{
+\item{FCi}{
  integer vector, of col indices of ff$FCmatrix. Those feature contributions to conbine(sum) and convolute. 
 }
 
@@ -72,7 +72,7 @@ rfo=randomForest(X,Y,keep.inbag=TRUE,ntree=1000,sampsize=800)
 ff = forestFloor(rfo,X)
 
 #convolute the interacting feature contributions by their feature to understand relationship
-fc34_convoluted = convolute_ff2(ff,Xvars=3:4,FCvars=3:4,  #arguments for the wrapper
+fc34_convoluted = convolute_ff2(ff,Xi=3:4,FCi=3:4,  #arguments for the wrapper
                   userArgs.kknn = alist(kernel="gaussian",k=25)) #arguments for train.kknn
 
 #plot the joined convolution

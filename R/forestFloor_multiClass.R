@@ -1,35 +1,38 @@
 #test multiClass.cpp
-forestFloor_multiClass = function(rfo,X) { 
+forestFloor_randomForest_multiClass <- function(rf.fit,
+                                     X,
+                                     calc_np = FALSE,
+                                     binary_reg = FALSE,
+                                     ...) { 
 
-  #check the RFobject have a inbag
-  if(is.null(rfo$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
+  #check the rf.fitbject have a inbag
+  if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
                               try, randomForest(X,Y,keep.inbag=T) for without replacement
                               and, cinbag(X,Y,keep.inbag=T,keep.forest=T) with replacement
                               ..cinbag is from trimTrees package...
-                              error condition: if(is.null(rfo$inbag))")
+                              error condition: if(is.null(rf.fit$inbag))")
   
   #make node status a integer matrix
-  ns = rfo$forest$nodestatus
+  ns = rf.fit$forest$nodestatus
   storage.mode(ns) = "integer"
   
   
   #translate binary classification RF-object, to regression mode
-  if(rfo$type=="classification") {
-    #     if(length(levels(rfo$y))!=2) stop("no multiclass, must be binary classification.
-    #                                       error condition: if(length(levels(rfo$y))!=2")
-    print("RF is classification, converting factors/categories to numeric 0 an 1")
+  if(rf.fit$type=="classification") {
+    #     if(length(levels(rf.fit$y))!=2) stop("no multiclass, must be binary classification.
+    #                                       error condition: if(length(levels(rf.fit$y))!=2")
     
-    rfo$forest$leftDaughter  = rfo$forest$treemap[,1,] #translate daughter representation to regression mode
-    rfo$forest$rightDaughter = rfo$forest$treemap[,2,] 
+    rf.fit$forest$leftDaughter  = rf.fit$forest$treemap[,1,] #translate daughter representation to regression mode
+    rf.fit$forest$rightDaughter = rf.fit$forest$treemap[,2,] 
     ns[ns==1] = -3  ##translate nodestatus representation to regression mode
     
-    if(!is.null(rfo$inbagCount)) {
-      inbag = rfo$inbagCount
+    if(!is.null(rf.fit$inbagCount)) {
+      inbag = rf.fit$inbagCount
     } else {
-      if(!is.null(rfo$inbag)) {
-        inbag = rfo$inbag
+      if(!is.null(rf.fit$inbag)) {
+        inbag = rf.fit$inbag
       } else {
-        stop("error rfo$inbag or rfo$inbagCount is missing, 
+        stop("error rf.fit$inbag or rf.fit$inbagCount is missing, 
              retrain forest with keep.inbag=TRUE")
       }
       }
@@ -40,26 +43,26 @@ forestFloor_multiClass = function(rfo,X) {
   
   #preparing data, indice-correction could be moved to C++
   #a - This should be fethed from RF-object, flat interface
-  ld = rfo$forest$leftDaughter-1 #indice correction, first element is 0 in C++ and 1 in R.
+  ld = rf.fit$forest$leftDaughter-1 #indice correction, first element is 0 in C++ and 1 in R.
   storage.mode(ld) = "integer"
-  rd = rfo$forest$rightDaughter-1
+  rd = rf.fit$forest$rightDaughter-1
   storage.mode(rd) = "integer"
-  bv = rfo$forest$bestvar-1
+  bv = rf.fit$forest$bestvar-1
   storage.mode(bv) = "integer"
-  np = rfo$forest$nodepred
+  np = rf.fit$forest$nodepred
   storage.mode(np) = "double"
-  bs = rfo$forest$xbestsplit
+  bs = rf.fit$forest$xbestsplit
   storage.mode(bs) = "double"
   ib = inbag
   storage.mode(ib) = "integer"
-  Yd = as.numeric(rfo$y)-1
+  Yd = as.numeric(rf.fit$y)-1
   storage.mode(Yd) = "integer"
-  ot  = rfo$oob.times
+  ot  = rf.fit$oob.times
   storage.mode(ot) = "integer"
   
   
   ##recording types of variables
-  xlevels = unlist(lapply(rfo$forest$xlevels,length),use.names=F)
+  xlevels = unlist(lapply(rf.fit$forest$xlevels,length),use.names=F)
   xl = xlevels
   storage.mode(xl) = "integer"
   varsToBeConverted = xlevels>1
@@ -91,7 +94,7 @@ forestFloor_multiClass = function(rfo,X) {
     #passed by number
     vars=vars, 
     obs=obs,             
-    ntree=rfo$ntree,
+    ntree=rf.fit$ntree,
     nClasses = nClasses,# changed from calculate node pred
     #passed by reference
     X=Xd,  #training data, double matrix [obs,vars] 
@@ -117,8 +120,8 @@ forestFloor_multiClass = function(rfo,X) {
   
   
   #writing out list
-  imp = as.matrix(rfo$importance)[,1]
-  out = list(X=X,Y=rfo$y,
+  imp = as.matrix(rf.fit$importance)[,1]
+  out = list(X=X,Y=rf.fit$y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
              FCarray = array(localIncrements,dim=c(obs,vars,nClasses)),
@@ -128,4 +131,13 @@ forestFloor_multiClass = function(rfo,X) {
 
   class(out) = "forestFloor_multiClass"
   return(out)
+}
+
+
+print.forestFloor_multiClass = function(x,...) {
+  cat("this is a forestFloor_multiClass object \n
+      this object can be plotted in 2D with plot(x), see help(plot.forestFloor) \n
+      this object can be plotted in 3D with show3d(x), see help(show3d) \n
+      \n
+      x contains following internal elements: \n ",with(x,ls()))
 }

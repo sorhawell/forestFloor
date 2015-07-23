@@ -1,5 +1,8 @@
 \name{print.forestFloor}
 \alias{print.forestFloor}
+\alias{print.forestFloor_regression}
+\alias{print.forestFloor_multiClass}
+\alias{print.forestFloor_classification} %is not a real method
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 print summary of forestFloor.Object
@@ -9,7 +12,8 @@ summary comprise N_fold I_repeated cross validation statistics and aggragated im
 a forestFloor_Object is of class forestFloor and is the output of the forestFloor function.
 }
 \usage{
-\method{print}{forestFloor}(x,...)
+\method{print}{forestFloor_regression}    (x,...)
+\method{print}{forestFloor_multiClass}(x,...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

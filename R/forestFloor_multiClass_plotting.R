@@ -8,10 +8,10 @@ as.numeric.factor <- function(x,drop.levels=TRUE) {
 
 
 ##3d plot of forestFloor_multiClass
-show3d_forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user.grid.args=list(NULL),user.rgl.args=list(),
+show3d.forestFloor_multiClass = function(x,Xi,FCi=NULL,label.seq=NULL,user.grid.args=list(NULL),user.rgl.args=list(),
                       compute_GOF=FALSE,user.gof.args=list(NULL)) {
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
-  if(is.null(FCvars)) FCvars = Xvars
+  if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
   
   #compute mean goodness of fit of label surfaces of 3d-plot
@@ -21,17 +21,17 @@ show3d_forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user
       forestFloor_obj = list(FCmatrix = x$FCarray[,,label.ind],
                              X=apply(x$X[,],2,as.numeric.factor)
       )
-      class(forestFloor_obj)="forestFloor"
+      class(forestFloor_obj)="forestFloor_multiClass"
       convolute_ff2(forestFloor_obj,
-                    Xvars=Xvars,
-                    FCvars=FCvars,
+                    Xi=Xi,
+                    FCi=FCi,
                     userArgs.kknn=user.gof.args)
     })
     label_gofs =sapply(label.seq,function(label.ind) {
-      joinedFC = if(length(FCvars)>1) {
-        apply(x$FCarray[,FCvars,label.ind],1,sum)
+      joinedFC = if(length(FCi)>1) {
+        apply(x$FCarray[,FCi,label.ind],1,sum)
       } else {
-        x$FCarray[,FCvars,label.ind]
+        x$FCarray[,FCi,label.ind]
       }
       #       plot(fits[[label.ind]],joinedFC)
       #       plot(fits[[label.ind]],fits[[label.ind]]-joinedFC)
@@ -43,14 +43,14 @@ show3d_forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user
   
   with(x, {
     for(i in label.seq) {
-      if(length(FCvars)>1) FCcombined = apply(FCarray[,FCvars,i],1,sum) else FCcombined = FCarray[,FCvars,i]
+      if(length(FCi)>1) FCcombined = apply(FCarray[,FCi,i],1,sum) else FCcombined = FCarray[,FCi,i]
       
       
       
       
       
-      std.rgl.args = list(X[,Xvars[1]],
-                          X[,Xvars[2]],
+      std.rgl.args = list(X[,Xi[1]],
+                          X[,Xi[2]],
                           FCcombined,
                           add = {if(i==label.seq[1]) F else T},
                           col=(i)^((i==as.numeric(Y))*1),
@@ -58,18 +58,18 @@ show3d_forestFloor_multiClass = function(x,Xvars,FCvars=NULL,label.seq=NULL,user
                           type=if(length(label.seq)*dim(X)[1] <500) "s" else "p",
                           size=if(length(label.seq)*dim(X)[1] <500) 1 else 3,
                           main = if(compute_GOF) paste0("R^2=",mean_gof) else "",
-                          xlab = names(x$X)[Xvars[1]],
-                          ylab = names(x$X)[Xvars[2]],
-                          zlab = if(length(FCvars==1)) names(x$X)[FCvars] else "joined FC"
+                          xlab = names(x$X)[Xi[1]],
+                          ylab = names(x$X)[Xi[2]],
+                          zlab = if(length(FCi==1)) names(x$X)[FCi] else "joined FC"
       )
       run.args = append.overwrite.alists(user.rgl.args,std.rgl.args)
       do.call(plot3d,run.args)
       
       ffpar = list(FCmatrix=FCarray[,,i],X=X)
-      class(ffpar) = "forestFloor"
+      class(ffpar) = "forestFloor_multiClass"
       
       #merge user arguments for grid estimation with default arguments and estimate...
-      default.grid.args = alist(ff=ffpar,Xvars=Xvars,FCvars=FCvars,zoom=1,
+      default.grid.args = alist(ff=ffpar,Xi=Xi,FCi=FCi,zoom=1,
                                 grid=25,userArgs.kknn=alist(k=10))
       run.args = append.overwrite.alists(user.grid.args,default.grid.args)
       Spar = do.call(convolute_grid,run.args)
@@ -171,7 +171,7 @@ plot.forestFloor_multiClass  = function(
 # 
 # #this function can plot triad-diagrams for 3way-classification
 # plot_ffmc_K3 = function(ffmc,
-#                    Xvars=NULL,
+#                    Xi=NULL,
 #                    includeTotal=TRUE,
 #                    label.col=NULL,
 #                    fig.cols=3,
@@ -189,19 +189,19 @@ plot.forestFloor_multiClass  = function(
 #   if(length(unique(ffmc$Y))!=3) stop("this plot is only for 3 classes")
 #   
 #   #all variables as those used to calculate total separation
-#   if(is.null(Xvars)) {
-#     Xvars = 1:dim(ffmc$X)[2]
-#     calVars = Xvars
+#   if(is.null(Xi)) {
+#     Xi = 1:dim(ffmc$X)[2]
+#     calVars = Xi
 #     plot_total = F
 #   }
-#   #if Xvars is 0, only total separation will be plotted
-#   if(Xvars[1]==0) {
+#   #if Xi is 0, only total separation will be plotted
+#   if(Xi[1]==0) {
 #     calVars = 1:dim(ffmc$X)[2]
 #     if(is.null(fig.cols)) fig.cols=1
 #     plot_total=T
 #   }else {
 #     plot_total=F
-#     calVars = Xvars
+#     calVars = Xi
 #   }
 #   
 #   #defining colours
@@ -232,7 +232,7 @@ plot.forestFloor_multiClass  = function(
 #   
 #   #modifying graphical paremeters
 #   pars = par(no.readonly = TRUE) 
-#   if(is.null(fig.rows)) fig.rows = min(ceiling(length(Xvars)/fig.cols),5)
+#   if(is.null(fig.rows)) fig.rows = min(ceiling(length(Xi)/fig.cols),5)
 #   if(set_pars) par(mfrow=c(fig.rows,fig.cols),mar=c(3,3,2,2))
 #   
 #   #computing K3-simplex axis vectors. First axis is vertically upward/north
@@ -251,8 +251,8 @@ plot.forestFloor_multiClass  = function(
 #   })
 #   
 #   #plot all figures
-#   if(includeTotal && length(Xvars)>1) ite=c(Xvars,0) else ite=Xvars
-#   if(plot_total) ite=0 #only plot total sep. but use all variables (Xvars)
+#   if(includeTotal && length(Xi)>1) ite=c(Xi,0) else ite=Xi
+#   if(plot_total) ite=0 #only plot total sep. but use all variables (Xi)
 #   for(i in ite) {  
 #     if(i == 0) FC=apply(ffmc$FCarray[,calVars,],c(1,3),sum) else FC=ffmc$FCarray[,i,]
 #     #draw triangle

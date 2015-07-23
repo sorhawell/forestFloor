@@ -5,11 +5,11 @@ show3d = function(x,...) {
 
 ##3d plot of forestFloor_multiClass
 show3d.forestFloor_multiClass = function(
-  x,Xvars,FCvars=NULL,label.seq=NULL,user.grid.args=list(NULL),
-  user.rgl.args=list(),compute_GOF=FALSE,user.gof.args=list(NULL),...) {
+  x,Xi,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
+  plot.rgl.args=list(),compute_GOF=FALSE,user.gof.args=list(NULL),...) {
   
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
-  if(is.null(FCvars)) FCvars = Xvars
+  if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
   
   #compute mean goodness of fit of label surfaces of 3d-plot
@@ -19,17 +19,17 @@ show3d.forestFloor_multiClass = function(
       forestFloor_obj = list(FCmatrix = x$FCarray[,,label.ind],
                              X=apply(x$X[,],2,as.numeric.factor)
       )
-      class(forestFloor_obj)="forestFloor"
+      class(forestFloor_obj)="forestFloor_multiClass"
       convolute_ff2(forestFloor_obj,
-                    Xvars=Xvars,
-                    FCvars=FCvars,
+                    Xi=Xi,
+                    FCi=FCi,
                     userArgs.kknn=user.gof.args)
     })
     label_gofs =sapply(label.seq,function(label.ind) {
-      joinedFC = if(length(FCvars)>1) {
-        apply(x$FCarray[,FCvars,label.ind],1,sum)
+      joinedFC = if(length(FCi)>1) {
+        apply(x$FCarray[,FCi,label.ind],1,sum)
       } else {
-        x$FCarray[,FCvars,label.ind]
+        x$FCarray[,FCi,label.ind]
       }
       #       plot(fits[[label.ind]],joinedFC)
       #       plot(fits[[label.ind]],fits[[label.ind]]-joinedFC)
@@ -40,14 +40,14 @@ show3d.forestFloor_multiClass = function(
   
   with(x, {
     for(i in label.seq) {
-      if(length(FCvars)>1) {
-        FCcombined = apply(FCarray[,FCvars,i],1,sum)
+      if(length(FCi)>1) {
+        FCcombined = apply(FCarray[,FCi,i],1,sum)
       } else {
-        FCcombined = FCarray[,FCvars,i]    
+        FCcombined = FCarray[,FCi,i]    
       }
         
-      std.rgl.args = list(X[,Xvars[1]],
-                          X[,Xvars[2]],
+      std.rgl.args = list(X[,Xi[1]],
+                          X[,Xi[2]],
                           FCcombined,
                           add = {if(i==label.seq[1]) F else T},
                           col=(i)^((i==as.numeric(Y))*1),
@@ -55,20 +55,20 @@ show3d.forestFloor_multiClass = function(
                           type=if(length(label.seq)*dim(X)[1] <500) "s" else "p",
                           size=if(length(label.seq)*dim(X)[1] <500) 1 else 3,
                           main = if(compute_GOF) paste0("R^2=",mean_gof) else "",
-                          xlab = names(x$X)[Xvars[1]],
-                          ylab = names(x$X)[Xvars[2]],
-                          zlab = if(length(FCvars==1)) names(x$X)[FCvars] else "joined FC"
+                          xlab = names(x$X)[Xi[1]],
+                          ylab = names(x$X)[Xi[2]],
+                          zlab = if(length(FCi==1)) names(x$X)[FCi] else "joined FC"
       )
-      run.args = append.overwrite.alists(user.rgl.args,std.rgl.args)
+      run.args = append.overwrite.alists(plot.rgl.args,std.rgl.args)
       do.call(plot3d,run.args)
       
       ffpar = list(FCmatrix=FCarray[,,i],X=X)
-      class(ffpar) = "forestFloor"
+      class(ffpar) = "forestFloor_multiClass"
       
       #merge user arguments for grid estimation with default arguments and estimate...
-      default.grid.args = alist(ff=ffpar,Xvars=Xvars,FCvars=FCvars,zoom=1,
+      default.grid.args = alist(ff=ffpar,Xi=Xi,FCi=FCi,zoom=1,
                                 grid=25,userArgs.kknn=alist(k=10))
-      run.args = append.overwrite.alists(user.grid.args,default.grid.args)
+      run.args = append.overwrite.alists(kknnGrid.args,default.grid.args)
       Spar = do.call(convolute_grid,run.args)
       
       #draw grid
@@ -82,22 +82,22 @@ show3d.forestFloor_multiClass = function(
   })
 }
 
-show3d.forestFloor = function(x,
-                      Xi  = 1:2,
-                      FCi = NULL,
-                      col = "#12345678",    
-                      sortByImportance = TRUE,
-                      surface=TRUE,   
-                      combineFC = sum,  
-                      zoom=1.2,       
-                      grid.lines=30,  
-                      limit=3, 
-                      kknnGrid.args = alist(),  
-                      plot.rgl.args = alist(),  
-                      surf.rgl.args = alist(),
-                      ...
-) {
-  if(class(x)!="forestFloor") stop("x, must be of class forestFloor")
+show3d.forestFloor_regression = function(
+  x,
+  Xi  = 1:2,
+  FCi = NULL,
+  col = "#12345678",    
+  sortByImportance = TRUE,
+  surface=TRUE,   
+  combineFC = sum,  
+  zoom=1.2,       
+  grid.lines=30,  
+  limit=3, 
+  kknnGrid.args = alist(),  
+  plot.rgl.args = alist(),  
+  surf.rgl.args = alist(),
+  ...) {
+if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
   if(length(Xi)!=2) {
     warning("Xi should be of length 2, if 1 first elements is used twice, if >2 only two first elements is used")
     if(length(Xi) > 2) Xi=Xi[1:2] else Xi = Xi[c(1,1)]
@@ -143,13 +143,13 @@ show3d.forestFloor = function(x,
   #merge arguments again
   if(surface) {
     #compute grid
-    grid = convolute_grid(x, Xvars=Xi,FCvars=FCi, limit=limit, grid=grid.lines, zoom=zoom,  userArgs.kknn = kknnGrid.args)
+    grid = convolute_grid(x, Xi=Xi,FCi=FCi, limit=limit, grid=grid.lines, zoom=zoom,  userArgs.kknn = kknnGrid.args)
     wrapper_arg = alist(x=unique(grid[,2]),y=unique(grid[,3]),z=grid[,1],add=TRUE,alpha=0.2,col=c("grey","black")) #args defined in this wrapper function
     calling_arg = append.overwrite.alists(surf.rgl.args,wrapper_arg)   
     do.call("persp3d",args=calling_arg)
   }
+
+invisible()
 }
-
-
 
 

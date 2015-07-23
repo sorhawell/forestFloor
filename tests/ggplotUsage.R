@@ -1,3 +1,4 @@
+
 ##testing ggplot functionality
 rm(list=ls())
 
@@ -14,5 +15,5 @@ Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 1 * rnorm(obs))
 rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=250,ntree=50)
 #compute topology
 ff = forestFloor(rfo,X)
+#plot(ff,1:9,col=fcol(ff))
 ggPlotForestFloor(ff,1:9)
-plot(ff,1:9,col=fcol(ff))

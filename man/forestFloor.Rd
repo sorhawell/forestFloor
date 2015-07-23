@@ -1,24 +1,22 @@
 \name{forestFloor}
-\alias{forestFloor_f}
 \alias{forestFloor}
+\alias{forestFloor_randomForest_regression}
+\alias{forestFloor_randomForest_classification}
 
 \title{
 ForestFloor: Visualize topologies of randomForest model
 }
 \description{
 The function forestFloor computes a feature contribution matrix from a randomForest model-fit and outputs a forestFloor S3 class object, including importance and the orginal training set. The output object is the basis all visualizations.
-
 }
+
 \usage{
-forestFloor(rfo,X,calc_np=FALSE)
+forestFloor(rf.fit,X,calc_np = FALSE, binary_reg = FALSE,...)
 }
 
 \arguments{
-\item{rfo}{
-rfo, random forest object is the output from randomForest::randomForest or cinbag::trimTrees \cr
-for regression use: rfo = randomForest(X,Y,keep.inbag=T,importance=T) \cr
-for binary classification use: rfo = cinbag(X,Y,keep.inbag=T,keep.forest=T,importance=T) \cr
-Formula interface is not supported. Y is a factor of two levels or numeric vector or n_row elements. Multi-class clasification is not supported, try rfFC-package instead see references.
+\item{rf.fit}{
+rf.fit, a random forest object as the output from randomForest::randomForest or cinbag::trimTrees \cr
 }
 
 \item{X}{
@@ -28,17 +26,27 @@ X MUST be the same data.frame as used to train the random forest, see above item
 }
 
 \item{calc_np}{
-  calculate Node Predictions(TRUE) or reuse information from rfo(FALSE)?
-
+  calculate Node Predictions(TRUE) or reuse information from rf.fit(FALSE)?
   slightly faster when FALSE for regression \cr
-  MUST be TRUE for binary classification \cr
+  This option will only take effect for rf.fit of class "randomForest" and type="regression".   This option, is only for developmental purposes. Set to FALSE always as function will override this choice anyway when needed.
+}
 
-  Node predictions, the average target value of inbag samples in any terminal or intermediary node of a random forest are already calculated for regression and are placed in rfo$forest$nodepred. Node predictions for binaray classification are the fraction of class 1 (out of 2) in any node of a random forest and are not calculated in advance.
+\item{binary_reg}{
+booleen, if TRUE binary classification can be changed to "percentage votes" of class 1, and thus be treated as regression.
 }
+
+\item{...}{
+does nothing
 }
+
+
+}
+
 
 \details{
   forestFloor computes feature contributions for random forest regression as suggest by Kuz'min et al, and for binaray classification as suggested by Palczewska et al. Feature contributions is the sums over all local increments for each observation for each feature divided by the number of trees. A local increment is the change of node prediction for given observation in one node being split to a subnode by a given feature. forestFloor use inbag samples to calculate local increments, but only sum local increments over out-of-bag samples divided with OOBtimes. OOBtimes is the number of times a given observation have out-of-bag which normally is ~ trees / 3. This implementation, can be said to yield cross-validated feature contributions. In practices this lowers the leaverage of any observation to the feature contributions of this observation. Hereby becomes the visulization less noisy. In systems with low or no noise, this implementation have no particular advantage.
+  
+Node predictions, the average target value of inbag samples in any terminal or intermediary node of a rf.fit of class randomForest are already calculated for regression and are placed in rfo$forest$nodepred. Node predictions for binaray classification are the fraction of class 1 (out of 2) in any node of a random forest and are not calculated in advance, by randomForest package.  
 }
 
 \value{
@@ -85,7 +93,6 @@ this version
 \seealso{
   \code{\link{plot.forestFloor}},
   \code{\link{show3d}},
-  \code{\link{show3d.forestFloor}}
 }
 
 \examples{

@@ -49,6 +49,7 @@ Soren Havelund Welling
 
 
 \examples{
+\dontrun{
 ##testing ggplot functionality
 rm(list=ls())
 library(forestFloor)
@@ -64,5 +65,5 @@ rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=250,ntree=50)
 ff = forestFloor(rfo,X)
 ggPlotForestFloor(ff,1:9)
 plot(ff,1:9,col=fcol(ff))
-
+}
 }

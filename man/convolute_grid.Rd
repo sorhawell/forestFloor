@@ -12,8 +12,8 @@
 
 \usage{
 convolute_grid           (ff,
-                          Xvars,
-                          FCvars = NULL,
+                          Xi,
+                          FCi = NULL,
                           grid = 30,
                           limit = 3,
                           zoom = 3,
@@ -23,14 +23,14 @@ convolute_grid           (ff,
 \arguments{
   
   \item{ff}{
-    forestFloor object(class="forestFloor") concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
+    forestFloor object class "forestFloor_regression" or "forestFloor_multiClass" at least containing ff$X and ff$FCmatrix with two matrices of equal size
   }
-  \item{Xvars}{
+  \item{Xi}{
     integer vector, of col indices of ff$X to convolute by, often of length 2 or 3. Note total number of predictions is a equal grid^"length of this vector". So computation and visualization might be tough.
   }
-  \item{FCvars}{
+  \item{FCi}{
     integer vector, of col indices of ff$FCmatrix. Those feature contributions to conbine(sum) and convolute.
-    if none provided will copy Xvars vector, which is the trivial choice.
+    if none provided will copy Xi vector, which is the trivial choice.
   }
   
   \item{grid}{
@@ -112,7 +112,7 @@ plot3d::rgl(ff$X[,2],ff$X[,3],apply(ff$FCmatrix[,2:3],1,sum),
 
 #add grid convolution/interpolation
 #make grid with current function
-grid23 = convolute_grid(ff,Xvars=2:3,userArgs.kknn= alist(k=25,kernel="gaus"),grid=50,zoom=1.2)
+grid23 = convolute_grid(ff,Xi=2:3,userArgs.kknn= alist(k=25,kernel="gaus"),grid=50,zoom=1.2)
 #apply grid on 3d-plot
 persp3d(unique(grid23[,2]),unique(grid23[,3]),grid23[,1],alpha=0.3,col=c("black","grey"),add=TRUE)
 #anchor points of grid could be plotted also
@@ -126,8 +126,8 @@ plot3d(grid23[,2],grid23[,3],grid23[,1],alpha=0.3,col=c("black"),add=TRUE)
 
 #Make grid of three effects, 25^3 = 15625 anchor points
 grid123 = convolute_grid(ff,
-                         Xvars=c(1:3),
-                         FCvars=c(1:3),
+                         Xi=c(1:3),
+                         FCi=c(1:3),
                          userArgs.kknn = alist(
                            k= 100,
                            kernel = "gaussian",

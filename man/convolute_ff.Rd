@@ -16,7 +16,7 @@ convolute_ff(ff,
 \arguments{
   
 \item{ff}{
-  forestFloor object(class="forestFloor") concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
+  forestFloor object "forestFloor_regression" or "forestFloor_multiClass"  concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
 }
 \item{these.vars}{
   vector of col.indices to ff$X. Convolution can be limited to these.vars 

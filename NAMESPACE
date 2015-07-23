@@ -29,22 +29,21 @@ importFrom(ggplot2,
 
 importFrom(gridExtra,grid.arrange)
 
-#methods for forestFloor regression
-S3method(plot, forestFloor)
-S3method(print,forestFloor)
-
-#methods for forestFloor classification
+#methods
+#plotting
+S3method(plot, forestFloor_regression)
+S3method(plot, forestFloor_multiClass)
+#printing
+S3method(print,forestFloor_regression)
+S3method(print,forestFloor_multiClass)
+#3d images
 S3method(show3d,  forestFloor_multiClass)
-S3method(show3d,  forestFloor)
+S3method(show3d,  forestFloor_regression)
 
-S3method(plot,  forestFloor_multiClass)
-S3method(plot,  forestFloor)
 
 
 
 export(forestFloor,
-       plot.forestFloor,
-       print.forestFloor,
        box.outliers,
        recTree,
        vec.plot,
@@ -55,7 +54,7 @@ export(forestFloor,
        fcol,
        ggPlotForestFloor,
        ggplotGrob,
-       forestFloor_multiClass,
+       #forestFloor_multiClass,
        #plot.forestFloor_multiClass,#,
        #show3d_forestFloor_multiClass),
        show3d,
