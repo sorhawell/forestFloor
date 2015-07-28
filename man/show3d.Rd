@@ -25,7 +25,9 @@ make 3d-plot of forestFloor topology
       limit=3, 
       kknnGrid.args = alist(),  
       plot.rgl.args = alist(),  
-      surf.rgl.args = alist(), #only regression
+      surf.rgl.args = alist(),
+      user.gof.args = alist(),
+      compute_GOF = TRUE,
       ...)
 
 \method{show3d}{forestFloor_multiClass}(
@@ -131,7 +133,7 @@ argument list passed to internal function ff2, which can modify how goodness-of-
   }
   
   \item{compute_GOF}{
-Booleen TRUE/FALSE. Should the goodness of fit be computed? If false, no GOF input pars are useful.
+Booleen TRUE/FALSE. Should the goodness of fit be computed and plotted is main of 3D plot? If false, no GOF input pars are useful.
 }
   
   \item{...}{
