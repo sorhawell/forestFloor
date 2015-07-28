@@ -96,6 +96,8 @@ show3d.forestFloor_regression = function(
   kknnGrid.args = alist(),  
   plot.rgl.args = alist(),  
   surf.rgl.args = alist(),
+  user.gof.args = alist(),
+  compute_GOF = TRUE,
   ...) {
 if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
   if(length(Xi)!=2) {
@@ -130,10 +132,21 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   xaxis = as.numeric.factor(xaxis)
   yaxis = as.numeric.factor(yaxis)
   zaxis = as.numeric.factor(zaxis)
-  
+ 
+  #computing goodness-of-viusalization
+  if(compute_GOF) {
+    fittedFC = convolute_ff2(x,
+                             Xi=Xi,
+                             FCi=FCi,
+                             userArgs.kknn=user.gof.args)
+    joinedFC = apply(x$FCmatrix[,FCi],1,sum)
+    sqCor = cor(joinedFC,fittedFC)^2
+    mean_gof = paste("R^2=",round(sqCor,digits=2),collapse="")
+  } else {mean_gof=""}
+
   #plotting points
   #merge current/user, wrapper arguments for plot3d in proritized order
-  wrapper_arg = list(x=xaxis, y=yaxis, z=zaxis, col=col,
+  wrapper_arg = list(x=xaxis, y=yaxis, z=zaxis, col=col,main=mean_gof,
                      xlab=names(X)[1],ylab=names(X)[2],zlab=paste(names(x$X[,FCi]),collapse=" - "),
                      alpha=.4,size=3,scale=.7,avoidFreeType = TRUE,add=FALSE)
   calling_arg = append.overwrite.alists(plot.rgl.args,wrapper_arg)
@@ -151,5 +164,3 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
 
 invisible()
 }
-
-

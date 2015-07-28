@@ -12,32 +12,33 @@ make 3d-plot of forestFloor topology
 
 }
 \usage{
-\method{show3d}{forestFloor_regression} (x,
-                              Xi  = 1:2,
-                              FCi = NULL,
-                              col = "#12345678",    
-                              sortByImportance = TRUE,
-                              surface=TRUE,   
-                              combineFC = sum,  
-                              zoom=1.2,       
-                              grid.lines=30,  
-                              limit=3, 
-                              kknnGrid.args = alist(),  
-                              plot.rgl.args = alist(),  
-                              surf.rgl.args = alist(),   
-                              ...)
+\method{show3d}{forestFloor_regression} (
+      x,
+      Xi  = 1:2,
+      FCi = NULL,
+      col = "#12345678",    
+      sortByImportance = TRUE,
+      surface=TRUE,   
+      combineFC = sum,  
+      zoom=1.2,       
+      grid.lines=30,  
+      limit=3, 
+      kknnGrid.args = alist(),  
+      plot.rgl.args = alist(),  
+      surf.rgl.args = alist(), #only regression
+      ...)
 
 \method{show3d}{forestFloor_multiClass}(
-x,
-Xi,
-FCi=NULL,
-label.seq=NULL,
-kknnGrid.args=list(NULL),
-plot.rgl.args=list(),
-compute_GOF=FALSE,
-user.gof.args=list(NULL),
-...)
-
+      x,
+      Xi,
+      FCi=NULL,
+      label.seq=NULL,
+      kknnGrid.args=list(NULL),
+      plot.rgl.args=list(),
+      compute_GOF=FALSE,
+      user.gof.args=list(NULL),
+      ...)
+    
 }
 
 
