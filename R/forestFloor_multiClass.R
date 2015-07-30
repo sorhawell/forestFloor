@@ -125,7 +125,7 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
              FCarray = array(localIncrements,dim=c(obs,vars,nClasses)),
-             sumOfInbags = apply(rf$inbag,1,sum)
+             sumOfInbags = apply(rf.fit$inbag,1,sum)
              #  all = mget(ls()) #export everything in list
   )
 
