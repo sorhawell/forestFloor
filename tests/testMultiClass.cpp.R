@@ -39,3 +39,43 @@ for (I in ff.test42$imp_ind[1:4])  {
 }
 
 
+
+
+##more plots
+rm(list=ls())
+library(randomForest)
+library(forestFloor)
+#simulate data
+obs=2500
+vars = 6
+X = data.frame(replicate(vars,rnorm(obs)))
+Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 1 * rnorm(obs))
+Y.class <- Y
+Y.class[Y<=-1] <- 1
+Y.class[Y>1] <- 2
+Y.class[Y.class<1] <- 3
+Y.class <- factor(Y.class)
+#grow a forest, remember to include inbag
+
+rfo=randomForest(X,Y.class,keep.inbag = TRUE,sampsize=1500,ntree=500)
+
+#compute topology
+ff = forestFloor(rfo,X)
+
+#plot
+Col = fcol(ff,1,alpha=.25,orderByImportance=FALSE) #farve bruges her bedst til kende forskel på klasser
+
+plot(ff,
+     plot_GOF=T,
+     colLists=list("#00000010",
+                   "#FF000010",
+                   "#00FF0010"),
+     GOF_col=c("#3A3A3A80",
+               "#FF3A3A80",
+               "#3AFF3A80"))
+
+plot(ff,plot_seq=1:6,
+     colLists=list("#00000002", #farve vector til class1 (length 1 eller 2500)
+                   "#00000002", #farve vector til class2 (length 1 eller 2500)
+                   Col) #tredje  farves med fcol (length 1 eller 2500)
+     ,plot_GOF=T)

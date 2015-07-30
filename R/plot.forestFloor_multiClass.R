@@ -19,7 +19,7 @@ plot.forestFloor_multiClass  = function(
     
     if(is.null(plot_seq))         plot_seq = 1:min(18,dim(X)[2])
     fig.columns = if(is.null(fig.columns)) {
-      if(length(plot_seq<=4)) c(1,2,3,2)[length(plot_seq)] else 3
+      if(length(plot_seq)<=4) c(1,2,3,2)[length(plot_seq)] else 3
     }
     if(order_by_importance) plot_seq = x$imp_ind[plot_seq]
     if(is.null(label.seq)) label.seq = 1:min(8,length(levels(Y)))
@@ -41,7 +41,6 @@ plot.forestFloor_multiClass  = function(
                      #reduced version if speedup true. Not reduced content of x still
                      #available locally as with(x, have been called once before
           subSample=sample(obs,ceiling(obs^reduce.exp))
-          print(ls())
           X=X[subSample,]
           Y=Y[subSample]
           FCarray=FCarray[subSample,,]
@@ -76,7 +75,7 @@ plot.forestFloor_multiClass  = function(
                #if fit is plotted goodness of fit is added to title
                main = paste(names(X)[j],if(plot_GOF) {paste("R^2=",round(mean(sapply(label.seq,function(lSeq) {
                  #plot(fits[[lSeq]]$FCfit[,j],FCarray[,j,lSeq],col=4)
-                 cor( fits[[lSeq]]$FCfit[,j],FCarray[,j,lSeq])^2
+                 cor( fits[[lSeq]]$FCfit[,j],x$FCarray[,j,lSeq])^2
                }))
                ,digits=2))
                
