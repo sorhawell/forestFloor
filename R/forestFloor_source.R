@@ -597,7 +597,6 @@ forestFloor = function(rf.fit,
   if(Class=="randomForest") {
   Type = rf.fit$type
   #changed classification to binary regression if requested and only two classes
-  print(rf.fit$forest$nclass)
   if(binary_reg) {
     if(!is.null(rf.fit$forest$nclass) && rf.fit$forest$nclass==2) {
       Type="regression"

@@ -558,7 +558,6 @@ int multiTree(int  vars,               //local 3  nvar
   
   //iterate each tree and compute and sum to localIncrements
   for(int i_tree=0;i_tree<ntree;i_tree++){
-    Rprintf("560 \n");
     //make ranges of Out Of Bag and inbag observations in root of tree
     OOB_count = 0;  //reset OOB_count for this new tree
     IB_count  = 0 ; 

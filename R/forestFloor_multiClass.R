@@ -110,7 +110,6 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
     ot,  #oob.times
     localIncrements = localIncrements #output is written directly to localIncrements from C++
   )
-  print("finished cpp")
   
 
   #restructure to feature contributions obs X var X class
