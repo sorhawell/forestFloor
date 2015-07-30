@@ -9,21 +9,33 @@ plot.forestFloor_regrssion
 A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions.
 }
 \usage{
-\method{plot}{forestFloor_regression} (x,
-                            plot_seq=NULL, 
-                            limitY=TRUE,
-                            order_by_importance=TRUE, 
-                            cropXaxes=NULL, 
-                            crop_limit=4,
-                            plot_GOF = FALSE,
-                            GOF_col = "#33333399",
-                            ...)
-                            
-\method{plot}{forestFloor_multiClass} (x,
-plot_seq = NULL, label.seq = NULL, limitY = TRUE,colLists = NULL,
-order_by_importance = TRUE, fig.columns = NULL, plot_GOF = FALSE,
-GOF_col = NULL, jitter_these_cols = NULL, jitter.factor = NULL,
-compute_GOF = F, ...)                             
+\method{plot}{forestFloor_regression} (
+  x,
+  plot_seq=NULL, 
+  limitY=TRUE,
+  order_by_importance=TRUE, 
+  cropXaxes=NULL, 
+  crop_limit=4,
+  plot_GOF = FALSE,
+  GOF_col = "#33333399",
+  speedup_GOF = TRUE,
+  ...)
+                          
+\method{plot}{forestFloor_multiClass} (
+  x,
+  plot_seq = NULL,
+  label.seq = NULL,
+  limitY = TRUE,
+  colLists = NULL,
+  order_by_importance = TRUE,
+  fig.columns = NULL,
+  plot_GOF = FALSE,
+  GOF_col = NULL,
+  speedup_GOF = TRUE,
+  jitter_these_cols = NULL,
+  jitter.factor = NULL,
+  compute_GOF = F,
+  ...)                             
 }
 
 %- maybe also 'usage' for other objects documented here.
@@ -61,7 +73,7 @@ value to decide howmuch jitter to apply. often between .5 and 3
 \item{compute_GOF}{
 Booleen TRUE/FALSE. Should the goodness of fit be computed? If false, no GOF input pars are useful.
 }
-
+   
 \item{order_by_importance}{
 TRUE / FALSE
 should plotting and plot_seq be ordered after importance. Most important feature plot first(TRUE)
@@ -84,6 +96,10 @@ Booleen TRUE/FALSE. Should the goodness of fit be plotted as a line?
 Color of plotted GOF line
 }
 
+\item{speedup_GOF}{
+Should GOF only computed on reasonable subsample of data set to speedup computation.
+GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
+}
 
 \item{...}{
 ... other arguments passed to generic plot functions

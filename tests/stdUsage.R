@@ -9,7 +9,7 @@ Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + .5 * rnorm(obs))
 
 
 #grow a forest, remeber to include inbag
-rfTest42=randomForest(X,Y,keep.inbag = TRUE,sampsize=1500,ntree=500)
+rfTest42=randomForest(X,Y,keep.inbag = TRUE,sampsize=1000,ntree=500)
 
 #compute topology
 ffTest42 = forestFloor(rfTest42,X)
@@ -25,7 +25,7 @@ plot(ffTest42,order_by_importance=TRUE)
 #by applying different colourgradient, interactions reveal themself 
 #also a k-nearest neighbor fit is applied to evaluate goodness of fit
 Col=fcol(ffTest42,3,orderByImportance=FALSE)
-plot(ffTest42,col=Col,plot_GOF=TRUE) 
+plot(ffTest42,col=Col,plot_GOF=TRUE,speed=T) 
 
 #if ever needed, k-nearest neighbor parameters for goodness-of-fit can be access through convolute_ff
 #a new fit will be calculated and added to forstFloor object as ffTest42$FCfit
