@@ -58,6 +58,5 @@ export(forestFloor,
        #plot.forestFloor_multiClass,#,
        #show3d_forestFloor_multiClass),
        show3d,
-       append.overwrite.alists)
-
-       #plot_ffmc_K3)
+       append.overwrite.alists,
+       plot_simplex3)
