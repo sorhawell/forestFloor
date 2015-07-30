@@ -9,7 +9,7 @@ Y = iris[,"Species"]
 as.numeric(Y)
 rf.test42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
 ff.test42 = forestFloor(rf.test42,X,F,F)
-pred = sapply(1:3,function(i) apply(ff$FCarray[,,i],1,sum))+1/3
+pred = sapply(1:3,function(i) apply(ff.test42$FCarray[,,i],1,sum))+1/3
 rfPred = predict(rf.test42,type="vote",norm.votes=T)
 rfPred[is.nan(rfPred)] = 1/3
 if(cor(as.vector(rfPred),as.vector(pred))^2<0.99) stop("fail testMultiClass")
