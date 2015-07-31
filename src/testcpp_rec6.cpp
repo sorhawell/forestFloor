@@ -524,7 +524,7 @@ void follow_path2(
 
 /// defining Rcpp function to communicate with R
 //[[Rcpp::export]]
-int multiTree(int  vars,               //local 3  nvar
+void multiTree(int  vars,               //local 3  nvar
             int  obs,                 //local 4  nobs
             int  ntree,               //local  5  ntrees
             int  nClasses, //changed from calculate_node_pred
