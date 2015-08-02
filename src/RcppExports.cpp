@@ -31,10 +31,9 @@ BEGIN_RCPP
 END_RCPP
 }
 // multiTree
-int multiTree(int vars, int obs, int ntree, int nClasses, NumericMatrix X, IntegerVector Y, IntegerMatrix leftDaughter, IntegerMatrix rightDaughter, IntegerMatrix nodestatus, NumericMatrix xbestsplit, NumericMatrix nodepred, IntegerMatrix bestvar, IntegerMatrix inbag, IntegerVector varLevels, IntegerVector OOBtimes, NumericVector localIncrements);
+void multiTree(int vars, int obs, int ntree, int nClasses, NumericMatrix X, IntegerVector Y, IntegerMatrix leftDaughter, IntegerMatrix rightDaughter, IntegerMatrix nodestatus, NumericMatrix xbestsplit, NumericMatrix nodepred, IntegerMatrix bestvar, IntegerMatrix inbag, IntegerVector varLevels, IntegerVector OOBtimes, NumericVector localIncrements);
 RcppExport SEXP forestFloor_multiTree(SEXP varsSEXP, SEXP obsSEXP, SEXP ntreeSEXP, SEXP nClassesSEXP, SEXP XSEXP, SEXP YSEXP, SEXP leftDaughterSEXP, SEXP rightDaughterSEXP, SEXP nodestatusSEXP, SEXP xbestsplitSEXP, SEXP nodepredSEXP, SEXP bestvarSEXP, SEXP inbagSEXP, SEXP varLevelsSEXP, SEXP OOBtimesSEXP, SEXP localIncrementsSEXP) {
 BEGIN_RCPP
-    Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< int >::type vars(varsSEXP);
     Rcpp::traits::input_parameter< int >::type obs(obsSEXP);
@@ -52,7 +51,7 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< IntegerVector >::type varLevels(varLevelsSEXP);
     Rcpp::traits::input_parameter< IntegerVector >::type OOBtimes(OOBtimesSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type localIncrements(localIncrementsSEXP);
-    __result = Rcpp::wrap(multiTree(vars, obs, ntree, nClasses, X, Y, leftDaughter, rightDaughter, nodestatus, xbestsplit, nodepred, bestvar, inbag, varLevels, OOBtimes, localIncrements));
-    return __result;
+    multiTree(vars, obs, ntree, nClasses, X, Y, leftDaughter, rightDaughter, nodestatus, xbestsplit, nodepred, bestvar, inbag, varLevels, OOBtimes, localIncrements);
+    return R_NilValue;
 END_RCPP
 }
