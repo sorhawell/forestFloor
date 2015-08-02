@@ -12,13 +12,16 @@ importFrom(stats,
 importFrom(graphics,
            par,
            plot,
-           points)
+           points,
+           segments)
 
 importFrom(grDevices,
            rgb2hsv,
-           hsv)           
-import(rgl)
+           hsv,
+           col2rgb,
+           rgb)
 
+import(rgl)
 importFrom(ggplot2,
            aes_string,
            ggplot,
