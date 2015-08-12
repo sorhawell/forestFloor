@@ -1,3 +1,4 @@
+if(!interactive()) Sys.setenv(RGL_USE_NULL=F) #disable RGL for headless machines
 library(forestFloor)
 library(randomForest)
 #simulate data
