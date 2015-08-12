@@ -1,4 +1,4 @@
-if(!interactive()) Sys.setenv(RGL_USE_NULL=F) #disable RGL for headless machines
+if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
 ##testing ggplot functionality
 rm(list=ls())
 
