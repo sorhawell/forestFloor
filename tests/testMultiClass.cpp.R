@@ -16,12 +16,12 @@ rfPred[is.nan(rfPred)] = 1/3
 if(cor(as.vector(rfPred),as.vector(pred))^2<0.99) stop("fail testMultiClass")
 attributes(ff.test42)
 args(forestFloor:::plot.forestFloor_multiClass)
-plot(ff.test42,compute_GOF=F,plot_GOF=T,cex=.7,
+plot(ff.test42,plot_GOF=T,cex=.7,
      colLists=list(c("#FF0000A5"),
                    c("#00FF0050"),
                    c("#0000FF35")))
 
-show3d(ff.test42,1:2,3:4,compute_GOF=T)
+show3d(ff.test42,1:2,3:4,plot_GOF=T)
 #plot all effect 2D only
 pars = plot_simplex3(ff.test42,Xi=c(1:3),restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,
                fig3d=F,includeTotal=T,auto.alpha=.4,set_pars=T)

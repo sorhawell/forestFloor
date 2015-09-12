@@ -6,7 +6,7 @@ show3d = function(x,...) {
 ##3d plot of forestFloor_multiClass
 show3d.forestFloor_multiClass = function(
   x,Xi,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
-  plot.rgl.args=list(),compute_GOF=FALSE,user.gof.args=list(NULL),...) {
+  plot.rgl.args=list(),plot_GOF=FALSE,user.gof.args=list(NULL),...) {
   
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCi)) FCi = Xi
@@ -14,7 +14,7 @@ show3d.forestFloor_multiClass = function(
   
   #compute mean goodness of fit of label surfaces of 3d-plot
   #gof is the squared pearson correlation of any FC and fitted surface
-  if(compute_GOF) {
+  if(plot_GOF) {
     fits = lapply(label.seq, function(label.ind) {
       forestFloor_obj = list(FCmatrix = x$FCarray[,,label.ind],
                              X=apply(x$X[,],2,as.numeric.factor)
@@ -54,7 +54,7 @@ show3d.forestFloor_multiClass = function(
                           alpha=1-.8*(i!=as.numeric(Y)),
                           type=if(length(label.seq)*dim(X)[1] <500) "s" else "p",
                           size=if(length(label.seq)*dim(X)[1] <500) 1 else 3,
-                          main = if(compute_GOF) paste0("R^2=",mean_gof) else "",
+                          main = if(plot_GOF) paste0("R^2=",mean_gof) else "",
                           xlab = names(x$X)[Xi[1]],
                           ylab = names(x$X)[Xi[2]],
                           zlab = if(length(FCi==1)) names(x$X)[FCi] else "joined FC"
@@ -97,7 +97,7 @@ show3d.forestFloor_regression = function(
   plot.rgl.args = alist(),  
   surf.rgl.args = alist(),
   user.gof.args = alist(),
-  compute_GOF = TRUE,
+  plot_GOF = TRUE,
   ...) {
 if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
   if(length(Xi)!=2) {
@@ -134,7 +134,7 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   zaxis = as.numeric.factor(zaxis)
  
   #computing goodness-of-viusalization
-  if(compute_GOF) {
+  if(plot_GOF) {
     fittedFC = convolute_ff2(x,
                              Xi=Xi,
                              FCi=FCi,

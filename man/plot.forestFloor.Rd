@@ -34,7 +34,6 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   speedup_GOF = TRUE,
   jitter_these_cols = NULL,
   jitter.factor = NULL,
-  compute_GOF = F,
   ...)                             
 }
 
@@ -69,9 +68,6 @@ vector to apply jitter to x-axis in plots. Will refer to variables. Useful to fo
 }
 \item{jitter.factor}{
 value to decide howmuch jitter to apply. often between .5 and 3
-}
-\item{compute_GOF}{
-Booleen TRUE/FALSE. Should the goodness of fit be computed? If false, no GOF input pars are useful.
 }
    
 \item{order_by_importance}{

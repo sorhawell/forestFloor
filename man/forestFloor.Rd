@@ -103,49 +103,53 @@ this version
 
 \examples{
 \dontrun{
-library(forestFloor)
-library(randomForest)
+#Regression example:
 #simulate data
-obs=2500
+library(randomForest)
+library(forestFloor)
+obs=1000
 vars = 6 
-
 X = data.frame(replicate(vars,rnorm(obs)))
-Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 1 * rnorm(obs))
-
+Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 0.5 * rnorm(obs))
 
 #grow a forest, remeber to include inbag
-rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=1500,ntree=500)
+rfo=randomForest::randomForest(X,Y,keep.inbag=TRUE)
 
 #compute topology
 ff = forestFloor(rfo,X)
-
 
 #print forestFloor
 print(ff) 
 
 #plot partial functions of most important variables first
-plot(ff) 
+plot(ff,order_by_importance=TRUE) 
 
 #Non interacting functions are well displayed, whereas X3 and X4 are not
 #by applying different colourgradient, interactions reveal themself 
-Col = fcol(ff,3,orderByImportance=FALSE)
-plot(ff,col=Col,compute_GOF=TRUE) 
+#also a k-nearest neighbor fit is applied to evaluate goodness of fit
+Col=fcol(ff,3,orderByImportance=FALSE)
+plot(ff,col=Col,plot_GOF=TRUE) 
+
+#if needed, k-nearest neighbor parameters for goodness-of-fit can be access through convolute_ff
+#a new fit will be calculated and added to forstFloor object as ff$FCfit
+ff = convolute_ff(ff,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
+plot(ff,col=Col,plot_GOF=TRUE)
 
 
+#Classification example:
+library(forestFloor)
+library(randomForest)
+data(iris)
+iris
+X = iris[,!names(iris) %in% "Species"]
+Y = iris[,"Species"]
 
-#in 3D the interaction between X3 and X reveals itself completely
-show3d(ff,3:4,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
-
-#although no interaction, a joined additive effect of X1 and X2
-#colour by FC-component FC1 and FC2 summed
-Col = fcol(ff,1:2,orderByImportance=FALSE,X.m=FALSE,RGB=TRUE)
-plot(ff,col=Col) 
-show3d(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
-
-#...or two-way gradient is formed from FC-component X1 and X2.
-Col = fcol(ff,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8) 
-plot(ff,col=Col) 
-show3d(ff,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE)
+rf = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
+ff = forestFloor(rf,X,F,F)
+plot(ff,plot_GOF=T,cex=.7,
+     colLists=list(c("#FF0000A5"),
+                   c("#00FF0050"),
+                   c("#0000FF35")))
 
 }
 }

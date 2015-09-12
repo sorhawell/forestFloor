@@ -103,12 +103,12 @@ Soren Havelund Welling
     replace=F,keep.inbag=T,samp=15,ntree=100)
   ff.test42 = forestFloor(rf.test42,X,F,F)
   
-  plot(ff.test42,compute_GOF=F,plot_GOF=T,cex=.7,
+  plot(ff.test42,plot_GOF=T,cex=.7,
        colLists=list(c("#FF0000A5"),
                      c("#00FF0050"),
                      c("#0000FF35")))
   
-  show3d(ff.test42,1:2,3:4,compute_GOF=T)
+  show3d(ff.test42,1:2,3:4,plot_GOF=T)
   
   #plot all effect 2D only
   pars = plot_simplex3(ff.test42,Xi=c(1:3),restore_par=F,zoom.fit=NULL,

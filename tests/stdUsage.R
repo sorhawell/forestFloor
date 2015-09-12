@@ -45,5 +45,5 @@ show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE)
 #...or two-way gradient is formed from FC-component X1 and X2.
 Col = fcol(ffTest42,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8) 
 plot(ffTest42,col=Col) 
-show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE,compute_GOF=T)
+show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE,plot_GOF=T)
 

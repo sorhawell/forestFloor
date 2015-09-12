@@ -13,7 +13,6 @@ plot.forestFloor_multiClass  = function(
   speedup_GOF = TRUE,
   jitter_these_cols = NULL,
   jitter.factor = NULL,
-  compute_GOF = F,
   ...) {
   void = with(x,{ #inside x object
     

@@ -27,7 +27,7 @@ make 3d-plot of forestFloor topology
       plot.rgl.args = alist(),  
       surf.rgl.args = alist(),
       user.gof.args = alist(),
-      compute_GOF = TRUE,
+      plot_GOF = TRUE,
       ...)
 
 \method{show3d}{forestFloor_multiClass}(
@@ -37,7 +37,7 @@ make 3d-plot of forestFloor topology
       label.seq=NULL,
       kknnGrid.args=list(NULL),
       plot.rgl.args=list(),
-      compute_GOF=FALSE,
+      plot_GOF=FALSE,
       user.gof.args=list(NULL),
       ...)
     
@@ -132,7 +132,7 @@ a numeric vector describing which classes and in what sequence to plot. NULL is 
 argument list passed to internal function ff2, which can modify how goodness-of-fit is computed. Number of neighobers and kernel can be set manually with e.g. list(kmax=40,kernel="gaussion"). Default pars should work already in most cases. Function ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
   }
   
-  \item{compute_GOF}{
+  \item{plot_GOF}{
 Booleen TRUE/FALSE. Should the goodness of fit be computed and plotted is main of 3D plot? If false, no GOF input pars are useful.
 }
   
