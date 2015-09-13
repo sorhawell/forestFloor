@@ -112,6 +112,8 @@ this version
 
 \examples{
 
+\dontrun{
+
 #disable RGL for headless machines, CRAN testing etc.
 #(if you can read this and have a head, don't bother...)
 if(!interactive()) {
@@ -243,6 +245,7 @@ Col = fcol(ff,1) #color by most important feature
 plot(ff,col=Col)   #plot features 
 show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) #interfacing with rgl::plot3d
 
+}
 
 }
 
