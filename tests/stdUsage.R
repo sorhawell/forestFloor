@@ -2,7 +2,7 @@ if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machi
 library(forestFloor)
 library(randomForest)
 #simulate data
-obs=5000
+obs=2000
 vars = 6 
 
 X = data.frame(replicate(vars,rnorm(obs)))
@@ -20,7 +20,7 @@ ffTest42 = forestFloor(rfTest42,X)
 print(ffTest42) 
 
 #plot partial functions of most important variables first
-plot(ffTest42,order_by_importance=TRUE) 
+plot(ffTest42,orderByImportance=TRUE) 
 
 #Non interacting functions are well displayed, whereas X3 and X4 are not
 #by applying different colourgradient, interactions reveal themself 
@@ -34,16 +34,16 @@ ffTest42 = convolute_ff(ffTest42,userArgs.kknn=alist(kernel="epanechnikov",kmax=
 plot(ffTest42,col=Col,plot_GOF=TRUE)
 
 #in 3D the interaction between X3 and X reveals itself completely
-show3d(ffTest42,3:4,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
+show3d(ffTest42,3:4,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE) 
 
 #although no interaction, a joined additive effect of X1 and X2
 #colour by FC-component FC1 and FC2 summed
 Col = fcol(ffTest42,1:2,orderByImportance=FALSE,X.m=FALSE,RGB=TRUE)
 plot(ffTest42,col=Col) 
-show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE) 
+show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE) 
 
 #...or two-way gradient is formed from FC-component X1 and X2.
 Col = fcol(ffTest42,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8) 
 plot(ffTest42,col=Col) 
-show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),sortByImportance=FALSE,plot_GOF=T)
+show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE,plot_GOF=T)
 

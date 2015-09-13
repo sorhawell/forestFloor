@@ -24,7 +24,7 @@ includes also X and Y and importance data
 
 \item{plot_seq}{
 a numeric vector describing which variables and in what sequence to plot,
-ordered by importance as default, order_by_importance = F then by feature/coloumn order of training data.
+ordered by importance as default, orderByImportance = F then by feature/coloumn order of training data.
 }
 
 

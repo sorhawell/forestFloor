@@ -5,7 +5,7 @@ plot.forestFloor_regression = function(x,
                                        plot_seq=NULL, 
                                        #alpha="auto", #remove
                                        limitY=TRUE,
-                                       order_by_importance=TRUE, 
+                                       orderByImportance=TRUE, 
                                        #external.col=NULL, #remove
                                        cropXaxes=NULL, 
                                        crop_limit=4,
@@ -79,7 +79,7 @@ plot.forestFloor_regression = function(x,
   
   ##plot the n.plots most important variables
   Xsd = 0:1 #initialize Xsd
-  if(!order_by_importance) imp.ind=sort(imp.ind) #optinal removal of importance order
+  if(!orderByImportance) imp.ind=sort(imp.ind) #optinal removal of importance order
   for(i in plot_seq) {
     
     if(i %in% cropXaxes && !is.null(cropXaxes)) {

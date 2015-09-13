@@ -9,7 +9,8 @@ X = iris[,!names(iris) %in% "Species"]
 Y = iris[,"Species"]
 as.numeric(Y)
 rf.test42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
-ff.test42 = forestFloor(rf.test42,X,F,F)
+ff.test42 = forestFloor(rf.test42,X,calc_np = F)
+
 pred = sapply(1:3,function(i) apply(ff.test42$FCarray[,,i],1,sum))+1/3
 rfPred = predict(rf.test42,type="vote",norm.votes=T)
 rfPred[is.nan(rfPred)] = 1/3

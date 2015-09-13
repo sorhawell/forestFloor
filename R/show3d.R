@@ -87,7 +87,7 @@ show3d.forestFloor_regression = function(
   Xi  = 1:2,
   FCi = NULL,
   col = "#12345678",    
-  sortByImportance = TRUE,
+  orderByImportance = TRUE,
   surface=TRUE,   
   combineFC = sum,  
   zoom=1.2,       
@@ -109,7 +109,7 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   if(!all(FCi %in% 1:dim(x$FCmatrix)[2]) && length(FCi)>0) stop("input FCi points to columns indices out of range of feature matrix x$X")
   
   #should Xi and FCi refer to coloumns sorted by importance?
-  if(sortByImportance) {
+  if(orderByImportance) {
     Xi  = x$imp_ind[ Xi]
     FCi = x$imp_ind[FCi]
   }

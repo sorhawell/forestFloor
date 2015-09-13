@@ -17,7 +17,7 @@ make 3d-plot of forestFloor topology
       Xi  = 1:2,
       FCi = NULL,
       col = "#12345678",    
-      sortByImportance = TRUE,
+      orderByImportance = TRUE,
       surface=TRUE,   
       combineFC = sum,  
       zoom=1.2,       
@@ -60,7 +60,7 @@ make 3d-plot of forestFloor topology
   colour vector
   points colour or colour palette, can also be passed as promise in plot.rgl.args
   }
-  \item{sortByImportance}{
+  \item{orderByImportance}{
   booleen
   should indices count 'variable importance' order or matrix/data.frame order
   }

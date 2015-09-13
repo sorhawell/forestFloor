@@ -6,7 +6,7 @@ plot.forestFloor_multiClass  = function(
   label.seq=NULL,
   limitY=TRUE,
   colLists = NULL,
-  order_by_importance=TRUE,
+  orderByImportance=TRUE,
   fig.columns = NULL,
   plot_GOF=FALSE,
   GOF_col=NULL,
@@ -20,7 +20,7 @@ plot.forestFloor_multiClass  = function(
     fig.columns = if(is.null(fig.columns)) {
       if(length(plot_seq)<=4) c(1,2,3,2)[length(plot_seq)] else 3
     }
-    if(order_by_importance) plot_seq = x$imp_ind[plot_seq]
+    if(orderByImportance) plot_seq = x$imp_ind[plot_seq]
     if(is.null(label.seq)) label.seq = 1:min(8,length(levels(Y)))
     if(is.null(colLists)) colLists =
       lapply(1:length(label.seq), function(i) factor(rep(i,dim(X)[1])))

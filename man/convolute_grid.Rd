@@ -100,7 +100,7 @@ print(ff)
 
 #plot partial functions of most important variables first
 Col=fcol(ff,1)
-plot(ff,col=Col,order_by_importance=TRUE) 
+plot(ff,col=Col,orderByImportance=TRUE) 
 
 
 #the pure feature contributions
