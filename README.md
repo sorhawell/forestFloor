@@ -10,6 +10,6 @@ note to my self
 
 Comming soon:
 
--forestFloor will support Rborist models
--forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
--fix bug, show3d will produce error of only on feature contribution column is selected
+*forestFloor will support Rborist models
+*forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
+*fix bug, show3d will produce error of only on feature contribution column is selected
