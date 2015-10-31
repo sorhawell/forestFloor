@@ -14,4 +14,4 @@ Comming soon:
 - fix bug, show3d will produce error of only on feature contribution column is selected
 - fix bug, test inpunt in randomForest functions will prpevent forestFloor from runnig
 
-.
+..
