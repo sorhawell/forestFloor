@@ -13,3 +13,5 @@ Comming soon:
 - forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
 - fix bug, show3d will produce error of only on feature contribution column is selected
 - fix bug, test inpunt in randomForest functions will prpevent forestFloor from runnig
+
+.
