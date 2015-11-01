@@ -22,7 +22,10 @@ plot(ff.test42,plot_GOF=T,cex=.7,
                    c("#00FF0050"),
                    c("#0000FF35")))
 
-show3d(ff.test42,1:2,3:4,plot_GOF=T)
+show3d(ff.test42,1:2,1:2,plot_GOF=T)
+show3d(ff.test42,1:2,1,plot_GOF=T)#test plotting only one feature contribution
+
+
 #plot all effect 2D only
 pars = plot_simplex3(ff.test42,Xi=c(1:3),restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,
                fig3d=F,includeTotal=T,auto.alpha=.4,set_pars=T)
@@ -81,3 +84,6 @@ plot(ff,plot_seq=1:6,
                    "#00000002", #farve vector til class2 (length 1 eller 2500)
                    Col) #tredje  farves med fcol (length 1 eller 2500)
      ,plot_GOF=T)
+
+
+
