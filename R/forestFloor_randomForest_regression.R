@@ -66,6 +66,9 @@ forestFloor_randomForest_regression <- function(rf.fit,
   
   
   ##recording types of variables
+  if(is.null(rf.fit$forest)) {
+    stop("rf.fit$forest is null, try set keep.forest=TRUE during training")
+  }
   xlevels = unlist(lapply(rf.fit$forest$xlevels,length),use.names=F)
   xl = xlevels
   storage.mode(xl) = "integer"
