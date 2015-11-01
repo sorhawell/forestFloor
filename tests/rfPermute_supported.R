@@ -1,4 +1,7 @@
 ##This test check if rfPermute is supported
+if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
+library(forestFloor)
+library(randomForest)
 rm(list=ls())
 library(rfPermute)
 
@@ -16,7 +19,6 @@ rf = rfPermute(X,y,nrep=2,ntree=50,
                keep.forest=T) #mandatory for rfImpute regression
 
 print(class(rf))
-library(forestFloor)
 ff = forestFloor(rf,X)
 Col=fcol(ff,2,X.m=F,orderByImportance = FALSE) #some colours
 plot(ff,col=Col)
