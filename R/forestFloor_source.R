@@ -4,21 +4,25 @@ forestFloor = function(rf.fit,
                        calc_np = FALSE,
                        binary_reg = FALSE,
                        ...) {
-  Class = class(rf.fit)
-  #randomForest::randomForest or trimTrees::cinbag
-  if(Class=="randomForest") {
-  Type = rf.fit$type
-  #changed classification to binary regression if requested and only two classes
-  if(binary_reg) {
-    if(!is.null(rf.fit$forest$nclass) && rf.fit$forest$nclass==2) {
-      Type="regression"
-    } else {
-      warning("binary_reg=T is not possible for >2 classes. 
-               Continue computation as multiClass")
+  Class = class(rf.fit)[1] #read only first class
+  
+  
+  #randomForest::randomForest or trimTrees::cinbag or rfPermute::rfPermute
+  if(Class %in% c("randomForest","rfPermute")) {
+    if(Class=="rfPermute") print("class 'rfPermute' supported as 'randomForest'")
+    Type = rf.fit$type
+    #changed classification to binary regression if requested and only two classes
+    if(binary_reg) {
+      if(!is.null(rf.fit$forest$nclass) && rf.fit$forest$nclass==2) {
+        Type="regression"
+      } else {
+        warning("binary_reg=T is not possible for >2 classes. 
+                Continue computation as multiClass")
+        
+      }
     }
-  }
-   
-  #dispatch either forestFloor_regression(and binary) or multiClassification
+  
+    #dispatch either forestFloor_regression(and binary) or multiClassification
     switch(Type,
            regression =     return(forestFloor_randomForest_regression(rf.fit,
                                                                        X,
@@ -33,7 +37,7 @@ forestFloor = function(rf.fit,
            stop("type of randomForest object is neither 'regression' or 'classification', (RF.fit$type==?)"))
   }
   
-  #other models...
+  #other classes not supported...
   if(Class=="forestFloor_external") {
     print("forestFloor_external is a standardised treemodelfit which is not implemented yet")
     return("... cold emptyness")
