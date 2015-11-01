@@ -5,12 +5,19 @@ show3d = function(x,...) {
 
 ##3d plot of forestFloor_multiClass
 show3d.forestFloor_multiClass = function(
-  x,Xi,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
+  x,Xi=1:2,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
   plot.rgl.args=list(),plot_GOF=FALSE,user.gof.args=list(NULL),...) {
   
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
+  
+  #hack to only plot one feature contributions and not the sum of two
+  #indice of one feature is duplicated, and contributions are halved
+  if(length(FCi)==1) {
+    FCi = c(FCi,FCi)  
+    x$FCmatrix = x$FCmatrix/2
+  }
   
   #compute mean goodness of fit of label surfaces of 3d-plot
   #gof is the squared pearson correlation of any FC and fitted surface
@@ -108,6 +115,11 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   if(is.null(FCi)) FCi=Xi
   if(!all(FCi %in% 1:dim(x$FCmatrix)[2]) && length(FCi)>0) stop("input FCi points to columns indices out of range of feature matrix x$X")
   
+  #hack to only plot one feature contributions and not the sum of two
+  if(length(FCi)==1) {
+    FCi = c(FCi,FCi)  
+    x$FCmatrix = x$FCmatrix/2
+  }
   #should Xi and FCi refer to coloumns sorted by importance?
   if(orderByImportance) {
     Xi  = x$imp_ind[ Xi]
