@@ -47,3 +47,11 @@ Col = fcol(ffTest42,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8)
 plot(ffTest42,col=Col) 
 show3d(ffTest42,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE,plot_GOF=T)
 
+
+#testing single feature contribution indice plot, implemented from 1.8.7
+show3d(ffTest42,Xi=1:2,
+       FCi=1, #only one feature contribution is chosen
+       col=Col,plot.rgl=list(size=5),
+       orderByImportance=FALSE,plot_GOF=T)
+
+
