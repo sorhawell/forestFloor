@@ -8,7 +8,7 @@ R package to visualize the mapping curvature of random forests with feature cont
 
 note to my self
 
-1.8.7:
+1.8.7-1.8.8:
 - (v) forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
 - (v) fix bug, show3d will produce error of only on feature contribution column is selected
 - (V) fix bug, test input in randomForest functions will prpevent forestFloor from runnig
