@@ -6,10 +6,11 @@ R package to visualize the mapping curvature of random forests with feature cont
 
 
 
-note to my self
-coming soon:
+note to my self:
 bug if forestFloor X input is matrix without dimnames, show3d() function label columns by all values concatenated.
 could be fixed by casting matrix to data.frame always
+
+coming soon:
 - forestFloor will support Rborist models
 
 
