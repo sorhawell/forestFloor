@@ -13,6 +13,7 @@ could be fixed by casting matrix to data.frame always
 
 - fcol should support color gradients perpendicular to fitted functions
 - implement some matrix/data.frame checks to avoid crash if non training feature matrix is forwarded to forestFloor()
+- par(mfrow) does not always restore after plot.forestFloor
 
 - coming soon:
 forestFloor will support Rborist models
