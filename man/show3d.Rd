@@ -23,6 +23,7 @@ make 3d-plot of forestFloor topology
       zoom=1.2,       
       grid.lines=30,  
       limit=3, 
+      cropPointsOutSideLimit = TRUE,
       kknnGrid.args = alist(),  
       plot.rgl.args = alist(),  
       surf.rgl.args = alist(),
@@ -78,6 +79,9 @@ make 3d-plot of forestFloor topology
   }
   \item{limit}{
   #sizing of grid does not concider outliers, outside limit of e.g. 3 sd deviations univariately
+  }
+  \item{cropPointsOutSideLimit}{
+  #if points exceed standard devation limit, they will not be plotted
   }
   \item{kknnGrid.args}{
   argument list, any possiple arguments to kknn{kknn} \cr
