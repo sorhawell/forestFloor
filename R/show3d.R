@@ -101,7 +101,8 @@ show3d.forestFloor_regression = function(
   combineFC = sum,  
   zoom=1.2,       
   grid.lines=30,  
-  limit=3, 
+  limit=3,
+  cropPointsOutSideLimit = TRUE,
   kknnGrid.args = alist(),  
   plot.rgl.args = alist(),  
   surf.rgl.args = alist(),
@@ -134,6 +135,7 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   X = x$X[,Xi]
   FC = x$FCmatrix[,FCi]
   
+  
   #define xy coordinates from features and z from feature contributions
   xaxis = X[,1]
   yaxis = X[,2]
@@ -160,7 +162,35 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
     mean_gof = paste("R^2=",round(sqCor,digits=2),collapse="")
   } else {mean_gof=""}
 
-  #plotting points
+  #crop xaxis and yaxis and correct color vector
+  if(cropPointsOutSideLimit){
+    dlim = function(x,limit) {
+      which(
+        (x < mean(x) - limit*sd(x)) * 1 + 
+        (x > mean(x) + limit*sd(x)) * 1 != 0
+      )
+    }
+    #find points exceeding limits
+    points2drop.x = dlim(xaxis,limit)
+    points2drop.y = dlim(yaxis,limit)
+    points2drop = unique(points2drop.x,points2drop.y)
+    points2keep = which(! 1:length(xaxis) %in% points2drop)
+#     print(points2drop.x)
+#     print(points2drop.y)
+#     print(points2drop)
+#     print(points2keep)
+    #correct yaxis, xaxis and zaxis and color vector
+    #color vector short repeating colors, then full length color vector is made first
+    col = rep(col,ceiling(length(yaxis)/length(col)))[points2keep]
+    #col    = tempCol[points2keep]
+    xaxis  =  xaxis[points2keep]
+    yaxis  =  yaxis[points2keep]
+    zaxis  =  zaxis[points2keep]
+  }
+  
+  
+  
+  
   #merge current/user, wrapper arguments for plot3d in proritized order
   wrapper_arg = list(x = xaxis,
                      y = yaxis,
