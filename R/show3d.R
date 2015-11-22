@@ -2,7 +2,6 @@ show3d = function(x,...) {
   UseMethod("show3d")
 }
 
-
 ##3d plot of forestFloor_multiClass
 show3d.forestFloor_multiClass = function(
   x,Xi=1:2,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
@@ -14,8 +13,9 @@ show3d.forestFloor_multiClass = function(
   
   #hack to only plot one feature contributions and not the sum of two
   #indice of one feature is duplicated, and contributions are halved
+  FClength = length(FCi) #true number of selected feature contribution columns
   if(length(FCi)==1) {
-    FCi = c(FCi,FCi)  
+    FCi = c(FCi,FCi)
     x$FCmatrix = x$FCmatrix/2
   }
   
@@ -64,7 +64,9 @@ show3d.forestFloor_multiClass = function(
                           main = if(plot_GOF) paste0("R^2=",mean_gof) else "",
                           xlab = names(x$X)[Xi[1]],
                           ylab = names(x$X)[Xi[2]],
-                          zlab = if(length(FCi==1)) names(x$X)[FCi] else "joined FC"
+                          zlab = if(FClength==1) names(x$X)[FCi[1]] else {
+                            paste(lapply(names(x$X)[FCi],substr,1,10),collapse = "-")
+                          }
       )
       run.args = append.overwrite.alists(plot.rgl.args,std.rgl.args)
       do.call(plot3d,run.args)
@@ -116,10 +118,12 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
   if(!all(FCi %in% 1:dim(x$FCmatrix)[2]) && length(FCi)>0) stop("input FCi points to columns indices out of range of feature matrix x$X")
   
   #hack to only plot one feature contributions and not the sum of two
+  FClength = length(FCi) #true number of selected feature contribution columns
   if(length(FCi)==1) {
     FCi = c(FCi,FCi)  
     x$FCmatrix = x$FCmatrix/2
   }
+  
   #should Xi and FCi refer to coloumns sorted by importance?
   if(orderByImportance) {
     Xi  = x$imp_ind[ Xi]
@@ -158,9 +162,21 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
 
   #plotting points
   #merge current/user, wrapper arguments for plot3d in proritized order
-  wrapper_arg = list(x=xaxis, y=yaxis, z=zaxis, col=col,main=mean_gof,
-                     xlab=names(X)[1],ylab=names(X)[2],zlab=paste(names(x$X[,FCi]),collapse=" - "),
-                     alpha=.4,size=3,scale=.7,avoidFreeType = TRUE,add=FALSE)
+  wrapper_arg = list(x = xaxis,
+                     y = yaxis,
+                     z = zaxis,
+                     col = col,
+                     main = mean_gof,
+                     xlab = names(X)[1],
+                     ylab = names(X)[2],
+                     zlab = if(FClength==1) names(x$X)[FCi[1]] else {
+                       paste(lapply(names(x$X)[FCi],substr,1,10),collapse = "-")
+                     },
+                     alpha = .4,
+                     size  =  3,
+                     scale = .7,
+                     avoidFreeType = TRUE,
+                     add=FALSE)
   calling_arg = append.overwrite.alists(plot.rgl.args,wrapper_arg)
   do.call("plot3d",args=calling_arg)
   
