@@ -123,7 +123,8 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
   
   #writing out list
   imp = as.matrix(rf.fit$importance)[,1]
-  out = list(X=X,Y=rf.fit$y,
+  out = list(X=data.frame(X), #cast as data.frame
+             Y=rf.fit$y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
              FCarray = array(localIncrements,dim=c(obs,vars,nClasses)),
