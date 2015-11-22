@@ -170,26 +170,21 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
         (x > mean(x) + limit*sd(x)) * 1 != 0
       )
     }
+    
     #find points exceeding limits
     points2drop.x = dlim(xaxis,limit)
     points2drop.y = dlim(yaxis,limit)
     points2drop = unique(points2drop.x,points2drop.y)
+    
+    if(length(points2drop)>0) {
     points2keep = which(! 1:length(xaxis) %in% points2drop)
-#     print(points2drop.x)
-#     print(points2drop.y)
-#     print(points2drop)
-#     print(points2keep)
-    #correct yaxis, xaxis and zaxis and color vector
-    #color vector short repeating colors, then full length color vector is made first
-    col = rep(col,ceiling(length(yaxis)/length(col)))[points2keep]
-    #col    = tempCol[points2keep]
-    xaxis  =  xaxis[points2keep]
-    yaxis  =  yaxis[points2keep]
-    zaxis  =  zaxis[points2keep]
+      #correct yaxis, xaxis and zaxis and color vector
+      col = rep(col,ceiling(length(yaxis)/length(col)))[points2keep]
+      xaxis  =  xaxis[points2keep]
+      yaxis  =  yaxis[points2keep]
+      zaxis  =  zaxis[points2keep]
+    }
   }
-  
-  
-  
   
   #merge current/user, wrapper arguments for plot3d in proritized order
   wrapper_arg = list(x = xaxis,
