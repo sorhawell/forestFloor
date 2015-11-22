@@ -1,12 +1,8 @@
 #m2 plot output
 plot.forestFloor_regression = function(x,
-                                       #colour_by=1,  #remove
-                                       #col_axis = 1, #remove
                                        plot_seq=NULL, 
-                                       #alpha="auto", #remove
                                        limitY=TRUE,
                                        orderByImportance=TRUE, 
-                                       #external.col=NULL, #remove
                                        cropXaxes=NULL, 
                                        crop_limit=4,
                                        plot_GOF=FALSE,
