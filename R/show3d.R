@@ -164,16 +164,10 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
 
   #crop xaxis and yaxis and correct color vector
   if(cropPointsOutSideLimit){
-    dlim = function(x,limit) {
-      which(
-        (x < mean(x) - limit*sd(x)) * 1 + 
-        (x > mean(x) + limit*sd(x)) * 1 != 0
-      )
-    }
     
     #find points exceeding limits
-    points2drop.x = dlim(xaxis,limit)
-    points2drop.y = dlim(yaxis,limit)
+    points2drop.x = which(xaxis!=box.outliers(xaxis,limit=limit,normalize = FALSE))
+    points2drop.y = which(xaxis!=box.outliers(xaxis,limit=limit,normalize = FALSE))
     points2drop = unique(points2drop.x,points2drop.y)
     
     if(length(points2drop)>0) {
