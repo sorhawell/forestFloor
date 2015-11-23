@@ -5,7 +5,7 @@
 [Travis](https://travis-ci.org/sorhawell/forestFloor) says: ![alt tag](https://travis-ci.org/sorhawell/forestFloor.svg?branch=master)
 
 **note to my self:**
-1.8.9
+1.8.9 (unfrozen github)
 -(v) bug if forestFloor X input is matrix without dimnames, show3d() function label columns by all values concatenated.
 could be fixed by casting matrix to data.frame always
 
@@ -16,7 +16,7 @@ could be fixed by casting matrix to data.frame always
 - coming soon:
 forestFloor will support Rborist models
 
-1.8.7-1.8.8:
+1.8.7-1.8.8(Stable Cran):
 - (v) forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
 - (v) fix bug, show3d will produce error of only on feature contribution column is selected
 - (V) fix bug, test input in randomForest functions will prpevent forestFloor from runnig
