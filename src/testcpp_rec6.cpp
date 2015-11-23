@@ -3,7 +3,7 @@ using namespace Rcpp;
 
 //internal function to convert int to binary vector
 bool inbin(int bestsplit_groups, int obs_group) { 
-  int divisionStore=0,modStore=0;
+  int modStore=0;
   int i = 0;
   do {
       modStore=bestsplit_groups%2;
@@ -57,7 +57,7 @@ void follow_path(
   
   
   double this_increment = current_pred - parent_pred;
-  int outcome  = 0;
+  //int outcome  = 0;
   int this_obs = 0;
     
   for(int i_obs=0;i_obs<passed_OOB_count;i_obs++) {
@@ -225,7 +225,7 @@ void recTree(int  vars,               //local 3  nvar
   int times_inbag = 0;
   int OOB_count = 0;
   int IB_count = 0;
-  int outcome = 0;
+  //int outcome = 0;
   double root_pred = 0;
   
   //iterate each tree and compute and sum to localIncrements
@@ -552,7 +552,7 @@ void multiTree(int  vars,               //local 3  nvar
   int times_inbag = 0;
   int OOB_count = 0;
   int IB_count = 0;
-  int outcome = 0;
+  //int outcome = 0;
   IntegerVector root_classCount(nClasses);
   NumericVector root_pred(nClasses);
   
