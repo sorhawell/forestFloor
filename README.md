@@ -6,7 +6,8 @@
 
 **note to my self:**
 1.8.9 (unfrozen github)
--(v) bug if forestFloor X input is matrix without dimnames, show3d() function label columns by all values concatenated.
+
+- (v) bug if forestFloor X input is matrix without dimnames, show3d() function label columns by all values concatenated.
 could be fixed by casting matrix to data.frame always
 
 - fcol should support color gradients perpendicular to fitted functions
