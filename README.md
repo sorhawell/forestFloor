@@ -1,4 +1,4 @@
-# forestFloor BETA
+# forestFloor development
 
  get latest stable version on [CRAN forestFloor](https://cran.r-project.org/web/packages/forestFloor)
 
