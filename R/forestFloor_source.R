@@ -6,7 +6,12 @@ forestFloor = function(rf.fit,
                        ...) {
   Class = class(rf.fit)[1] #read only first class
   
-  
+  #error message for formula forests
+  if(any(class(rf.fit) %in% "randomForest.formula")){
+    stop("sry class randomForest.formula is not supported yet.
+Solution: retrain randomForest without formula interface, see documented examples")
+  }
+    
   #randomForest::randomForest or trimTrees::cinbag or rfPermute::rfPermute
   if(Class %in% c("randomForest","rfPermute")) {
     if(Class=="rfPermute") print("class 'rfPermute' supported as 'randomForest'")
