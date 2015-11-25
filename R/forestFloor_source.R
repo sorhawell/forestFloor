@@ -6,14 +6,16 @@ forestFloor = function(rf.fit,
                        ...) {
   Class = class(rf.fit)[1] #read only first class
   
-  #error message for formula forests
-  if(any(class(rf.fit) %in% "randomForest.formula")){
-    stop("sry class randomForest.formula is not supported yet.
-Solution: retrain randomForest without formula interface, see documented examples")
+  #convert randomForest.formula
+  if(inherits(rf.fit,"randomForest.formula")){
+    X <- as.data.frame(X)
+    rn <- row.names(X)
+    Terms <- delete.response(rf.fit$terms)
+    X <- model.frame(Terms, X, na.action = na.fail)
   }
     
   #randomForest::randomForest or trimTrees::cinbag or rfPermute::rfPermute
-  if(Class %in% c("randomForest","rfPermute")) {
+  if(inherits(rf.fit,"randomForest")) {
     if(Class=="rfPermute") print("class 'rfPermute' supported as 'randomForest'")
     Type = rf.fit$type
     #changed classification to binary regression if requested and only two classes
