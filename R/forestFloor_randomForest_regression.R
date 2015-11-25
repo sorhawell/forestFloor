@@ -120,7 +120,7 @@ forestFloor_randomForest_regression <- function(rf.fit,
   
   #writing out list
   imp = as.matrix(rf.fit$importance)[,1]
-  out = list(X=data.frame(X), #cast as data.frame
+  out = list(X=as.data.frame(X), #cast as data.frame
              Y=Y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
