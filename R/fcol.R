@@ -11,6 +11,7 @@ fcol = function(ff,
                 bri.range  = NULL,
                 alpha = NULL,
                 RGB = NULL,
+                byResiduals = FALSE,
                 max.df=3,
                 imp.weight = NULL,
                 imp.exp = 1,
@@ -40,7 +41,21 @@ fcol = function(ff,
   
   #get/check data.frame/matrix, convert to df, remove outliers and normalize
   if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
-    if(X.matrix) colM = ff$X else colM = ff$FCmatrix
+    
+    #if colouring by residuals to fit
+    if(byResiduals) {
+      #if no fit has been computed and found in forestFloor object
+      if(is.null(ff$FCfit)) {
+        print("no $FCfit found, computing tempoary LOO-kNN-gaussion fit to main affect")
+        print("use ff = convolute_ff(ff) to compute a fixed fit")
+        #as-hoc downsampling to speedup
+        ff = convolute_ff(ff) #make fit
+      } 
+      colM = ff$FCmatrix-ff$FCfit
+    } else {
+      #not colouring by residuals then either by variables or FC's
+      if(X.matrix) colM = ff$X else colM = ff$FCmatrix
+    }
     if(is.null(imp.weight)) imp.weight=TRUE
     if(is.null(orderByImportance)) orderByImportance = TRUE
   } else {

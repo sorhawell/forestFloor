@@ -14,7 +14,7 @@ This colour module colour observations by selected variables. PCA decomposes a s
 fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE, 
      hue = NULL, saturation = NULL, brightness = NULL,
      hue.range  = NULL, sat.range  = NULL, bri.range  = NULL,
-     alpha = NULL, RGB = NULL, max.df=3,
+     alpha = NULL, RGB = NULL, byResiduals=FALSE, max.df=3,
      imp.weight = NULL, imp.exp = 1,outlier.lim = 3,RGB.exp=NULL)
 }
 
@@ -63,6 +63,12 @@ value within [0,1], for colouring of 3 or more variables, a range of brightness 
   RGB=TRUE: Red-Green-Blue colour: a system with fewer colours(~3) but more contrast. Can still   be altered by hue, saturation, brightness etc.\cr
   RGB=FALSE: True-colour-system: Maximum colour detail. Sometimes more confusing.
   }
+  
+  \item{byResiduals}{
+  logical, should coloring be residuals of main effect fit(overrides X.matrix=). If no fit has been computed "is.null(ff$FCfit)", a tempoarily main effect fit will be computed. Use ff = convolute_ff(ff) to only compute once and/or to modify fit parameters.
+  }
+  
+  
   \item{max.df}{
   integer 1, 2, or 3 only. Only for true-colour-system, the maximal allowed degrees of freedom in a colour scale. If more variables selected than max.df, PCA decompose to request degrees of freedom. max.df = 1 will give more simple colour gradients
   }
