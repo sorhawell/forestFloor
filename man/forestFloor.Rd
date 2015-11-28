@@ -114,7 +114,7 @@ this version
 
 #disable RGL for headless machines, CRAN testing etc.
 #(if you can read this and have a head, don't bother...)
-if(T) {
+if(TRUE) {
   Sys.setenv(RGL_USE_NULL=TRUE)
   require(utils) #iris data set
 }
