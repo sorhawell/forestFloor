@@ -22,15 +22,16 @@ importFrom(grDevices,
            rgb)
 
 import(rgl)
-importFrom(ggplot2,
-           aes_string,
-           ggplot,
-           ggplotGrob,
-           geom_point,
-           xlab,
-           ylab)
 
-importFrom(gridExtra,grid.arrange)
+#importFrom(ggplot2,
+#           aes_string,
+#           ggplot,
+#           ggplotGrob,
+#           geom_point,
+#           xlab,
+#           ylab)
+
+#importFrom(gridExtra,grid.arrange)
 
 #methods
 #plotting
@@ -55,8 +56,8 @@ export(forestFloor,
        convolute_grid,
        #show3d_new,
        fcol,
-       ggPlotForestFloor,
-       ggplotGrob,
+       #ggPlotForestFloor,
+       #ggplotGrob,
        #forestFloor_multiClass,
        #plot.forestFloor_multiClass,#,
        #show3d_forestFloor_multiClass),
