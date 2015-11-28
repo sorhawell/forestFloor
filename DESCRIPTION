@@ -10,5 +10,6 @@ Suggests: randomForest, trimTrees, utils, rfPermute
 Description: Enables users to form appropriate visualizations of high dimensional mapping curvatures of random forests.
 SystemRequirements: OpenGL, GLU Library, zlib
 License: GPL-2
+URL: forestFloor.dk
 Imports: Rcpp (>= 0.11.3), rgl,  kknn, ggplot2, gridExtra
 LinkingTo: Rcpp
