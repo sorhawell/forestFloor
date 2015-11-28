@@ -44,7 +44,7 @@ does nothing
 
 
 \details{
-  forestFloor computes out-of-bag cross validated feature contributions for a "randomForest" class object. Other packages will be supported in future, mail me a request. forestFloor guides you to discover the topology of a randomForest model fit. With input plot_GOF=T is tested for latent interactions for given visualization. If the GOF = .5, then some ~50\% of the variance of a given feature contributions is not explained in that visualization. Check examples how latent interactions can be identified with color gradients. Use show3d to visualize an interaction in an adequate vaiable context.
+  forestFloor computes out-of-bag cross validated feature contributions for a "randomForest" class object. Other packages will be supported in future, mail me a request. forestFloor guides you to discover the structure of a randomForest model fit. With input plot_GOF=T is tested for latent interactions for given visualization. If the GOF = .5, then some ~50\% of the variance of a given feature contributions is not explained in that visualization. Check examples how latent interactions can be identified with color gradients. Use show3d to visualize an interaction in an adequate vaiable context.
   
   What is FC?: Feature contributions are the sums over all local increments for each observation for each feature divided by the number of trees. A local increment is the change of node prediction from parent to daughter node over split by a given variable. forestFloor use inbag samples to calculate local increments, but only sum local increments over out-of-bag samples divided with OOBtimes. OOBtimes is the number of times a given observation have out-of-bag which normally is ~ trees / 3. In practice this lowers the leverage of any observation to the feature contributions of this observation. Hereby becomes the visualization less noisy.
   
@@ -111,8 +111,6 @@ this version
 }
 
 \examples{
-
-\dontrun{
 
 #disable RGL for headless machines, CRAN testing etc.
 #(if you can read this and have a head, don't bother...)
@@ -245,7 +243,6 @@ Col = fcol(ff,1) #color by most important feature
 plot(ff,col=Col)   #plot features 
 show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) #interfacing with rgl::plot3d
 
-}
 
 }
 
