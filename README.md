@@ -7,6 +7,9 @@
 **note to my self:**
 1.8.9 (unfrozen github)
 
+- (v) XY axes can be cropped for outliers also in show3d
+- (v) forestFloor supports class randomForest.formula and will try other subclasses of randomForest
+- (v) fidxed: Z-label in show3d was sometimes written twice
 - (v) bug if forestFloor X input is matrix without dimnames, show3d() function label columns by all values concatenated.
 could be fixed by casting matrix to data.frame always
 
