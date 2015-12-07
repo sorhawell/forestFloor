@@ -5,61 +5,57 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
                                      binary_reg = FALSE,
                                      ...) { 
 
+  #translate binary classification RF-object, to regression mode
+  if(rf.fit$typ!="classification") stop("this function only handles type 'classification',
+ but rf.fit$type!= 'classification'")
+  
   #check the rf.fitbject have a inbag
   if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
-                                 solution: randomForest(X,Y,keep.inbag=T).")
+solution: randomForest(X,Y,keep.inbag=T).")
   
-  #make node status a integer matrix
-  ns = rf.fit$forest$nodestatus
-  storage.mode(ns) = "integer"
+  #check if forest is saved
+  if(is.null(rf.fit$forest)) stop("rf.fit$forest is null, try set keep.forest=TRUE during training")
   
-  
-  #translate binary classification RF-object, to regression mode
-  if(rf.fit$type=="classification") {
-    
-    rf.fit$forest$leftDaughter  = rf.fit$forest$treemap[,1,] #translate daughter representation to regression mode
-    rf.fit$forest$rightDaughter = rf.fit$forest$treemap[,2,] 
-    ns[ns==1] = -3  ##translate nodestatus representation to regression mode
-    
-    ##inbagCount comes from trimTrees::cinbag, inbag from randomForest, both is supported
-    if(!is.null(rf.fit$inbagCount)) {
-      inbag = rf.fit$inbagCount
-    } else {
-      if(!is.null(rf.fit$inbag)) {
-        inbag = rf.fit$inbag
-      } else {
-        stop("error rf.fit$inbag is missing, retrain forest with keep.inbag=TRUE")
-      }
-    }
-  } else {
-    #if not classification
-    stop("this function only handles type 'classification', but rf.fit$type!= 'classification'")
+  ##This line, allow legacy use of trimTrees::cinbag
+  if(!is.null(rf.fit$inbagCount)) {
+    rf.fit$inbag = rf.fit$inbagCount
+    warning("rf.fit$inbagCount found. Are you still using trimTrees::cinbag?,
+foerstFloor later than 1.8.9 supports classification w/wo replace directly, 
+with randomForest")
   }
   
   #preparing data, indice-correction could be moved to C++
   #a - This should be fethed from RF-object, flat interface
+  ns = rf.fit$forest$nodestatus
+  storage.mode(ns) = "integer"
+  ns[ns==1] = -3  ##translate nodestatus representation to regression mode
+  
+  rf.fit$forest$leftDaughter  = rf.fit$forest$treemap[,1,] #translate daughter representation to regression mode
+  rf.fit$forest$rightDaughter = rf.fit$forest$treemap[,2,] 
   ld = rf.fit$forest$leftDaughter-1 #indice correction, first element is 0 in C++ and 1 in R.
   storage.mode(ld) = "integer"
   rd = rf.fit$forest$rightDaughter-1
   storage.mode(rd) = "integer"
+  
   bv = rf.fit$forest$bestvar-1
   storage.mode(bv) = "integer"
+  
   np = rf.fit$forest$nodepred
   storage.mode(np) = "double"
+  
   bs = rf.fit$forest$xbestsplit
   storage.mode(bs) = "double"
-  ib = inbag
+  
+  ib = rf.fit$inbag
   storage.mode(ib) = "integer"
+  
   Yd = as.numeric(rf.fit$y)-1
   storage.mode(Yd) = "integer"
+  
   ot  = rf.fit$oob.times
   storage.mode(ot) = "integer"
   
-  
   ##recording types of variables
-  if(is.null(rf.fit$forest)) {
-    stop("rf.fit$forest is null, try set keep.forest=TRUE during training")
-  }
   xlevels = unlist(lapply(rf.fit$forest$xlevels,length),use.names=F)
   xl = xlevels
   storage.mode(xl) = "integer"
@@ -71,7 +67,8 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
     if(varsToBeConverted[i]) {
       Xd[,i] = as.numeric(Xd[,i])-1  
     }
-  }  
+  }
+  
   Xd=as.matrix(Xd)
   storage.mode(Xd) = "double"
   
