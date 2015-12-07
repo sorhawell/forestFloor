@@ -7,10 +7,7 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
 
   #check the rf.fitbject have a inbag
   if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
-                              try, randomForest(X,Y,keep.inbag=T) for without replacement
-                              and, cinbag(X,Y,keep.inbag=T,keep.forest=T) with replacement
-                              ..cinbag is from trimTrees package...
-                              error condition: if(is.null(rf.fit$inbag))")
+                                 solution: randomForest(X,Y,keep.inbag=T).")
   
   #make node status a integer matrix
   ns = rf.fit$forest$nodestatus
@@ -19,27 +16,25 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
   
   #translate binary classification RF-object, to regression mode
   if(rf.fit$type=="classification") {
-    #     if(length(levels(rf.fit$y))!=2) stop("no multiclass, must be binary classification.
-    #                                       error condition: if(length(levels(rf.fit$y))!=2")
     
     rf.fit$forest$leftDaughter  = rf.fit$forest$treemap[,1,] #translate daughter representation to regression mode
     rf.fit$forest$rightDaughter = rf.fit$forest$treemap[,2,] 
     ns[ns==1] = -3  ##translate nodestatus representation to regression mode
     
+    ##inbagCount comes from trimTrees::cinbag, inbag from randomForest, both is supported
     if(!is.null(rf.fit$inbagCount)) {
       inbag = rf.fit$inbagCount
     } else {
       if(!is.null(rf.fit$inbag)) {
         inbag = rf.fit$inbag
       } else {
-        stop("error rf.fit$inbag or rf.fit$inbagCount is missing, 
-             retrain forest with keep.inbag=TRUE")
+        stop("error rf.fit$inbag is missing, retrain forest with keep.inbag=TRUE")
       }
-      }
-    } else {
-      stop("this function should only be run for classification")
+    }
+  } else {
+    #if not classification
+    stop("this function only handles type 'classification', but rf.fit$type!= 'classification'")
   }
-  
   
   #preparing data, indice-correction could be moved to C++
   #a - This should be fethed from RF-object, flat interface
