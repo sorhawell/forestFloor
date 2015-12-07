@@ -10,8 +10,13 @@
 - par(mfrow) does not always restore after plot.forestFloor
 
 
+1.9.0 (unfrozens Github)
+New Features:
+ - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts .Restrictions and error messages removed.
+ - () Hence documentation needs an update
+ 
 
-1.8.9 (unfrozen github)
+1.8.9 (CRAN)
 New features
 - XY axes can be cropped for outliers also in show3d
 - forestFloor supports class randomForest.formula and will try other subclasses of randomForest
