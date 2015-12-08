@@ -29,7 +29,7 @@ Bugs:
 - If forestFloor X input is matrix without dimnames, show3d() plot labels were messed up.
 
 
-1.8.7-1.8.8(Stable Cran):
+1.8.7-1.8.8:
 - forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
 - fix bug, show3d will produce error of only on feature contribution column is selected
 - fix bug, test input in randomForest functions will prpevent forestFloor from runnig
