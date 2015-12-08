@@ -14,6 +14,7 @@
 New Features:
  - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts .Restrictions and error messages removed.
  - () Hence documentation needs an update
+ - () Implement a better interface with par(), such that e.g. auto mfrow and mar can be overridden by user.
  
 
 1.8.9 (CRAN)
@@ -28,10 +29,6 @@ Bugs:
 - Z-label in show3d was sometimes written twice
 - If forestFloor X input is matrix without dimnames, show3d() plot labels were messed up.
 
-
-
-- coming soon:
-forestFloor will support Rborist models
 
 1.8.7-1.8.8(Stable Cran):
 - (v) forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
