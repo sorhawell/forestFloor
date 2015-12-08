@@ -12,19 +12,18 @@
 - Implement a better interface with par(), such that e.g. auto mfrow and mar can be overridden by user
 
 1.9.0 (unfrozen Github)
-New Features:
+ - **New Features:**
  - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts .Restrictions and error messages removed.
  
 
 1.8.9 (CRAN)
-New features
+- **New features:**
 - XY axes can be cropped for outliers also in show3d
 - forestFloor supports class randomForest.formula and will try other subclasses of randomForest
 - fcol(byResiduals) fcol support color gradients perpendicular to fitted functions
 - ggplot functions has been completely disabled
 - link to webpage forestFloor.dk
-
-Bugs:
+- **Bugs:**
 - Z-label in show3d was sometimes written twice
 - If forestFloor X input is matrix without dimnames, show3d() plot labels were messed up.
 
