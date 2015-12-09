@@ -5,7 +5,7 @@ plot.forestFloor_regression = function(x,
                                        orderByImportance=TRUE, 
                                        cropXaxes=NULL, 
                                        crop_limit=4,
-                                       plot_GOF=FALSE,
+                                       plot_GOF=TRUE,
                                        GOF_col = "#33333399",
                                        speedup_GOF = TRUE,
                                        ...){

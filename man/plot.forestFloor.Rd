@@ -16,7 +16,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   orderByImportance=TRUE, 
   cropXaxes=NULL, 
   crop_limit=4,
-  plot_GOF = FALSE,
+  plot_GOF = TRUE,
   GOF_col = "#33333399",
   speedup_GOF = TRUE,
   ...)
@@ -29,7 +29,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   colLists = NULL,
   orderByImportance = TRUE,
   fig.columns = NULL,
-  plot_GOF = FALSE,
+  plot_GOF = TRUE,
   GOF_col = NULL,
   speedup_GOF = TRUE,
   jitter_these_cols = NULL,
