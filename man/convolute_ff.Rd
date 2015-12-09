@@ -2,10 +2,9 @@
 \alias{convolute_ff}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Convolution SPECIFIC set of featureContributions by corresponding features with kknn-package}
+Convolution of main effects for all featureContributions by corresponding features with kknn-package}
 \description{
-Can do any order of convolution, whereas convolute_ff rather do batches of first order convolution.
-With kNN- gaussian kernel and LOO cross-validation.
+Estimates feature contributions repsectively as a function of each variable/feature. With kNN-gaussian weighting and LOO cros-validation.
 }
 \usage{
 convolute_ff(ff,
@@ -32,8 +31,7 @@ Conflicting arguments to this list will be overridden e.g. k.fun.
   
 }
 \details{
-convolute_ff uses train.kknn from kknn package to convolute featureContributions by their corresponding varialbles. The output inside a ff$FCfit will resemble ff$Fmatrix for any coloumn/variable which is well explained by its main effect. Guassian weighting of nearest neighbors lowers bias of the fit.
-
+convolute_ff uses train.kknn from kknn package to estimate featureContributions by their corresponding varialbles. The output inside a ff$FCfit will resemble ff$Fmatrix for any coloumn/variable which is well explained by its main effect. Guassian weighting of nearest neighbors lowers bias of the fit.
 }
 
 \value{
@@ -60,7 +58,7 @@ rfo=randomForest(X,Y,keep.inbag=TRUE,ntree=1000,sampsize=800)
 
 ff = forestFloor(rfo,X)
 
-ff = convolute_ff(ff)
+ff = convolute_ff(ff) #return input oject with ff$FCfit included
 
 #the convolutions correlation to the feature contribution
 for(i in 1:6) print(cor(ff$FCmatrix[,i],ff$FCfit[,i])^2)
