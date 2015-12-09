@@ -7,6 +7,7 @@ show3d.forestFloor_multiClass = function(
   x,Xi=1:2,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
   plot.rgl.args=list(),plot_GOF=FALSE,user.gof.args=list(NULL),...) {
   
+  skipRGL = exists("skipRGL",envir=.GlobalEnv) #RGL override switch
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
@@ -69,7 +70,8 @@ show3d.forestFloor_multiClass = function(
                           }
       )
       run.args = append.overwrite.alists(plot.rgl.args,std.rgl.args)
-      do.call(plot3d,run.args)
+      
+      if(!skipRGL) do.call(plot3d,run.args)
       
       ffpar = list(FCmatrix=FCarray[,,i],X=X)
       class(ffpar) = "forestFloor_multiClass"
@@ -81,12 +83,12 @@ show3d.forestFloor_multiClass = function(
       Spar = do.call(convolute_grid,run.args)
       
       #draw grid
-      persp3d(unique(Spar[,2]),
-              unique(Spar[,3]),
-              Spar[,1],
-              alpha=0.15,
-              col=i,
-              add=T)
+      if(!skipRGL) persp3d(unique(Spar[,2]),
+                           unique(Spar[,3]),
+                           Spar[,1],
+                           alpha=0.15,
+                           col=i,
+                           add=T)
     }
   })
 }
@@ -109,7 +111,9 @@ show3d.forestFloor_regression = function(
   user.gof.args = alist(),
   plot_GOF = TRUE,
   ...) {
-if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
+  
+  skipRGL = exists("skipRGL",envir=.GlobalEnv) #RGL override switch
+  if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
   if(length(Xi)!=2) {
     warning("Xi should be of length 2, if 1 first elements is used twice, if >2 only two first elements is used")
     if(length(Xi) > 2) Xi=Xi[1:2] else Xi = Xi[c(1,1)]
@@ -197,7 +201,7 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
                      avoidFreeType = TRUE,
                      add=FALSE)
   calling_arg = append.overwrite.alists(plot.rgl.args,wrapper_arg)
-  do.call("plot3d",args=calling_arg)
+  if(!skipRGL) do.call("plot3d",args=calling_arg)
   
   #plotting surface
   #merge arguments again
@@ -206,7 +210,7 @@ if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_reg
     grid = convolute_grid(x, Xi=Xi,FCi=FCi, limit=limit, grid=grid.lines, zoom=zoom,  userArgs.kknn = kknnGrid.args)
     wrapper_arg = alist(x=unique(grid[,2]),y=unique(grid[,3]),z=grid[,1],add=TRUE,alpha=0.2,col=c("grey","black")) #args defined in this wrapper function
     calling_arg = append.overwrite.alists(surf.rgl.args,wrapper_arg)   
-    do.call("persp3d",args=calling_arg)
+    if(!skipRGL) do.call("persp3d",args=calling_arg)
   }
 
 invisible()
