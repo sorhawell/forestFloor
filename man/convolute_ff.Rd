@@ -31,7 +31,7 @@ Conflicting arguments to this list will be overridden e.g. k.fun.
   
 }
 \details{
-convolute_ff uses train.kknn from kknn package to estimate featureContributions by their corresponding varialbles. The output inside a ff$FCfit will resemble ff$Fmatrix for any coloumn/variable which is well explained by its main effect. Guassian weighting of nearest neighbors lowers bias of the fit.
+convolute_ff uses train.kknn from kknn package to estimate featureContributions by their corresponding varialbles. The output inside a ff$FCfit will have same dimensions as ff$Fmatrix and the values will match quite well if the learned model structure is relative smooth and main effects are dominent. This function is e.g. used to estimate fitted lines in plot.forestFloor function "plot(ff,...)". LOO cross validation is used to quantify how much of feature contribution variation can be explained as a main effect.
 }
 
 \value{
