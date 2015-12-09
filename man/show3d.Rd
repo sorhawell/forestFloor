@@ -5,7 +5,7 @@
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-make 3d-plot of forestFloor topology
+make forestFloor 3D-plot of random forest feature contributions
 }
 \description{
 2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(gaussian-kNN by kknn package) and plotted alongside the datapoints. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor for regression and show3d_forestFloor_multiClass for classification.
