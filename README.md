@@ -2,7 +2,12 @@
 
  get latest stable version on [CRAN forestFloor](https://cran.r-project.org/web/packages/forestFloor)
 
-[Travis](https://travis-ci.org/sorhawell/forestFloor) says: ![alt tag](https://travis-ci.org/sorhawell/forestFloor.svg?branch=master)
+![alt tag](https://travis-ci.org/sorhawell/forestFloor.svg?branch=master)
+![alt tag](http://cranlogs.r-pkg.org/badges/last-day/forestFloor)
+![alt tag](http://cranlogs.r-pkg.org/badges/forestFloor)
+![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
+
+
 
 **todo list:**
 
