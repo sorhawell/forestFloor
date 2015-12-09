@@ -44,11 +44,11 @@ does nothing
 
 
 \details{
-  forestFloor computes out-of-bag cross validated feature contributions for a "randomForest" class object. Other packages will be supported in future, mail me a request. forestFloor guides you to discover the structure of a randomForest model fit. With input plot_GOF=T is tested for latent interactions for given visualization. If the GOF = .5, then some ~50\% of the variance of a given feature contributions is not explained in that visualization. Check examples how latent interactions can be identified with color gradients. Use show3d to visualize an interaction in an adequate vaiable context.
+  forestFloor computes out-of-bag cross validated feature contributions for a "randomForest" class object. Other packages will be supported in future, mail me a request. forestFloor guides you to discover the structure of a randomForest model fit. Check examples of how latent interactions can be identified with color gradients. Use show3d to visualize an interaction in an adequate contex.
   
-  What is FC?: Feature contributions are the sums over all local increments for each observation for each feature divided by the number of trees. A local increment is the change of node prediction from parent to daughter node over split by a given variable. forestFloor use inbag samples to calculate local increments, but only sum local increments over out-of-bag samples divided with OOBtimes. OOBtimes is the number of times a given observation have out-of-bag which normally is ~ trees / 3. In practice this lowers the leverage of any observation to the feature contributions of this observation. Hereby becomes the visualization less noisy.
+What is FC?: Feature contributions are the sums over all local increments for each observation for each feature divided by the number of trees. A local increment is the change of node prediction from parent to daughter node over split by a given variable. forestFloor use inbag samples to calculate local increments, but only sum local increments over out-of-bag samples divided with OOBtimes. OOBtimes is the number of times a given observation have been out-of-bag. which is roundly ntrees / 3. In practice this lowers the leverage of sample to calculation of the corresponding feature contributions. Hereby becomes visualizations less noisy.
   
-  What is FC used for?: Feature contributions is smart way to separate a RF mapping topology into additive components. Plotting FC's against variables values yield plots similar to marginal-effect plots, partial dependence plots and vector effect characteristic plots. In this package FC's is identify latent interactions not realized in given visualization.
+What is FC used for?: Feature contributions is smart way to decompose a RF mapping structure into additive components. Plotting FC's against variables values yield plots similar to marginal-effect plots, partial dependence plots and vector effect characteristic plots. In this package forsetFloor, make use of FC to separate main effects and identify plus quantify latent interaction.
   
 Node predictions, the average target value of inbag samples in any terminal or intermediary node of a rf.fit of class="randomForest"/type="regression" are already calculated and placed in rfo$forest$nodepred. setting input calc_np=TRUE can force re-calculation. Node predictions for classification are the class prevalences in any node of a random forest and must be re-calculated. input calc_np takes no effect.
 
@@ -111,8 +111,9 @@ this version
 }
 
 \examples{
-
-\dontrun{
+## avoid testing of rgl 3D plot on headless non-windows OS
+## users can disregard this sentence.
+if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
 
 ###
 #1 - Regression example:
@@ -167,6 +168,7 @@ plot(ff,col=Col,plot_GOF=TRUE)
 
 #feature contributions of X3 and X4 are well explained in the context of X3 and X4
 # as GOF R^2>.8
+
 show3d(ff,3:4,col=Col,plot_GOF=TRUE,orderByImportance=FALSE)
 
 #if needed, k-nearest neighbor parameters for goodness-of-fit can be accessed through convolute_ff
@@ -188,7 +190,6 @@ Y = iris[,"Species"]
 rf = randomForest(
   X,Y,               
   keep.forest=TRUE,  # mandatory
-  replace=FALSE,     # if TRUE, use trimTrees::cinbag instead of randomForest
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
   importance  = TRUE # recommended, else ordering by giniImpurity (unstable)
@@ -225,7 +226,6 @@ Y = droplevels((Y)) #drop unused level virginica
 rf = randomForest(
   X,Y,               
   keep.forest=TRUE,  # mandatory
-  replace=FALSE,     # if TRUE, use trimTrees::cinbag instead of randomForest
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
   importance  = TRUE # recommended, else giniImpurity
@@ -236,9 +236,10 @@ ff = forestFloor(rf,X,
                  binary_reg=TRUE) #binary regression, scale direction is printed
 Col = fcol(ff,1) #color by most important feature
 plot(ff,col=Col)   #plot features 
-show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) #interfacing with rgl::plot3d
 
-}
+#interfacing with rgl::plot3d
+show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) 
+
 }
 
 
