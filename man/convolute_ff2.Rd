@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \title{
-Convolute SPECIFIC set of featureContributions by corresponding features with kknn-package.
+Estimate a specific set of featureContributions by corresponding features with kknn-package.
 }
 
 \description{
-Only one convolution - but any kind. Whereas convolute_ff rather do batches of first order convolution.
+Only feature contribution coloumn estimated(or row sums of several columns), but estimated by any set of features. convolute_ff rather do a batch estimate of each feature contribution by each feature.
 }
 
 \usage{
@@ -23,10 +23,10 @@ convolute_ff2(ff,
   forestFloor object class "forestFloor_regression" or "forestFloor_multiClass" concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
 }
 \item{Xi}{
-  integer vector, of col indices of ff$X to convolute by
+  integer vector, of column indices of ff$X to estimate by
 }
 \item{FCi}{
- integer vector, of col indices of ff$FCmatrix. Those feature contributions to conbine(sum) and convolute. 
+ integer vector, coloumn indices of features contributions in ff$FCmatrix to estimate. If more than one , these coloumns will be summed by samples/rows. If NULL then FCi will match Xi.
 }
 
 \item{k.fun}{
@@ -42,12 +42,13 @@ convolute_ff2(ff,
   
 }
 \details{
-convolute_ff2 is a wrapper of train.kknn from kknn package to convolute featureContributions by their corresponding features. The output depends on paremets passer 
+convolute_ff2 is a wrapper of train.kknn from kknn package to estimate one column feature contributions by a set of features.
+This function is e.g. used to estimate the visualized surface layer in show3d function.LOO cross validation and used to quantify how much of feature contribution variation can by this surface. Can in theory also be used to quantify higher dimensional interaction effects, but randomForest do not learn much 3rd order (or higher) interactions.
 
 }
 
 \value{
-an numeric vector of with the convoluted value for any observation
+an numeric vector of the estimated feature contribution for any observation
 }
 
 \author{
