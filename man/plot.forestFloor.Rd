@@ -98,7 +98,7 @@ GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
 }
 
 \item{...}{
-... other arguments passed to generic plot functions
+... other arguments passed to generic plot functions, see \code{\link{plot}} and \code{\link{points}}
 }
 
 }
