@@ -2,7 +2,8 @@
 
 New Features:
  * user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts .Restrictions and error messages removed.
- * any graphical argument can passed through plot.forestFloor to plot or points
+ * any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args.
+ 
 
 ##### 1.8.9 (CRAN)
 
