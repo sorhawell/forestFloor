@@ -26,9 +26,9 @@ show3d(ff.test42,1:2,3:4)
 
 
 ##test randomForest binary classification treated as, regression
-rf.test42 = cinbag(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
+rf.test42 = randomForest(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
 ff.test42 = forestFloor(rf.test42,X,T,T)
-rf.test42 = cinbag(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
+rf.test42 = randomForest(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
 ff.test42 = forestFloor(rf.test42,X,T,T)
 plot(ff.test42,col=Y)
 show3d(ff.test42,col=as.numeric(Y))
