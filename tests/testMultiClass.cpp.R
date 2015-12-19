@@ -75,9 +75,7 @@ plot(ff,
      colLists=list("#00000010",
                    "#FF000010",
                    "#00FF0010"),
-     GOF_col=c("#3A3A3A80",
-               "#FF3A3A80",
-               "#3AFF3A80"))
+     GOF_args = alist(col = c("#3A3A3A80","#FF3A3A80","#3AFF3A80")[i]))
 
 plot(ff,plot_seq=1:6,
      colLists=list("#00000002", #farve vector til class1 (length 1 eller 2500)

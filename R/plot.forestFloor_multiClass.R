@@ -9,14 +9,14 @@ plot.forestFloor_multiClass  = function(
   orderByImportance=TRUE,
   fig.columns = NULL,
   plot_GOF=TRUE,
-  GOF_col=NULL,
+  GOF_args = list(),
   speedup_GOF = TRUE,
   jitter_these_cols = NULL,
   jitter.factor = NULL,
   ...) {
-  void = with(x,{ #inside x object
+  void = with(x,{ #set scope inside x object
     
-    if(is.null(plot_seq))         plot_seq = 1:min(18,dim(X)[2])
+    if(is.null(plot_seq)) plot_seq = 1:min(18,dim(X)[2])
     fig.columns = if(is.null(fig.columns)) {
       if(length(plot_seq)<=4) c(1,2,3,2)[length(plot_seq)] else 3
     }
@@ -24,7 +24,7 @@ plot.forestFloor_multiClass  = function(
     if(is.null(label.seq)) label.seq = 1:min(8,length(levels(Y)))
     if(is.null(colLists)) colLists =
       lapply(1:length(label.seq), function(i) factor(rep(i,dim(X)[1])))
-    if(plot_GOF && is.null(GOF_col)) GOF_col = sapply(colLists,function(x) x[1])
+    
     
     n.plots = min(dim(X)[2],length(plot_seq))
     plotdims.y = min(ceiling(n.plots/fig.columns),5)
@@ -49,7 +49,7 @@ plot.forestFloor_multiClass  = function(
       
       fits = lapply(label.seq,function(label.ind) {
         ff2 = convolute_ff(list(FCmatrix = x$FCarray[,,label.ind],
-                                X=apply(x$X[,],2,as.numeric.factor,),
+                                X=apply(x$X[,],2,as.numeric.factor),
                                 Xind = apply(x$X,2,function(xcol) { 
                                   sort(xcol,index.return=TRUE)$ix})),
                            these.vars=sort(plot_seq))
@@ -59,34 +59,47 @@ plot.forestFloor_multiClass  = function(
     }  else fits = invisible()
     
     
+    #define standard graphical arguments as non-evaluated alist
+    stdArgs.plot = alist(
+      x    = X.jittered,
+      y    = FCarray[,j,i],
+      col  = colLists[[i]],
+      ylim = range(FCarray),
+      ylab = " ",
+      xlab = paste0("X[ ,",j,"]"),
+      
+      #if fit is plotted goodness of fit is added to title
+      main = paste(names(X)[j],if(plot_GOF) {
+        paste("R^2=",
+              #compute fit of each class and calculate average R^2
+          round(mean(sapply(label.seq,function(lSeq) {
+            cor( fits[[lSeq]]$FCfit[,j],x$FCarray[,j,lSeq])^2 #i,j refer to later loops
+          })),digits=2)
+        )
+      } else "")
+    )
     
-    for(j in plot_seq)
+    #define std GOF graphical arguments
+    stdArgs.GOF = alist(
+      x   = X[Xind[,j],j],
+      y   = FCfit[Xind[,j],j],
+      col = colLists[[i]],
+      cex = 0.05,
+      type="l",
+      lwd=5
+    )
+    #iterate all plot windows and all classes
+    for(j in plot_seq) {
       for(i in label.seq) {
+        #plot samples by each feature by each class
         X.jittered = if(j %in% jitter_these_cols) jitter(X[,j],jitter.factor) else X[,j]
-        if(i==1) {
-          plot(X.jittered,
-               FCarray[,j,i],
-               col=colLists[[i]],
-               ...,
-               ylim=range(FCarray),
-               ylab= " ",
-               xlab = paste0("X[ ,",j,"]"),
-               #if fit is plotted goodness of fit is added to title
-               main = paste(names(X)[j],if(plot_GOF) {paste("R^2=",round(mean(sapply(label.seq,function(lSeq) {
-                 #plot(fits[[lSeq]]$FCfit[,j],FCarray[,j,lSeq],col=4)
-                 cor( fits[[lSeq]]$FCfit[,j],x$FCarray[,j,lSeq])^2
-               }))
-               ,digits=2))
-               
-               } else "")
-          )
-        } else {
-          points(X.jittered,FCarray[,j,i],col=colLists[[i]],...)
-        }
-        if(plot_GOF) with(fits[[i]],{
-          points(X[Xind[,j],j],FCfit[Xind[,j],j],col=GOF_col[i],cex=0.05,type="l",lwd=5) 
-        })
+        allArgs.plot = append.overwrite.alists(list(...),stdArgs.plot)
+        if(i==1) do.call(plot,allArgs.plot) else do.call(points,allArgs.plot)
+        #plot fitted lines by each class
+        if(plot_GOF) with(fits[[i]],do.call(points,
+          append.overwrite.alists(GOF_args,stdArgs.GOF)))  
       }
+    }
     return(fits)
   })
 }

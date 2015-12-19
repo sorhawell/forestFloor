@@ -17,7 +17,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   cropXaxes=NULL, 
   crop_limit=4,
   plot_GOF = TRUE,
-  GOF_col = "#33333399",
+  GOF_args = list(col="#33333399"),
   speedup_GOF = TRUE,
   ...)
                           
@@ -30,7 +30,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   orderByImportance = TRUE,
   fig.columns = NULL,
   plot_GOF = TRUE,
-  GOF_col = NULL,
+  GOF_args = list(),
   speedup_GOF = TRUE,
   jitter_these_cols = NULL,
   jitter.factor = NULL,
@@ -88,8 +88,8 @@ if limit = 2, above selected plots will zoom to +/- 2 std.dev of the respective 
 Booleen TRUE/FALSE. Should the goodness of fit be plotted as a line?
 }
 
-\item{GOF_col}{
-Color of plotted GOF line
+\item{GOF_args}{
+Graphical arguments fitted lines, see \code{\link{points}} for paramter names.
 }
 
 \item{speedup_GOF}{

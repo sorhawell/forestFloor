@@ -6,7 +6,7 @@ plot.forestFloor_regression = function(x,
                                        cropXaxes=NULL, 
                                        crop_limit=4,
                                        plot_GOF=TRUE,
-                                       GOF_col = "#33333399",
+                                       GOF_args = list(col="#33333399"),
                                        speedup_GOF = TRUE,
                                        ...){
   
@@ -20,7 +20,7 @@ plot.forestFloor_regression = function(x,
   if(plot_GOF && is.null(x$FCfit)) { 
     #compute goodness of fit of one way presentation
     #leave-one-out k-nearest neighbor(guassian kernel), kknn package
-    print("compute goodness-of-fit with leave-one-out k-nearest neighbor(guassian kernel), kknn package")
+    print("compute goodness-of-fit with leave-one-out k-nearest neighbor(guassian weighting), kknn package")
     if(speedup_GOF) { #reduce observatioins to compute forest GOF
       obs = length(x$Y)
       reduce.exp = 1 - 0.025  * sum(obs>c(500,700,1000,1500,2500,4500,10000,20000))
@@ -85,12 +85,16 @@ plot.forestFloor_regression = function(x,
       limitX = FALSE
     }
     
-    plot(
-      data.frame( # data to plot
-        physical.value        = jitter(X[,imp.ind[i]],
-                                       factor=jitter.template[imp.ind[i]]*2),
-        partial.contribution  = FCs[,imp.ind[i]]
+    #arguments for plooting
+    
+    stdArgs.plot = alist(
+      
+      #the XY coordinates to plot
+      x = data.frame(
+      physical.value = jitter(X[,imp.ind[i]],factor=jitter.template[imp.ind[i]]*2),
+      partial.contribution  = FCs[,imp.ind[i]]
       ),
+      #the title
       main = if(!plot_GOF) names(imp)[imp.ind[i]] else {
         imp=imp
         imp.ind = imp.ind
@@ -99,15 +103,26 @@ plot.forestFloor_regression = function(x,
         theNumber = round(GOFs[imp.ind[i]],2)
         paste0(theName,",R^2= ",theNumber)
       },
-      ylim = list(NULL,range(FCs))[[limitY+1]], #same Yaxis if limitY == TRUE
-      xlim = list(NULL,range(Xsd))[[limitX+1]],
-      ...
+      
+      #plot limits
+      ylim = list(NULL,range(FCs))[[limitY+1]],
+      xlim = list(NULL,range(Xsd))[[limitX+1]]
     )
+    
+    #merge args.plot with user args(...), conflicts resolved by ...
+    userArgs = list(...)
+    allArgs.plot = append.overwrite.alists(userArgs,stdArgs.plot)
+    do.call(plot,allArgs.plot)
+      
     if(plot_GOF) {
       X_unique = sort(unique(x$X[,imp.ind[i]])) #refer to x, as may be reduced by speedup_GOF
       X_unique.ind = match(X_unique,x$X[,imp.ind[i]]) #refer to x not X
       FC_match = x$FCfit[X_unique.ind,imp.ind[i]]     #refer to x not X
-      points(X_unique,FC_match,col=GOF_col,type="l",lwd=2)
+      allArgs.points = append.overwrite.alists(
+        GOF_args,
+        alist(x=X_unique,y=FC_match,type="l",lwd=2)
+      )
+      do.call(points,allArgs.points)
     }
   }
   pars = with(pars,if(exists("pin")) {
