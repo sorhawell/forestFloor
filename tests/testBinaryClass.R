@@ -25,23 +25,6 @@ plot(ff.test42,plot_GOF=T,cex=.7,
 show3d(ff.test42,1:2,3:4)
 
 
-#test with trimTrees::cinbag binary classification treat as the same
-library(trimTrees)
-rf.test42 = cinbag(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
-ff.test42 = forestFloor(rf.test42,X,T,F)
-nLevels = length(levels(Y))
-rfPred = predict(rf.test42,type="vote",norm.votes=T)
-rfPred[is.nan(rfPred)] = 1/nLevels
-if(cor(as.vector(rfPred),as.vector(pred))^2<0.99) stop("fail accuracy binaryMultiClass")
-attributes(ff.test42)
-args(forestFloor:::plot.forestFloor_multiClass)
-plot(ff.test42,plot_GOF=T,cex=.7,
-     colLists=list(c("#FF0000A5"),
-                   c("#00FF0050"),
-                   c("#0000FF35")))
-show3d(ff.test42,1:2,3:4)
-
-
 ##test randomForest binary classification treated as, regression
 rf.test42 = cinbag(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
 ff.test42 = forestFloor(rf.test42,X,T,T)
