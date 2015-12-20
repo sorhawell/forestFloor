@@ -10,7 +10,7 @@ vec.plot visulizes the vector effect charecteristics of a given model. One(2D pl
 
 \usage{
 vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
-         zoom=1,limitY=F,col="#20202050")
+         zoom=1,limitY=F,col="#20202050",moreArgs=list(),...)
 }
 
 \arguments{
@@ -38,7 +38,7 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
 
   }
   \item{VEC.function}{
-  function, method univariately a fixed value for any remaining variables(those not chosen by i.var). Default is mean.
+  function, establish one fixed value for any remaining variables(those not chosen by i.var). Default is use the mean of variables.
   }
   
   \item{zoom}{
@@ -50,7 +50,14 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
   }
   
   \item{col}{
-one colour or vector of colours of points passed to rgl::plot3d
+one colour or vector of colours of points passed to rgl::plot3d or plot(), depending on number of variables(length of i.var)
+  }
+  
+  \item{moreArgs}{
+  any lower level graphical args passed to rgl::surface3d or points depending on number of variables(length of i.var)
+  }
+  \item{...}{
+  any lower level graphical args passed to rgl::plot3d or plot depending on number of variables(length of i.var)
   }
   
 }

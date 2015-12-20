@@ -1,5 +1,5 @@
 #f2 - show vec plot 2D and 3D
-vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY=F,col="#20202050") {
+vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY=F,col="#20202050",moreArgs=list(),...) {
   
   #compute grid range
   d = length(i.var)
@@ -24,16 +24,48 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
   Xtest.obs[,i.var] = values.to.plot
   yhat.obs =  predict(model, Xtest.obs)
   
+
+  
   #plot VEC-space versus predictions (only 2D and 3D plot supported)
   if(d==2) { #if 2D VEC space
-    plot3d(x=values.to.plot[,1],y=values.to.plot[,2],z=yhat.obs,
-           xlab=names(X)[i.var][1],ylab=names(X)[i.var][2],main="VEC-SURFACE",col=col)
-    surface3d(x=scales[[1]],
-              y=scales[[2]],
-              z=yhat.vec,col="#404080",size=4,alpha=0.4)
+    #merge arguments for plot3d 
+    plot3dArgs.std = alist(
+      x=values.to.plot[,1],
+      y=values.to.plot[,2],
+      z=yhat.obs,
+      xlab=names(X)[i.var][1],
+      ylab=names(X)[i.var][2],
+      main="VEC-SURFACE",col=col)
+    plotArgs3d.all = append.overwrite.alists(list(...),plotArgs3d.std)
+    do.call(plot3d,plot3dArgs.all)
+    
+    #merge arguments for surf3d
+    surfArgs.std = alist(
+      x     = scales[[1]],
+      y     = scales[[2]],
+      z     = yhat.vec,
+      col   = "#404080",
+      size  = 4,
+      alpha = 0.4)
+    surfArgs.all = append.overwrite.alists(moreArgs,surfArgs.std)
+    do.call(surface3d,surfArgs.all)
   }else{ #otherwise if 1D VEC-space
     if(limitY) {ylim = range(model$y)} else {ylim = NULL}
-    plot(x=scales[[1]],y=yhat.vec,col="red",type="l",xlab=names(X)[i.var][1],ylim=ylim)
-    points(values.to.plot,yhat.obs)
+    plotArgs.std = alist(
+      x=scales[[1]],
+      y=yhat.vec,
+      col=col,
+      type="l",
+      xlab=names(X)[i.var][1],
+      ylim=ylim)
+    plotArgs.all = append.overwrite.alists(list(...),plotArgs.std)
+    do.call(plot,plotArgs.all)
+    
+    pointsArgs.std = alist(
+      x = values.to.plot,
+      y = yhat.obs,
+      col="red")
+    pointsArgs.all = append.overwrite.alists(moreArgs,pointsArgs.std)  
+    do.call(points,pointsArgs.all)
   }
 }
