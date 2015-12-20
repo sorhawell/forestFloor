@@ -16,10 +16,11 @@ importFrom(graphics,
            segments)
 
 importFrom(grDevices,
-           rgb2hsv,
-           hsv,
            col2rgb,
-           rgb)
+           hsv,
+           rgb,
+           rgb2hsv
+           )
 
 importFrom(stats,
            delete.response,
@@ -27,16 +28,6 @@ importFrom(stats,
            na.fail)
 
 import(rgl)
-
-#importFrom(ggplot2,
-#           aes_string,
-#           ggplot,
-#           ggplotGrob,
-#           geom_point,
-#           xlab,
-#           ylab)
-
-#importFrom(gridExtra,grid.arrange)
 
 #methods
 #plotting
@@ -51,21 +42,16 @@ S3method(show3d,  forestFloor_regression)
 
 
 
-
-export(forestFloor,
+export(
+       append.overwrite.alists,
        box.outliers,
-       recTree,
-       vec.plot,
        convolute_ff,
        convolute_ff2,
        convolute_grid,
-       #show3d_new,
        fcol,
-       #ggPlotForestFloor,
-       #ggplotGrob,
-       #forestFloor_multiClass,
-       #plot.forestFloor_multiClass,#,
-       #show3d_forestFloor_multiClass),
+       forestFloor,
+       plot_simplex3,
+       recTree,
        show3d,
-       append.overwrite.alists,
-       plot_simplex3)
+       vec.plot
+       )
