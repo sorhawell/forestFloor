@@ -36,7 +36,7 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
       xlab=names(X)[i.var][1],
       ylab=names(X)[i.var][2],
       main="VEC-SURFACE",col=col)
-    plotArgs3d.all = append.overwrite.alists(list(...),plotArgs3d.std)
+    plot3dArgs.all = append.overwrite.alists(list(...),plot3dArgs.std)
     do.call(plot3d,plot3dArgs.all)
     
     #merge arguments for surf3d
