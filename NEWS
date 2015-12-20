@@ -2,7 +2,8 @@
 
 New Features:
  * user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts as randomForest some time ago started to support inbag counts. Restrictions and error messages removed.
- * any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args.
+ * any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args. If conflicts with internal arguments, user provided arguments have priority.
+ * likewise for vec.plot, plot and plot3d through ..., points and surface3d through moreArgs=list() 
  
 
 ##### 1.8.9 (CRAN)
