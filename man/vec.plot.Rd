@@ -10,7 +10,7 @@ vec.plot visulizes the vector effect charecteristics of a given model. One(2D pl
 
 \usage{
 vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
-         zoom=1,limitY=F,col="#20202050",moreArgs=list(),...)
+         zoom=1,limitY=F,moreArgs=list(),...)
 }
 
 \arguments{
@@ -49,10 +49,6 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
   boleen, if TRUE Y-axis is standardised for any variable. Useful for composite plots as shown in example.
   }
   
-  \item{col}{
-one colour or vector of colours of points passed to rgl::plot3d or plot(), depending on number of variables(length of i.var)
-  }
-  
   \item{moreArgs}{
   any lower level graphical args passed to rgl::surface3d or points depending on number of variables(length of i.var)
   }
@@ -74,7 +70,12 @@ Soren Havelund Welling
 }
 
 \examples{
-\dontrun{
+## avoid testing of rgl 3D plot on headless non-windows OS
+## users can disregard this sentence.
+if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
+library(randomForest)
+library(forestFloor)
+
 #simulate data
 obs=5000
 vars = 6 
@@ -97,7 +98,9 @@ par(pars) #restore
 for(i in 1:vars) vec.plot(rfo2,X,i,zoom=1.5,limitY=TRUE)
 
 #plotvariable X3 and X4 with vec.plot
-vec.plot(rfo2,X,c(3,4),zoom=1,grid.lines=100)
+if(!exists("skip") || !skip) { #skips testing sometime, don't mind
+vec.plot(rfo2,X,3:4,zoom=1,grid.lines=100,col=fcol(X,3:4))
 }
 }
+
 
