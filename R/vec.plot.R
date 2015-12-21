@@ -64,7 +64,7 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
     pointsArgs.std = alist(
       x = values.to.plot,
       y = yhat.obs,
-      col="#20202030")
+      col="#DD202030")
     pointsArgs.all = append.overwrite.alists(moreArgs,pointsArgs.std)  
     do.call(points,pointsArgs.all)
   }
