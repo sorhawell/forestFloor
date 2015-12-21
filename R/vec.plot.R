@@ -1,5 +1,5 @@
 #f2 - show vec plot 2D and 3D
-vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY=F,col="#20202050",moreArgs=list(),...) {
+vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY=F,moreArgs=list(),...) {
   
   #compute grid range
   d = length(i.var)
@@ -35,7 +35,7 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
       z=yhat.obs,
       xlab=names(X)[i.var][1],
       ylab=names(X)[i.var][2],
-      main="VEC-SURFACE",col=col)
+      main="VEC-SURFACE")
     plot3dArgs.all = append.overwrite.alists(list(...),plot3dArgs.std)
     do.call(plot3d,plot3dArgs.all)
     
@@ -54,9 +54,9 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
     plotArgs.std = alist(
       x=scales[[1]],
       y=yhat.vec,
-      col=col,
       type="l",
       xlab=names(X)[i.var][1],
+      col = "red",
       ylim=ylim)
     plotArgs.all = append.overwrite.alists(list(...),plotArgs.std)
     do.call(plot,plotArgs.all)
@@ -64,7 +64,7 @@ vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY
     pointsArgs.std = alist(
       x = values.to.plot,
       y = yhat.obs,
-      col="red")
+      col="#20202030")
     pointsArgs.all = append.overwrite.alists(moreArgs,pointsArgs.std)  
     do.call(points,pointsArgs.all)
   }
