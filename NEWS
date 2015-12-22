@@ -6,7 +6,7 @@ New Features:
  * likewise for vec.plot, plot and plot3d through ..., points and surface3d through moreArgs=list() 
  
 
-##### 1.8.9 (CRAN)
+##### 1.8.9
 
 New features:
 * XY axes can be cropped for outliers also in show3d
