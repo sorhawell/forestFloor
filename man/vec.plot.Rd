@@ -1,11 +1,11 @@
 \name{vec.plot}
 \alias{vec.plot}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 Compute and plot vector effct characteristics for a given multivariate model
 }
 \description{
-vec.plot visulizes the vector effect charecteristics of a given model. One(2D plot) or two(3D plot) variables are screened within the range of the training data, while remaining variables are fixed the univariate means of each them(as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model topology in separate components.
+vec.plot visualizes the vector effect characteristics of a given model. One variable (2D plot) or two variables (3D plot) are screened within the range of the training data, while remaining variables are fixed at the univariate means (as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model structure into separate components.
 }
 
 \usage{
@@ -15,9 +15,7 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
 
 \arguments{
   \item{model}{
-  model, S3 or S4 object
-  model_object who have a defined method predict.model, which can accept arguments as showed for
-  randomForest e.g.
+  model_object which has a defined method predict.model, which can accept arguments as showed for randomForest e.g.
   library(randomForest)
   model = randomForest(X,Y)
   predict(model,X)
@@ -38,7 +36,7 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
 
   }
   \item{VEC.function}{
-  function, establish one fixed value for any remaining variables(those not chosen by i.var). Default is use the mean of variables.
+  function, establish one fixed value for any remaining variables(those not chosen by i.var). Default is to use the mean of variables.
   }
   
   \item{zoom}{
@@ -77,7 +75,7 @@ library(randomForest)
 library(forestFloor)
 
 #simulate data
-obs=5000
+obs=2000
 vars = 6 
 X = data.frame(replicate(vars,rnorm(obs)))
 Y = with(X, X1^2 + 2*sin(X2*pi) + 2 * X3 * (X4+.5))
@@ -86,7 +84,7 @@ var(Y)/var(Y+Yerror)
 Y= Y+Yerror
 
 #grow a forest, remeber to include inbag
-rfo2=randomForest(X,Y,keep.inbag=TRUE,ntree=1000,sampsize=800)
+rfo2=randomForest(X,Y,keep.inbag=TRUE,sampsize=800)
 
 #plot partial functions of most important variables first
 pars=par(no.readonly=TRUE) #save previous graphical paremeters

@@ -1,11 +1,12 @@
 \name{convolute_ff}
 \alias{convolute_ff}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Convolution of main effects for all featureContributions by corresponding features with kknn-package}
+Cross-validateded main effects interpretation for all feature contributions.}
+
 \description{
-Estimates feature contributions repsectively as a function of each variable/feature. With kNN-gaussian weighting and LOO cros-validation.
+Convolute_ff estimates feature contributions of each feature separately as a function of the corresponding variable/feature. The estimator is a k-nearest neighbor function with gaussian distance weighting and LOO cros-validation see \code{\link{train.kknn}}.
 }
+
 \usage{
 convolute_ff(ff,
              these.vars=NULL,
@@ -35,17 +36,15 @@ convolute_ff uses train.kknn from kknn package to estimate featureContributions 
 }
 
 \value{
-ff$FCfit, a matrix of convoluted featureContributions
-}
+ff$FCfit a matrix of predicted feature contributions has same dimension as ff$FCmatrix. The output is appended to the input "forestFloor" object as $FCfit.}
 
 \author{
 Soren Havelund Welling
 }
 
 \examples{
-\dontrun{
 #simulate data
-obs=2500
+obs=1000
 vars = 6 
 X = data.frame(replicate(vars,rnorm(obs)))
 Y = with(X, X1^2 + 2*sin(X2*pi) + 8 * X3 * X4)
@@ -54,7 +53,7 @@ cor(Y,Y+Yerror)^2
 Y= Y+Yerror
 
 #grow a forest, remeber to include inbag
-rfo=randomForest(X,Y,keep.inbag=TRUE,ntree=1000,sampsize=800)
+rfo=randomForest(X,Y,keep.inbag=TRUE)
 
 ff = forestFloor(rfo,X)
 
@@ -69,10 +68,8 @@ par(mfrow=c(3,2),mar=c(2,2,2,2))
 for(i in 1:6) {
   plot(ff$X[,i],ff$FCmatrix[,i],col="#00000030",ylim=range(ff$FCmatrix))
   points(ff$X[,i],ff$FCfit[,i],col="red",cex=0.2)
-
 }
 par(pars) #restore graphicals
 
-}
 }
 

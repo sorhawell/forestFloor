@@ -149,9 +149,6 @@ ff = forestFloor(
 
 #print forestFloor
 print(ff) #prints a text of what an 'forestFloor_regression' object is
-
-plot(1:10,1:10)
-
 plot(ff)
 
 #plot partial functions of most important variables first
@@ -238,8 +235,7 @@ Col = fcol(ff,1) #color by most important feature
 plot(ff,col=Col)   #plot features 
 
 #interfacing with rgl::plot3d
-show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) 
-
+show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5))
 }
 
 

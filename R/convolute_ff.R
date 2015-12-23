@@ -2,7 +2,7 @@
 #f3 input a forestFloor object, computes convoluted feature contributions with kknn
 #outout a new ff object as input with attached ff$FCfit
 #kknn arguments can be accessed directly from this wrapper by userArgs.kknn
-#if conflicting with wrappe
+#if conflicting with wrapper
 convolute_ff = function(ff,
                         these.vars=NULL,
                         k.fun=function() round(sqrt(n.obs)/2),
@@ -13,7 +13,6 @@ convolute_ff = function(ff,
   n.vars=dim(ff$X)[2]
   k=k.fun()
   if(is.null(these.vars)) these.vars = 1:n.vars
-  
   
   #merge user and wrapper args
   Data = "I only exist to satisfy R cmd CHECK" #dummy declaration

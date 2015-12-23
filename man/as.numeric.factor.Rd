@@ -1,12 +1,11 @@
 \name{as.numeric.factor}
 \alias{as.numeric.factor}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Convert a factor to numeric.vector.
 }
 
 \description{
-Internal function which will drop unused levels and convert remaining to a number from 1 to n levels.
+Internal function which will drop unused levels and convert remaining to a number from 1 to n.levels.
 }
 \usage{
 as.numeric.factor(x,drop.levels=TRUE)
@@ -14,19 +13,21 @@ as.numeric.factor(x,drop.levels=TRUE)
 
 \arguments{
 \item{x}{
-  noramlly a factor, can be a numeric vector(will be outputted unchanged)
+Normally a factor, can be a numeric vector(will be output unchanged)
 }
+
 \item{drop.levels}{
- booleen,  should unused levels be droppped?
+Booleen,  should unused levels be droppped?
 }
+
 }
 
 \details{
-simple internal function
+Simple internal function, used to direct categorical variables to a 1 dimensional scale.
 }
 
 \value{
-a vector of same length, where each category/level is replaced with number from 1 to n
+A vector of same length, where each category/level is replaced with number from 1 to n
 }
 
 \author{

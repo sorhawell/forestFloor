@@ -115,16 +115,9 @@ Soren Havelund Welling
 
 
 \examples{
-
-\dontrun{
-#example copied from forestFloor.rd 1.8.6
-
-#disable RGL for headless machines, CRAN testing etc.
-#(if you can read this and have a head, don't bother...)
-if(!interactive()) {
-  Sys.setenv(RGL_USE_NULL=TRUE)
-  require(utils) #iris data set
-}
+## avoid testing of rgl 3D plot on headless non-windows OS
+## users can disregard this sentence.
+if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
 
 ###
 #1 - Regression example:
@@ -160,9 +153,6 @@ ff = forestFloor(
 
 #print forestFloor
 print(ff) #prints a text of what an 'forestFloor_regression' object is
-
-plot(1:10,1:10)
-
 plot(ff)
 
 #plot partial functions of most important variables first
@@ -179,6 +169,7 @@ plot(ff,col=Col,plot_GOF=TRUE)
 
 #feature contributions of X3 and X4 are well explained in the context of X3 and X4
 # as GOF R^2>.8
+
 show3d(ff,3:4,col=Col,plot_GOF=TRUE,orderByImportance=FALSE)
 
 #if needed, k-nearest neighbor parameters for goodness-of-fit can be accessed through convolute_ff
@@ -200,7 +191,6 @@ Y = iris[,"Species"]
 rf = randomForest(
   X,Y,               
   keep.forest=TRUE,  # mandatory
-  replace=FALSE,     # if TRUE, use trimTrees::cinbag instead of randomForest
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
   importance  = TRUE # recommended, else ordering by giniImpurity (unstable)
@@ -237,7 +227,6 @@ Y = droplevels((Y)) #drop unused level virginica
 rf = randomForest(
   X,Y,               
   keep.forest=TRUE,  # mandatory
-  replace=FALSE,     # if TRUE, use trimTrees::cinbag instead of randomForest
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
   importance  = TRUE # recommended, else giniImpurity
@@ -248,13 +237,12 @@ ff = forestFloor(rf,X,
                  binary_reg=TRUE) #binary regression, scale direction is printed
 Col = fcol(ff,1) #color by most important feature
 plot(ff,col=Col)   #plot features 
-show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) #interfacing with rgl::plot3d
 
-
-
-}
+#interfacing with rgl::plot3d
+show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) 
 
 }
+
 
 \keyword{ multivariate }
 \keyword{ models }

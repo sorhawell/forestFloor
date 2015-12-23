@@ -1,12 +1,12 @@
 \name{append.overwrite.alists}
 \alias{append.overwrite.alists}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 Combine two argument lists
 }
 
 \description{
-first list master, second list slave
+First argument list is master, second list slave
 }
 \usage{
 append.overwrite.alists(masterArgs,slaveArgs)
@@ -14,19 +14,19 @@ append.overwrite.alists(masterArgs,slaveArgs)
 
 \arguments{
 \item{masterArgs}{
-  list of arguments, of which will stay unchanged
+List of arguments, of which will stay unchanged
 }
 \item{slaveArgs}{
-  list of arguments, conflicts with masterArgs will be deleted. Additional args will be appended.
+List of arguments, conflicts with masterArgs will be deleted. Additional args will be appended.
 }
 s}
 
 \details{
-This function combines to lists of arguments. Conflict will be resolved by masterArgs.
+This function combines to lists of arguments. Conflicts will be resolved by masterArgs.
 }
 
 \value{
-list of arguments, being masterArgs appended by slaveArgs
+List of arguments, being masterArgs appended by slaveArgs
 }
 
 \author{
