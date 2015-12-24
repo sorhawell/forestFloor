@@ -70,7 +70,7 @@ Soren Havelund Welling
 \examples{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
-if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
+if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
 library(randomForest)
 library(forestFloor)
 

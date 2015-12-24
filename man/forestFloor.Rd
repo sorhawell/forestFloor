@@ -113,7 +113,7 @@ this version
 \examples{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
-if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
+if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
 
 #1 - Regression example:
 set.seed(1234)
