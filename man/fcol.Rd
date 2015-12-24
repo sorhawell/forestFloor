@@ -104,34 +104,75 @@ Soren Havelund Welling
 }
 
 \examples{
-\dontrun{
+#example 1 - fcol used on data.frame or matrix
 library(forestFloor)
-obs=4000 
-vars = 6 
-X = data.frame(replicate(vars,rnorm(obs))) 
-Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 0.5 * rnorm(obs)) 
+X = data.frame(matrix(rnorm(1000),nrow=1000,ncol=4))
+X[] = lapply(X,jitter,amount = 1.5)
 
-#grow a forest, remeber to include inbag
-rfo=randomForest::randomForest(X,Y,keep.inbag=TRUE,
-importance=TRUE,sampsize=700)
+#single variable gradient by X1 (Unique colour system)
+plot(X,col=fcol(X,1))
+#double variable gradient by X1 and X2 (linear colour system)
+plot(X,col=fcol(X,1:2))
+#triple variable gradient (PCA-decomposed, linear colour system)
+plot(X,col=fcol(X,1:3))
+#higher based gradient    (PCA-decomposed, linear colour system)
+plot(X,col=fcol(X,1:4))
 
-#compute topology
-ff = forestFloor(rfo,X)
 
-#print forestFloor
-print(ff) 
+#force linear col + modify colour wheel
+plot(X,col=fcol(X,
+                cols=1, #colouring by one variable
+                RGB=FALSE,
+                hue.range = 4, #cannot exceed 1, if colouing by more than one var
+                               #except if max.df=1 (limits to 1D gradient)
+                saturation=1,
+                brightness = 0.6))
 
-#plot partial functions of most important variables first
-Colours1=fcol(ff,1)
-plot(ff,plot_seq=NULL,col=Colours1)
+#couler by one dimensional gradient first PC of multiple variables
+plot(X,col=fcol(X,
+                cols=1:2, #colouring by multiple
+                RGB=TRUE, #possible because max.df=1
+                max.df = 1, #only 1D gradient (only first principal component)
+                hue.range = 2, #can exceed 1, because max.df=1
+                saturation=.95,
+                brightness = 0.8))
 
-#try to colour by first four variables, uses PCA du reduce system to 3-way gradient
-# (2.5 way more exactly as saturation and brightness by default have very limited ranges
-# to avoid gray - or overexposed color tones).
-Colours2=fcol(ff,1:4)
-plot(ff,plot_seq=NULL,external.col=Colours2) 
+##example 2 - fcol used with forestFloor objects
+library(forestFloor)
+library(randomForest)
 
-}
+X = data.frame(replicate(6,rnorm(1000)))
+y = with(X,.3*X1^2+sin(X2*pi)+X3*X4)
+rf = randomForest(X,y,keep.inbag = TRUE,sampsize = 400)
+ff = forestFloor(rf,X)
+
+#colour by most important variable
+plot(ff,col=fcol(ff,1))
+
+#colour by first variable in data set
+plot(ff,col=fcol(ff,1,orderByImportance = FALSE),orderByImportance = FALSE)
+
+#colour by feature contributions
+plot(ff,col=fcol(ff,1:2,order=FALSE,X.matrix = FALSE,saturation=.95))
+
+#colour by residuals
+plot(ff,col=fcol(ff,3,orderByImportance = FALSE,byResiduals = TRUE))
+
+#colour by all features (most useful for colinear variables)
+plot(ff,col=fcol(ff,1:6))
+
+#disable importance weighting of colour
+#(important colours get to define gradients more)
+plot(ff,col=fcol(ff,1:6,imp.weight = FALSE)) #useless X5 and X6 appear more colourful
+
+#insert outlier in data set in X1 and X2
+ff$X[1,1] = 10; ff$X[1,2] = 10
+
+plot(ff,col=fcol(ff,1)) #colour not distorted, default: outlier.lim=3
+plot(ff,col=fcol(ff,1,outlier.lim = Inf)) #colour gradient distorted by outlier 
+plot(ff,col=fcol(ff,1,outlier.lim = 0.5)) #too little outlier.lim 
+
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
