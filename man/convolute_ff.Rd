@@ -43,6 +43,9 @@ Soren Havelund Welling
 }
 
 \examples{
+library(forestFloor)
+library(randomForest)
+
 #simulate data
 obs=1000
 vars = 6 
