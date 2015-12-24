@@ -115,7 +115,6 @@ this version
 ## users can disregard this sentence.
 if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
 
-###
 #1 - Regression example:
 set.seed(1234)
 library(forestFloor)
