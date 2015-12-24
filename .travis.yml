@@ -1,5 +1,2 @@
 language: r
 sudo: required
-
-init:
-sudo apt-get install r-cran-rgl
