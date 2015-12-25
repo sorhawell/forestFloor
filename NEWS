@@ -5,6 +5,9 @@ New Features:
  * any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args. If conflicts with internal arguments, user provided arguments have priority.
  * likewise for vec.plot, plot and plot3d through ..., points and surface3d through moreArgs=list() 
  
+ Misc:
+ * Major revision of all docs & examples
+ 
 
 ##### 1.8.9
 
