@@ -167,6 +167,7 @@ Soren Havelund Welling
 if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
 
 library(forestFloor)
+library(randomForest)
 #simulate data
 obs=2500
 vars = 6 
