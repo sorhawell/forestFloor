@@ -9,12 +9,24 @@ plot.forestFloor_regression = function(x,
                                        GOF_args = list(col="#33333399"),
                                        speedup_GOF = TRUE,
                                        ...){
+  #pre-checking graphial parameters, and split into separate lists
+  moreArgs = list(...) #args passed to par() if no match, passed instead to plot(,...) 
+  pars = par(no.readonly = TRUE) #save previous graphical parameters
+  toPlotOnly=c("cex","col") #these args always passed to plot(,...)
+  #TRUE/FALSE vector, passed to par() (TRUE) or plot() FALSE
+  parArgs.ind = mapply("&&", 
+                        names(moreArgs) %in% names(pars),#is a par-arg  match
+                       !names(moreArgs) %in% toPlotOnly  #not par-excluded
+  )
+  if(length(parArgs.ind)==0) {
+    userArgs.plot=list()
+    userArgs.par =list()
+  } else {
+    userArgs.plot = moreArgs[!parArgs.ind]
+    userArgs.par  = moreArgs[ parArgs.ind]
+  }
   
-  pars = par(no.readonly = TRUE) #save previous graphical par(emeters)
-  par(mar=c(2.2,2.2,1.2,1.2),cex=.5) #changing par, narrowing plot margins, smaller points
-  
-  #short for phys.val and feature contribution in object
-  
+  #short for features and feature contribution in object
   X = x$X
   FCs = x$FCmatrix
   if(plot_GOF && is.null(x$FCfit)) { 
@@ -63,11 +75,24 @@ plot.forestFloor_regression = function(x,
     if(is.character(X[,i])) X[,i] = as.numeric(X[,i])
   } 
   
-  ##get dimensions of plots
+  ##get dimensions of plots and set graphical (par)ameters
   n.plots = min(dim(X)[2],length(plot_seq))
   plotdims.y = min(ceiling(n.plots/3),5)
   plotdims.x = min(3 , n.plots)
-  par(mfrow=c(plotdims.y,plotdims.x))
+  if(n.plots==4) {
+    plotdims.x=2
+    plotdims.y=2
+  }
+  
+  stdArgs.par = list(
+    mar=c(2.2,2.2,1.2,1.2),
+    cex=.5,
+    mfrow=c(plotdims.y,plotdims.x))
+  
+  args.par = append.overwrite.alists(
+    userArgs.par, #userArgs for par() [MASTER args]
+     stdArgs.par) #std args for par() [SLAVE args]
+  par(args.par) #changing par, narrowing plot margins, smaller points
   
   ##get importance for plotting
   imp = x$importance     #fetch importance
@@ -110,8 +135,7 @@ plot.forestFloor_regression = function(x,
     )
     
     #merge args.plot with user args(...), conflicts resolved by ...
-    userArgs = list(...)
-    allArgs.plot = append.overwrite.alists(userArgs,stdArgs.plot)
+    allArgs.plot = append.overwrite.alists(userArgs.plot,stdArgs.plot)
     do.call(plot,allArgs.plot)
       
     if(plot_GOF) {

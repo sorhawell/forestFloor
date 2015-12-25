@@ -14,6 +14,25 @@ plot.forestFloor_multiClass  = function(
   jitter_these_cols = NULL,
   jitter.factor = NULL,
   ...) {
+ 
+  #pre-checking graphial parameters, and split into separate lists
+  moreArgs = list(...) #args passed to par() if no match, passed instead to plot(,...) 
+  print(moreArgs)
+  pars = par(no.readonly = TRUE) #save previous graphical parameters
+  toPlotOnly=c("cex","col") #these args always passed to plot(,...)
+  #TRUE/FALSE vector, passed to par() (TRUE) or plot() FALSE
+  parArgs.ind = mapply("&&", 
+                       names(moreArgs) %in% names(pars),#is a par-arg  match
+                       !names(moreArgs) %in% toPlotOnly  #not par-excluded
+  )
+  if(length(parArgs.ind)==0) {
+    userArgs.plot=list()
+    userArgs.par =list()
+  } else {
+    userArgs.plot = moreArgs[!parArgs.ind]
+    userArgs.par  = moreArgs[ parArgs.ind]
+  }
+  
   void = with(x,{ #set scope inside x object
     
     if(is.null(plot_seq)) plot_seq = 1:min(18,dim(X)[2])
@@ -26,11 +45,15 @@ plot.forestFloor_multiClass  = function(
       lapply(1:length(label.seq), function(i) factor(rep(i,dim(X)[1])))
     
     
+    #set graphical pars
     n.plots = min(dim(X)[2],length(plot_seq))
     plotdims.y = min(ceiling(n.plots/fig.columns),5)
     plotdims.x = min(fig.columns , n.plots)
-    par(mfrow=c(plotdims.y,plotdims.x),mar = c(2,2,3,1))
-    
+    args.par = append.overwrite.alists(
+      masterArgs = userArgs.par, #user args for par is master
+       slaveArgs = list(mfrow=c(plotdims.y,plotdims.x),mar = c(2,2,3,1)) #std args
+    )
+    par(args.par)
     
     if(plot_GOF) {
       if(speedup_GOF) { #reduce observatoins to compute forest GOF faster
@@ -93,13 +116,14 @@ plot.forestFloor_multiClass  = function(
       for(i in label.seq) {
         #plot samples by each feature by each class
         X.jittered = if(j %in% jitter_these_cols) jitter(X[,j],jitter.factor) else X[,j]
-        allArgs.plot = append.overwrite.alists(list(...),stdArgs.plot)
+        allArgs.plot = append.overwrite.alists(userArgs.plot,stdArgs.plot)
         if(i==1) do.call(plot,allArgs.plot) else do.call(points,allArgs.plot)
         #plot fitted lines by each class
         if(plot_GOF) with(fits[[i]],do.call(points,
           append.overwrite.alists(GOF_args,stdArgs.GOF)))  
       }
     }
+    par(pars)
     return(fits)
   })
 }
