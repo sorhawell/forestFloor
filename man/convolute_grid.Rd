@@ -115,7 +115,8 @@ rgl::plot3d(ff$X[,2],ff$X[,3],apply(ff$FCmatrix[,2:3],1,sum),
 #make grid with current function
 grid23 = convolute_grid(ff,Xi=2:3,userArgs.kknn= alist(k=25,kernel="gaus"),grid=50,zoom=1.2)
 #apply grid on 3d-plot
-rgl::persp3d(unique(grid23[,2]),unique(grid23[,3]),grid23[,1],alpha=0.3,col=c("black","grey"),add=TRUE)
+rgl::persp3d(unique(grid23[,2]),unique(grid23[,3]),grid23[,1],alpha=0.3,
+col=c("black","grey"),add=TRUE)
 #anchor points of grid could be plotted also
 rgl::plot3d(grid23[,2],grid23[,3],grid23[,1],alpha=0.3,col=c("black"),add=TRUE)
 
@@ -151,7 +152,8 @@ for(i in uni2) {
   #  plot3d(ff$X[,1],ff$X[,2]
   persp3d(unique(this34.plane[,3]),
           unique(this34.plane[,4]),
-          this34.plane[,1], add=add, col=rgb(count/length(uni2),1-count/length(uni2),0),alpha=0.1)
+          this34.plane[,1], add=add,
+          col=rgb(count/length(uni2),1-count/length(uni2),0),alpha=0.1)
 }
 
 
