@@ -7,7 +7,7 @@ show3d.forestFloor_multiClass = function(
   x,Xi=1:2,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
   plot.rgl.args=list(),plot_GOF=FALSE,user.gof.args=list(NULL),...) {
   
-  skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL=TRUE #RGL override switch
+  skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL==TRUE #RGL override switch
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
@@ -112,7 +112,7 @@ show3d.forestFloor_regression = function(
   plot_GOF = TRUE,
   ...) {
   
-  skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL=TRUE #RGL override switch
+  skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL==TRUE #RGL override switch
   if(class(x)!="forestFloor_regression") stop("x, must be of class forestFloor_regression")
   if(length(Xi)!=2) {
     warning("Xi should be of length 2, if 1 first elements is used twice, if >2 only two first elements is used")
