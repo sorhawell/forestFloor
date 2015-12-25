@@ -6,7 +6,7 @@
 plot.forestFloor_regrssion
 }
 \description{
-A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions. Fitted function(plot_GOF) describe FC only as a main effect and qunatifies 'Goodness Of Fit'.
+A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied to show possible interactions. Fitted function(plot_GOF) describe FC only as a main effect and quantifies 'Goodness Of Fit'.
 }
 \usage{
 \method{plot}{forestFloor_regression} (
@@ -40,21 +40,19 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-foretFloor-object, also abbrivated ff..
-Computed topology of randomForest-model, the output from the forestFloor function \cr
-includes also X and Y and importance data
+forestFloor-object, also abbrivated ff. Basicly a list of class="forestFloor" containing feature contributions, features, targets and varaible importance.
 }
 
 \item{plot_seq}{
 a numeric vector describing which variables and in what sequence to plot,
-ordered by importance as default, orderByImportance = F then by feature/coloumn order of training data.
+ordered by importance as default. If orderByImportance = F, then by feature/coloumn order of training data.
 }
 
 \item{label.seq}{
-a numeric vector describing which classes and in what sequence to plot. NULL is all classes ordered is in levels in x$Y of forestFloor_mulitClass object x. 
+[only classification] a numeric vector describing which classes and in what sequence to plot. NULL is all classes ordered is in levels in x$Y of forestFloor_mulitClass object x. 
 }
 \item{fig.columns}{
-for multi plotting, how many columns per page.
+[]for multi plotting, how many columns per page.
 default(NULL) is 1 for one plot, 2 for 2, 3 for 3, 2 for 4 and 3 for more. 
 }
 \item{limitY}{
@@ -98,7 +96,8 @@ GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
 }
 
 \item{...}{
-... other arguments passed to generic plot functions, see \code{\link{plot}} and \code{\link{points}}
+... other arguments passed to \code{\link{par}} or \code{\link{plot}}\cr.
+e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot
 }
 
 }
