@@ -18,9 +18,19 @@ if(cor(as.vector(rfPred),as.vector(pred))^2<0.99) stop("fail testMultiClass")
 attributes(ff.test42)
 args(forestFloor:::plot.forestFloor_multiClass)
 plot(ff.test42,plot_GOF=T,cex=.7,
-     colLists=list(c("#FF0000A5"),
-                   c("#00FF0050"),
-                   c("#0000FF35")))
+     colLists=list("#FF0000A5",
+                   "#00FF0050",
+                   "#0000FF35")
+     )
+
+#try to alter std par
+plot(ff.test42,plot_GOF=T,cex=.7,
+     colLists=list("#FF0000A5",
+                   "#00FF0050",
+                   "#0000FF35"),
+     mfrow=c(4,3)
+)
+
 
 show3d(ff.test42,1:2,1:2,plot_GOF=T)
 show3d(ff.test42,1:2,1,plot_GOF=T)#test plotting only one feature contribution
