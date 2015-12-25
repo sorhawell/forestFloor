@@ -6,13 +6,10 @@ New Features:
  * likewise for vec.plot, plot and plot3d through ..., points and surface3d through moreArgs=list()
  * graphical parameters par() can be set temporarily through dot args plot.forestFloor(,...). Hereby, e.g. mar or mfrow can be set manually and will override standard settings of this function.
  
-<<<<<<< HEAD
-=======
- Misc:
+Misc:
  * Major revision of all docs & examples
  
 
->>>>>>> 1b99cb7c0cc6981e7527c6748930c48a5738d72b
 ##### 1.8.9
 
 New features:
