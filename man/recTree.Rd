@@ -82,7 +82,7 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
 }
 \details{
 This is function is excuted by the function forestFloor. \cr
-This is a c++/Rcpp implementation computing feature contributions. The main differences from this implementation and the rfFC-package, is that these feature contributions is only summed over out-of-bag samples which give some kind of cross-validation. This implementation allows sample replacement but do not support more than binaray classification as rfFC do.
+This is a c++/Rcpp implementation computing feature contributions. The main differences from this implementation and the rfFC-package(Rforge), is that these feature contributions are only summed over out-of-bag samples yields a cross-validation. This implementation allows sample replacement, binary and multi-classification.
 }
 
 \value{
@@ -94,32 +94,4 @@ Interpreting random forest classification models using a feature contribution me
 }
 \author{
 Soren Havelund Welling
-}
-
-\examples{
-\dontrun{
-rm(list=ls())
-library(forestFloor)
-#simulate data
-obs=2500
-vars = 6 
-
-X = data.frame(replicate(vars,rnorm(obs)))
-Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 1 * rnorm(obs))
-
-
-#grow a forest, remeber to include inbag
-rfo=randomForest(X,Y,keep.inbag = TRUE,sampsize=1500,ntree=500)
-
-#compute topology, Rectree is excuted within forestFloor.
-#See source-code of forestFloor function to for more details.
-ff = forestFloor(rfo,X)
-
-#print forestFloor
-print(ff) 
-
-#plot partial functions of most important variables first
-plot(ff) 
-}
-
 }
