@@ -6,7 +6,7 @@
 plot.forestFloor_regrssion
 }
 \description{
-A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions.
+A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied two show possible interactions. Fitted function(plot_GOF) describe FC only as a main effect and qunatifies 'Goodness Of Fit'.
 }
 \usage{
 \method{plot}{forestFloor_regression} (
