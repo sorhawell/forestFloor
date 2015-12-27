@@ -5,7 +5,7 @@
 Compute and plot vector effct characteristics for a given multivariate model
 }
 \description{
-vec.plot visualizes the vector effect characteristics of a given model. One variable (2D plot) or two variables (3D plot) are screened within the range of the training data, while remaining variables are fixed at the univariate means (as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model structure into separate components.
+vec.plot visualizes the vector effect characteristics of a given model. Geomatrically it corresponds to a specific 2D or 3D slice of a higher dimensional mapping structure.  One variable (2D plot) or two variables (3D plot) are screened within the range of the training data, while remaining variables are fixed at the univariate means (as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model structure into separate components.
 }
 
 \usage{
@@ -100,5 +100,3 @@ if(!exists("skip") || !skip) { #skips testing sometime, don't mind
 vec.plot(rfo2,X,3:4,zoom=1,grid.lines=100,col=fcol(X,3:4))
 }
 }
-
-
