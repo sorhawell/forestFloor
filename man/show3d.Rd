@@ -8,7 +8,7 @@
 make forestFloor 3D-plot of random forest feature contributions
 }
 \description{
-2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(gaussian-kNN by kknn package) and plotted alongside the datapoints. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor for regression and show3d_forestFloor_multiClass for classification.
+2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(kknn package) and plotted alongside the data points. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor_regression for regression and show3d_forestFloor_multiClass for classification.
 
 }
 \usage{
@@ -150,7 +150,7 @@ Booleen TRUE/FALSE. Should the goodness of fit be computed and plotted is main o
 
 \details{
 show3d plot one or more combined feature contributions in the context of two features with points representing each data point.
-The input object must be a "forestFloor_regression" or "forestFloor_multiClass" S3 class object , and should at least contain $X the data.frame of training data, $FCmatrix the feature contributions matrix. Usually this object are formed with the function forestFloor having a random forest model fit as inpu. Actual visualization differs for each class.
+The input object must be a "forestFloor_regression" or "forestFloor_multiClass" S3 class object , and should at least contain $X the data.frame of training data, $FCmatrix the feature contributions matrix. Usually this object are formed with the function forestFloor having a random forest model fit as input. Actual visualization differs for each class.
 }
 
 \value{
