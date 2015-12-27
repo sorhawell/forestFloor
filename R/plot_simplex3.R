@@ -15,6 +15,7 @@ plot_simplex3 = function(ff,
     stop("this function takes input of class 'forestFloor_multiClass'")
   }
   if(length(unique(ff$Y))!=3) stop("this plot is only for 3 classes")
+  skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL==TRUE #RGL override switch
   
   #all variables as those used to calculate total separation
   if(is.null(Xi)) {
@@ -113,7 +114,7 @@ plot_simplex3 = function(ff,
     if(plot.sep.centroid) points(cent2[1],cent2[2],pch=4,cex=3,col=4)
     
     
-    if(fig3d && i!=0) {
+    if(fig3d && i!=0 && skipRGL==FALSE) {
       plot3d(rep(xd1,N),rep(xd2,N)
              ,ff$X[,i],
              col=label.col,
@@ -122,7 +123,7 @@ plot_simplex3 = function(ff,
              apply(xd2*t(FC[,]),2,sum)+cent2[2],
              ff$X[,i],col=Col,add=TRUE)
       print("pausing press enter to plot next 3D-Graph")
-      readline()
+      if(interactive()) readline()
     }
   }
   #end of plotting, restore graphical pars
