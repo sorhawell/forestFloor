@@ -17,7 +17,7 @@ Normally a factor, can be a numeric vector(will be output unchanged)
 }
 
 \item{drop.levels}{
-Booleen,  should unused levels be droppped?
+Boolean,  should unused levels be dropped?
 }
 
 }

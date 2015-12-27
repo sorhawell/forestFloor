@@ -15,7 +15,7 @@ box.outliers(x, limit = 1.5, normalize = TRUE)
 numeric vector, matrix, array, data.frame
 }
   \item{limit}{
-limit(SD,standard diviation) any number devating more than limit from mean is an outlier 
+limit(SD,standard deviation) any number deviating more than limit from mean is an outlier 
 }
 
 \item{normalize}{
@@ -26,7 +26,7 @@ should output range be normalized to [0;1]?
 
 }
 \details{
-Can be used to sqeeze high dimensional data into a box, hence the name box.outliers. Box.outliers is used internally in forestFloor-package to compute colour gradients without assigning unique colours to few outliers. It's a box because the borders univariate/non-interacting.
+Can be used to squeeze high dimensional data into a box, hence the name box.outliers. Box.outliers is used internally in forestFloor-package to compute colour gradients without assigning unique colours to few outliers. It's a box because the borders uni-variate/non-interacting.
 }
 \value{
 matrix(n x p) of normalized values
@@ -53,7 +53,7 @@ box.outliers = function (x, limit = 1.5)  {
 n=1000 #some observations
 p = 5  #some dimensions
 X = data.frame(replicate(p,rnorm(n))) # a dataset
-Xboxed =box.outliers(X,limit=1.5) #applying normalizatino
+Xboxed =box.outliers(X,limit=1.5) #applying normalization
 plot(Xboxed[,1],Xboxed[,2],col="#00000088") #plot output for first two dimensions
 }
 

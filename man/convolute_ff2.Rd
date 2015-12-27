@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \title{
-Low-level function to estimate a specific set of featureContributions by corresponding features with kknn-package. Used to estimate goodness-of-fit of surface in show3d.
+Low-level function to estimate a specific set of feature contributions by corresponding features with kknn-package. Used to estimate goodness-of-fit of surface in show3d.
 }
 
 \description{
-Low-level function to etstimate a selected combination feature contributions as function of selected features with leave-one-out k-nearest neighbor.
+Low-level function to estimate a selected combination feature contributions as function of selected features with leave-one-out k-nearest neighbor.
 }
 
 \usage{
@@ -20,17 +20,17 @@ convolute_ff2(ff,
 \arguments{
   
 \item{ff}{
-  forestFloor object class "forestFloor_regression" or "forestFloor_multiClass" concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
+  forestFloor object class "forestFloor_regression" or "forestFloor_multiClass" consisting of at least ff$X and ff$FCmatrix with two matrices of equal size
 }
 \item{Xi}{
   integer vector, of column indices of ff$X to estimate by.
 }
 \item{FCi}{
- integer vector, coloumn indices of features contributions in ff$FCmatrix to estimate. If more than one , these coloumns will be summed by samples/rows. If NULL then FCi will match Xi.
+ integer vector, column indices of features contributions in ff$FCmatrix to estimate. If more than one , these columns will be summed by samples/rows. If NULL then FCi will match Xi.
 }
 
 \item{k.fun}{
-  function to define k-neighbors to concider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="gaussian",kmax=10).
+  function to define k-neighbors to consider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="Gaussian",kmax=10).
 }
 
 \item{userArgs.kknn}{

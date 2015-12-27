@@ -1,10 +1,10 @@
 \name{convolute_ff}
 \alias{convolute_ff}
 \title{
-Cross-validateded main effects interpretation for all feature contributions.}
+Cross-validated main effects interpretation for all feature contributions.}
 
 \description{
-Convolute_ff estimates feature contributions of each feature separately as a function of the corresponding variable/feature. The estimator is a k-nearest neighbor function with gaussian distance weighting and LOO cros-validation see \code{\link{train.kknn}}.
+convolute_ff estimates feature contributions of each feature separately as a function of the corresponding variable/feature. The estimator is a k-nearest neighbor function with Gaussian distance weighting and LOO cross-validation see \code{\link{train.kknn}}.
 }
 
 \usage{
@@ -16,13 +16,13 @@ convolute_ff(ff,
 \arguments{
   
 \item{ff}{
-  forestFloor object "forestFloor_regression" or "forestFloor_multiClass"  concisting of at least ff$X and ff$FCmatrix with two matrices of equal size
+  forestFloor object "forestFloor_regression" or "forestFloor_multiClass"  consisting of at least ff$X and ff$FCmatrix with two matrices of equal size
 }
 \item{these.vars}{
   vector of col.indices to ff$X. Convolution can be limited to these.vars 
 }
 \item{k.fun}{
-  function to define k-neighbors to concider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="gaussian",kmax=10).
+  function to define k-neighbors to consider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="Gaussian",kmax=10).
 }
 \item{userArgs.kknn}{
   argument list to pass to train.kknn function for each convolution. See (link) kknn.args.
@@ -32,7 +32,7 @@ Conflicting arguments to this list will be overridden e.g. k.fun.
   
 }
 \details{
-convolute_ff uses train.kknn from kknn package to estimate featureContributions by their corresponding varialbles. The output inside a ff$FCfit will have same dimensions as ff$Fmatrix and the values will match quite well if the learned model structure is relative smooth and main effects are dominent. This function is e.g. used to estimate fitted lines in plot.forestFloor function "plot(ff,...)". LOO cross validation is used to quantify how much of feature contribution variation can be explained as a main effect.
+convolute_ff uses train.kknn from kknn package to estimate feature contributions by their corresponding variables. The output inside a ff$FCfit will have same dimensions as ff$FCmatrix and the values will match quite well if the learned model structure is relative smooth and main effects are dominant. This function is e.g. used to estimate fitted lines in plot.forestFloor function "plot(ff,...)". LOO cross validation is used to quantify how much of feature contribution variation can be explained as a main effect.
 }
 
 \value{

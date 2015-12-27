@@ -3,11 +3,11 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 
 \title{
-Generic colour module for forestFloor obejcts
+Generic colour module for forestFloor objects
 }
 
 \description{
-This colour module colour observations by selected variables. PCA decomposes a selection more than three variables. Space can be inflated by random forest variable importance, to focus colouring on influential variables. Outliers(>3std.dev) are automatically supressed. Any colouring can be modified.
+This colour module colour observations by selected variables. PCA decomposes a selection more than three variables. Space can be inflated by random forest variable importance, to focus coloring on influential variables. Outliers(>3std.dev) are automatically suppressed. Any colouring can be modified.
 }
 
 \usage{
@@ -21,10 +21,10 @@ fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE,
 \arguments{
   
   \item{ff}{
-  a obejct of class "forestFloor_regression" or "forestFloor_multiClass" or a matrix or a data.frame. No missing values. X.matrix must be set TRUE for "forestFloor_multiClass" as colouring by multiClass feature contributions is not supported.
+  a object of class "forestFloor_regression" or "forestFloor_multiClass" or a matrix or a data.frame. No missing values. X.matrix must be set TRUE for "forestFloor_multiClass" as colouring by multiClass feature contributions is not supported.
   }
   \item{cols}{
-  vector of indices of columns to colour by, will refer to ff$X if X.matrix=T and else ff$FCmatrix. If ff itself is a matrix or data.frame, indices will refer to these coloums
+  vector of indices of columns to colour by, will refer to ff$X if X.matrix=T and else ff$FCmatrix. If ff itself is a matrix or data.frame, indices will refer to these columns
   }
   
   \item{orderByImportance}{
@@ -32,7 +32,7 @@ fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE,
   }
   
   \item{X.matrix}{
-  logical, true will use feature matrix false will use feature contribution matrix. Only relvant if input is forestFloor object.
+  logical, true will use feature matrix false will use feature contribution matrix. Only relevant if input is forestFloor object.
   }
   
   \item{hue}{
@@ -40,13 +40,13 @@ fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE,
   colour wheel settings, will skew the colour of all observations without changing the contrast between any two given observations.
   }
   \item{saturation}{
-  value within [0,1], mean saturation of colours, 0 is greytone and 1 is maximal colourfull.
+  value within [0,1], mean saturation of colours, 0 is grey tone and 1 is maximal colourful.
   }
   \item{brightness}{
   value within [0,1], mean brightness of colours, 0 is black and 1 is lightly colours.
   }
   \item{hue.range}{
-  value within [0,1], ratio of colour wheel, small value is small slice of colour whell those little variation in colours. 1 is any possible colour except for RGB colour system.
+  value within [0,1], ratio of colour wheel, small value is small slice of colour wheel those little variation in colours. 1 is any possible colour except for RGB colour system.
   }
   \item{sat.range}{
   value within [0,1], for colouring of 2 or more variables, a range of saturation is needed to  obtain more degrees of freedom in the colour system. But as saturation of is preferred to be >.75 the range of saturation cannot here exceed .5. If NULL sat.range will set widest possible without exceeding range.
@@ -65,7 +65,7 @@ value within [0,1], for colouring of 3 or more variables, a range of brightness 
   }
   
   \item{byResiduals}{
-  logical, should coloring be residuals of main effect fit(overrides X.matrix=). If no fit has been computed "is.null(ff$FCfit)", a tempoarily main effect fit will be computed. Use ff = convolute_ff(ff) to only compute once and/or to modify fit parameters.
+  logical, should coloring be residuals of main effect fit(overrides X.matrix=). If no fit has been computed "is.null(ff$FCfit)", a temporarily main effect fit will be computed. Use ff = convolute_ff(ff) to only compute once and/or to modify fit parameters.
   }
   
   
@@ -81,12 +81,12 @@ value within [0,1], for colouring of 3 or more variables, a range of brightness 
 exponent to modify influence of imp.weight. 0 is not influence. -1 is counter influence. 1 is linear influence. .5 is square root influence etc..
   }
   \item{outlier.lim}{
-number from 0 to Inf. Any observation which univariately exceed this limit will be suppressed, as if it actually where on this limit. Normal limit is 3 standard deviations. Extreme outliers can otherwise reserve alone a very large part of a given linear colour gradient. This leeds to visulization where outlier have one colour and any other observation another but same colour.
+number from 0 to Inf. Any observation which univariately exceed this limit will be suppressed, as if it actually where on this limit. Normal limit is 3 standard deviations. Extreme outliers can otherwise reserve alone a very large part of a given linear colour gradient. This leads to visualization where outlier have one colour and any other observation another but same colour.
  }
  
  \item{RGB.exp}{
  value between ]1;>1]. Defines steepness of the gradient of the RGB colour system
- Close to one green midle area is missing.
+ Close to one green middle area is missing.
  For values higher than 2, green area is dominating
  }
 }

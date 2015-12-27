@@ -7,7 +7,7 @@
 }
 
 \description{
-Low-level n-dimensionl grid wrapper of \code{\link{kknn}} (not \code{\link{train.kknn}}). Predicts a grid structure on the basis of estimated feature contributions. Is used to draw  one 2D surface in a 3D plot (\code{\link{show3d}}) on basis of feature contributions.
+Low-level n-dimensional grid wrapper of \code{\link{kknn}} (not \code{\link{train.kknn}}). Predicts a grid structure on the basis of estimated feature contributions. Is used to draw  one 2D surface in a 3D plot (\code{\link{show3d}}) on basis of feature contributions.
 }
 
 \usage{
@@ -29,7 +29,7 @@ convolute_grid           (ff,
     the integer vector, of col indices of ff$X to estimate by, often of length 2 or 3. Note total number of predictions is a equal grid^"length of this vector".
   }
   \item{FCi}{
-    the integer vector, of col indices of ff$FCmatrix. Those feature contributions to conbine(sum) and estimate. If FCi=NULL, will copy Xi vector, which is the trivial choice.
+    the integer vector, of col indices of ff$FCmatrix. Those feature contributions to combine(sum) and estimate. If FCi=NULL, will copy Xi vector, which is the trivial choice.
   }
   
   \item{grid}{
@@ -37,16 +37,16 @@ convolute_grid           (ff,
   }
   
   \item{limit}{
-  a numeric scalar, number of stadard deviations away from mean by any dimension to disregard outliers when spanning observations with grid. Set to limit=Inf outliers never should be disregarded.
+  a numeric scalar, number of standard deviations away from mean by any dimension to disregard outliers when spanning observations with grid. Set to limit=Inf outliers never should be disregarded.
   }
   
   \item{zoom}{
-  numeric scaler, the size of the grid compared to the univariate range of data.  If zoom=2 the grid will by any dimension span the double range of the observations. Outliers are disregarded with limit argument.
+  numeric scalar, the size of the grid compared to the uni-variate range of data.  If zoom=2 the grid will by any dimension span the double range of the observations. Outliers are disregarded with limit argument.
   
   }
   
 \item{k.fun}{
-  function to define k-neighbors to concider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="gaussian",kmax=10).
+  function to define k-neighbors to consider. n.obs is a constant as number of observations in ff$X. Hereby k neighbors is defined as a function k.fun of n.obs. To set k to a constant use e.g. k.fun = function() 10. k can also be overridden with   userArgs.kknn = alist(kernel="Gaussian",kmax=10).
 }
   
   \item{userArgs.kknn}{
@@ -55,11 +55,11 @@ convolute_grid           (ff,
   
 }
 \details{
-  This low-level function predicts feature contributions in a grid with \code{\link{train.kknn}} which is k-nearest neighbor + gaussian weighting. This wrapper is used to construct the transparrent grey surface in \code{\link{show3d}}.
+  This low-level function predicts feature contributions in a grid with \code{\link{train.kknn}} which is k-nearest neighbor + Gaussian weighting. This wrapper is used to construct the transparent grey surface in \code{\link{show3d}}.
 }
 
 \value{
-  a data frame, 1 + Xvariable coloumns.
+  a data frame, 1 + X variable columns.
   First column is the predicted summed feature contributions as a function of the following columns feature   coordinates.
 }
 
