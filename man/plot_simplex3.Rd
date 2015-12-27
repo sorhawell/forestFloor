@@ -4,22 +4,22 @@
 3-class simplex forestFloor plot
 }
 \description{
-3-class forestFloor as plotted as 2D simplex. Can also expand to the 2D simplex with one variable into a 3D plot.
+3-class forestFloor as plotted as 2D simplex. Can also expand to the 2D simplex + variable into a 3D plot, see argument fig3d.
 }
 \usage{
 plot_simplex3(ff,
-              Xi=NULL,
-              includeTotal=TRUE,
-              label.col=NULL,
-              fig.cols=3,
-              fig.rows= NULL,
-              auto.alpha=0.25,
-              fig3d=FALSE,
-              restore_par=TRUE,
-              set_pars=TRUE,
-              zoom.fit=NULL,
-              var.col = NULL,
-              plot.sep.centroid=TRUE)
+              Xi           = NULL,
+              includeTotal = TRUE,
+              label.col    = NULL,
+              fig.cols     = 3,
+              fig.rows     = NULL,
+              auto.alpha   = 0.25,
+              fig3d        = FALSE,
+              restore_par  = TRUE,
+              set_pars     = TRUE,
+              zoom.fit     = NULL,
+              var.col      = NULL,
+              plot.sep.centroid = TRUE)
 }
 
 \arguments{
@@ -29,11 +29,11 @@ plot_simplex3(ff,
 }
 
 \item{Xi}{
-  vector of integer indices (refeering to columnorder of trainingset) to what feature contributions should be plotted in individual plots.
+  vector of integer indices (refeering to column order of trainingset) to what feature contributions should be plotted in individual plots.
 }
 
 \item{includeTotal}{
-  TRUE / FALSE. Combined separation of all feature contributions, which equal to the separation of the entire model can be included.
+  TRUE / FALSE. Combined separation of all feature contributions, which is equal to the separation of the entire model can be included.
 }
 
 \item{label.col}{
@@ -41,7 +41,7 @@ a colour vector of K classes length defining the colour of each class for plotti
 }
 
 \item{fig.cols}{
-  How many columns should be plotted side ways, is passed to par(mfrow=c(fig.rows,fig.cols))
+  How many columns should be plotted sideways, is passed to par(mfrow=c(fig.rows,fig.cols))
 }
 
 \item{fig.rows}{
@@ -50,11 +50,11 @@ a colour vector of K classes length defining the colour of each class for plotti
 }
 
 \item{auto.alpha}{
-  A scalar 0.5 to 1 most often. Low values increase transparancy of points used to avoid overplotting. auto.alpha is alpha corrected of samplesize such that less adjustment is needed.
+  a scalar between 0.5 to 1 most often. Low values increase transparancy of points used to avoid overplotting. auto.alpha is alpha corrected of samplesize such that less adjustment is needed.
 }
 
 \item{fig3d}{
-  TRUE/FALSE, a 3D plot including the variable as a axis can be co-plotted.
+  TRUE/FALSE, a 3D plot including the variable as an axis can be co-plotted with rgl.
 }
 
 \item{restore_par}{
@@ -70,11 +70,11 @@ a colour vector of K classes length defining the colour of each class for plotti
 }
 
 \item{var.col}{
-  NULL, a single colour or a  colour vector of N samples length. Samples will be coloured accordingly. use function fcol to make colour gradient e.g. by the variable values them selves. See example.
+  a single colour or a  colour vector of N samples length. Samples will be coloured accordingly. use function fcol to make colour gradient e.g. by the variable values themselves. See example \code{\link{fcol}}.
 }
 
 \item{plot.sep.centroid}{
-  TRUE/FALSE. Should the average bootstrap prediction be plotted? If no bootstrap stratification, the average bootstrap prediction is equal to class distribution training set. RF model probalistic predictions is equal average bootstrap prediction plus all feature contributions.
+  TRUE/FALSE. Should the average bootstrap prediction be plotted? If no bootstrap stratification, the average bootstrap prediction is equal to class distribution training set. RF model probalistic predictions is equal to average bootstrap prediction plus all feature contributions.
 }
 
 }
@@ -89,7 +89,6 @@ Soren Havelund Welling
 
 
 \examples{
-\dontrun{
   library(randomForest)
   library(forestFloor)
   require(utils)
@@ -131,5 +130,4 @@ Soren Havelund Welling
     var.col=alist(order=F,alpha=.8),fig3d=F,includeTotal=(I==4),
     auto.alpha=.3,set_pars=F)
   }
-}
 }
