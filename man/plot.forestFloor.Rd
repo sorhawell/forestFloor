@@ -97,7 +97,7 @@ GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
 
 \item{...}{
 ... other arguments passed to \code{\link{par}} or \code{\link{plot}}\cr.
-e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot
+e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot. par() arguments are reset imediately as plot function returns.
 }
 
 }
