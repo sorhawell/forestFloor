@@ -35,28 +35,28 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
   target vector, factor or regression
   }
   \item{leftDaughter}{
-  a matrix from a the output of randomForest rfo$forest$leftDaughter
+  a matrix from a the output of randomForest rf$forest$leftDaughter
   the node.number/row.number of the leftDaughter in a given tree by column
   }
   \item{rightDaughter}{
-  a matrix from a the output of randomForest rfo$forest$rightDaughter
+  a matrix from a the output of randomForest rf$forest$rightDaughter
   the node.number/row.number of the rightDaughter in a given tree by column
   }
   \item{nodestatus}{
-  a matrix from a the output of randomForest rfo$forest$nodestatus
+  a matrix from a the output of randomForest rf$forest$nodestatus
   the nodestatus of a given node in a given tree
   }
   \item{xbestsplit}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit. The split point of numeric variables or the binary split of categorical variables. See help file of \code{\link{randomForest::getTree}} for details of binary expansion for categorical splits.
+  a matrix from a the output of randomForest rf$forest$xbestsplit. The split point of numeric variables or the binary split of categorical variables. See help file of randomForest::getTree for details of binary expansion for categorical splits.
   }
   \item{nodepred}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit. The inbag target average for regression mode and the majority target class for classification
+  a matrix from a the output of randomForest rf$forest$xbestsplit. The inbag target average for regression mode and the majority target class for classification
   }
   \item{bestvar}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit the inbag target average for regression mode and the majority target class for classification
+  a matrix from a the output of randomForest rf$forest$xbestsplit the inbag target average for regression mode and the majority target class for classification
   }
   \item{inbag}{
-  a matrix as the output of \code{\link{randomForest}} rfo$inbag. Contain counts of how many times a sample was selected for a given tree.
+  a matrix as the output of randomForest rf$inbag. Contain counts of how many times a sample was selected for a given tree.
   }
   
   \item{varLevels}{
