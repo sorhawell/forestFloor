@@ -2,10 +2,10 @@
 \alias{vec.plot}
 
 \title{
-Compute and plot vector effct characteristics for a given multivariate model
+Compute and plot vector effect characteristics for a given multivariate model
 }
 \description{
-vec.plot visualizes the vector effect characteristics of a given model. Geomatrically it corresponds to a specific 2D or 3D slice of a higher dimensional mapping structure.  One variable (2D plot) or two variables (3D plot) are screened within the range of the training data, while remaining variables are fixed at the univariate means (as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model structure into separate components.
+vec.plot visualizes the vector effect characteristics of a given model. Geometrically it corresponds to a specific 2D or 3D slice of a higher dimensional mapping structure.  One variable (2D plot) or two variables (3D plot) are screened within the range of the training data, while remaining variables are fixed at the univariate means (as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model structure into separate components.
 }
 
 \usage{
@@ -44,7 +44,7 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
   }
   
   \item{limitY}{
-  boleen, if TRUE Y-axis is standardised for any variable. Useful for composite plots as shown in example.
+  boolean, if TRUE Y-axis is standardized for any variable. Useful for composite plots as shown in example.
   }
   
   \item{moreArgs}{
@@ -56,7 +56,7 @@ vec.plot(model,X,i.var,grid.lines=100,VEC.function=mean,
   
 }
 \details{
-vec.plot visulizes the vector effect charecteristics of a given model. One(2D plot) or two(3D plot) variables are screened within the range of the training data, while remaining variables are fixed at the univariate means of each them(as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model topology in separate components.
+vec.plot visualizes the vector effect characteristics of a given model. One(2D plot) or two(3D plot) variables are screened within the range of the training data, while remaining variables are fixed at the univariate means of each them(as default). If remaining variables do not interact strongly with plotted variable(s), vec.plot is a good tool to break up a high-dimensional model topology in separate components.
 }
 
 \value{

@@ -4,7 +4,7 @@
 3-class simplex forestFloor plot
 }
 \description{
-3-class forestFloor as plotted as 2D simplex. Can also expand to the 2D simplex + variable into a 3D plot, see argument fig3d.
+3-class forestFloor plotted in a 2D simplex. The plot describes with feature contributions the change of predicted class probability for each sample due a single variable given all other variables. This plot is better than regular multiclass plots (plot.forestFloor_multiClass) to show the change of class probabilities, but the feature values can only be depcited as a colour gradient. But (fig3d=TRUE) allows the feature value to be depicted by the Z-axis as a extra pop-up 3D plot.
 }
 \usage{
 plot_simplex3(ff,
@@ -80,7 +80,7 @@ a colour vector of K classes length defining the colour of each class for plotti
 }
 
 \details{
-Random forest 3 class maps from a feature space to a 3 dimensional (K-1) probability simplex space, which can be plotted in 2D as sum of class probabilities always is one. The mapping function can be plotted additivel for each variable(main effects plus interactions effects) 
+Random forest 3 class maps from a feature space to a 3 dimensional (K-1) probability simplex space, which can be plotted in 2D because class probabilities sum to one, and class feature contributions sum to zero. The centroid these plots is the prior of the random forest model. The prior, unless modified with statification is the target class distribution. Default majority voting lines would run from middle to the corners.
 }
 
 \author{

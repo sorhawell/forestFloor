@@ -8,8 +8,8 @@
 print summary of forestFloor.Object
 }
 \description{
-summary comprise N_fold I_repeated cross validation statistics and aggragated importance of variables.
-a forestFloor_Object is of class forestFloor and is the output of the forestFloor function.
+This function simply states the obvious and returns the elements inside the object list.
+
 }
 \usage{
 \method{print}{forestFloor_regression}    (x,...)
@@ -18,7 +18,7 @@ a forestFloor_Object is of class forestFloor and is the output of the forestFloo
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-  x also abbrivated ff, forestFloor_Object the output from the forestFloor function
+  x also abbreviated ff, forestFloor_Object the output from the forestFloor function
 
 }
 

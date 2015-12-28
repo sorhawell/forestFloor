@@ -4,10 +4,10 @@
 \alias{forestFloor_randomForest_classification}
 
 \title{
-ForestFloor: Visualize model structures of randomForest models
+Compute out-of-bag cross-validated feature contributions to visualize model structures of randomForest models.
 }
 \description{
-Computes a cross validated feature contribution matrix from a randomForest model-fit and outputs a forestFloor S3 class object (a list), including unscaled importance and the orginal training set. The output object is the basis for all visualizations.
+Computes a cross validated feature contribution matrix from a randomForest model-fit and outputs a forestFloor S3 class object (a list), including unscaled importance and the original training set. The output object is the basis for all visualizations.
 }
 
 \usage{
@@ -20,18 +20,18 @@ rf.fit, a random forest object as the output from randomForest::randomForest\cr
 }
 
 \item{X}{
-data.frame of input variables, numeric(continnous), descrete(treated as continous) or factors(categoric).
+data.frame of input variables, numeric(continuous), discrete(treated as continuous) or factors(categorical).
 n_rows observations and n_columns features
 X MUST be the same data.frame as used to train the random forest, see above item.
 }
 
 \item{calc_np}{
   TRUE/FALSE. Calculate Node Predictions(TRUE) or reuse information from rf.fit(FALSE)?
-  Xlightly faster when FALSE for regression. calc_np=TRUE will only take effect for rf.fit of class "randomForest" and type="regression". This option, is only for developmental purposes. Just set =FALSE always, as function will override this choice if not appropriate.
+  Slightly faster when FALSE for regression. calc_np=TRUE will only take effect for rf.fit of class "randomForest" and type="regression". This option, is only for developmental purposes. Just set =FALSE always, as function will override this choice if not appropriate.
 }
 
 \item{binary_reg}{
-booleen, if TRUE binary classification can be changed to "percentage votes" of class 1, and thus be treated as regression.
+boolean, if TRUE binary classification can be changed to "percentage votes" of class 1, and thus be treated as regression.
 }
 
 \item{...}{
@@ -47,9 +47,9 @@ does nothing
   
 What is FC?: Feature contributions are the sums over all local increments for each observation for each feature divided by the number of trees. A local increment is the change of node prediction from parent to daughter node split by a given feature. Thus a feature contribution summarizes the average outcome for all those times a given sample was split by a given prediction. forestFloor use inbag samples to calculate local increments, but only sum local increments over out-of-bag samples divided with OOBtimes. OOBtimes is the number of times a given observation have been out-of-bag. which is roundly ntrees / 3. In practice this removes a substantial self-leverage of samples to the corresponding feature contributions. Hereby visualizations becomes less noisy.
   
-What is FC used for?: Feature contributions is smart way to decompose a RF mapping structure into additive components. Plotting FC's against variables values yield at first glance plots similar to marginal-effect plots, partial dependence plots and vector effect characteristic plots. This package forsetFloor, make use of feature contributions to separate main effects and identify plus quantify latent interactions. The advantages of forestFloor over typial partial.dependence plots are: (1) Easier to identify interactions. (2) Training samples is a part of plot, such that extrapolated model structure can be disregarded. (3) The "goodness of visualization" (how exactly the plot represent the higher dimensional model structure) can be quantified. (4) Cherfull colours and 3D graphics thanks to the rgl package.  
+What is FC used for?: Feature contributions is smart way to decompose a RF mapping structure into additive components. Plotting FC's against variables values yield at first glance plots similar to marginal-effect plots, partial dependence plots and vector effect characteristic plots. This package forsetFloor, make use of feature contributions to separate main effects and identify plus quantify latent interactions. The advantages of forestFloor over typical partial.dependence plots are: (1) Easier to identify interactions. (2) Training samples is a part of plot, such that extrapolated model structure can be disregarded. (3) The "goodness of visualization" (how exactly the plot represent the higher dimensional model structure) can be quantified. (4) Cheerful colours and 3D graphics thanks to the rgl package.  
   
-RF regression takes input features and outputs a target value. RF classification can output a pseudo probability vector with predicted class probability for each sample. The RF mapping topology of classification is different than for regression as the output is no longer a scalar, the outout is a vector with predicted class probability for each class. For binary classification this topology can be simplified to a regression-like scalar as the probability of class_1 = 1 - class_2. Set binary_reg=TRUE for a binary RF classification to get regression like visualizations. For multi-class the output space is probability space where any point is a probability prediction of each target class.
+RF regression takes input features and outputs a target value. RF classification can output a pseudo probability vector with predicted class probability for each sample. The RF mapping topology of classification is different than for regression as the output is no longer a scalar, the output is a vector with predicted class probability for each class. For binary classification this topology can be simplified to a regression-like scalar as the probability of class_1 = 1 - class_2. Set binary_reg=TRUE for a binary RF classification to get regression like visualizations. For multi-class the output space is probability space where any point is a probability prediction of each target class.
 
 To plot forestFloor objects use plot-method plot.forestFloor and function show3d. Input parameters for classification or regression are not entirely the same. Check help-file \code{\link{plot.forestFloor}} and \code{\link{show3d}}. For 3-class problems the special function \code{\link{plot_simplex3}} can plot the probability predictions in a 2D phase diagram (K-1 simplex).
 }
@@ -66,11 +66,11 @@ To plot forestFloor objects use plot-method plot.forestFloor and function show3d
 }
 
 \item{importance}{
-  The gini-importance or permutation-importance a.k.a varaiable importance of the random forest object (unscaled). If rfo=randomForest(X,Y,importance=FALSE), gini-importance is used. Gini-importance is less reproducible and more biased. The extra time used to compute permutation-importance is negliable. 
+  The gini-importance or permutation-importance a.k.a variable importance of the random forest object (unscaled). If rfo=randomForest(X,Y,importance=FALSE), gini-importance is used. Gini-importance is less reproducible and more biased. The extra time used to compute permutation-importance is negligible. 
 }
 
 \item{imp_ind}{
-  the importance indices is the order to sort the features by descending importance. imp_ind is used by plotting functions to present most relevant feature contributions first. If using gini-importance, the order of plots is more random and will favor continous variables. The plots themselves will not differ.
+  the importance indices is the order to sort the features by descending importance. imp_ind is used by plotting functions to present most relevant feature contributions first. If using gini-importance, the order of plots is more random and will favor continuous variables. The plots themselves will not differ.
 }
 
 \item{FC_matrix}{

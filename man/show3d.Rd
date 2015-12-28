@@ -8,7 +8,7 @@
 make forestFloor 3D-plot of random forest feature contributions
 }
 \description{
-2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(kknn package) and plotted alongside the data points. 3D grphic device is rgl. Will dispatch methods show3d.forestFloor_regression for regression and show3d_forestFloor_multiClass for classification.
+2 features features(horizontal XY-plane) and one combined feature contribution (vertical Z-axis). Surface response layer will be estimated(kknn package) and plotted alongside the data points. 3D graphic device is rgl. Will dispatch methods show3d.forestFloor_regression for regression and show3d_forestFloor_multiClass for classification.
 
 }
 \usage{
@@ -58,33 +58,31 @@ make forestFloor 3D-plot of random forest feature contributions
   indices of feature contributions columns
   }
   \item{col}{
-  colour vector
-  points colour or colour palette, can also be passed as promise in plot.rgl.args
+  a colour vector. One colour or colour palette(vector).
   }
   \item{orderByImportance}{
-  booleen
-  should indices count 'variable importance' order or matrix/data.frame order
+  should indices order by 'variable importance' or by matrix/data.frame order?
   }
   \item{surface}{
-  should a surface be plotted also
+  should a surface be plotted also?
   }
   \item{combineFC}{
-  how should feature contributions be combined
+  a row function applied on selected columns(FCi) on $FCmatrix or $FCarray. How should feature contributions be combined? Default is \code{\link{sum}}.
   }
   \item{zoom}{
-  #grid can be expanded in all directions by a factor ,zoom
+  grid can be expanded in all directions by a factor
   }
   \item{grid.lines}{
-  #how many grid lines should be used
+  how many grid lines should be used. Total surface anchor points in plot is grid.lines^2. May run slow above 200-500 depending on hardware.
   }
   \item{limit}{
-  #sizing of grid does not concider outliers, outside limit of e.g. 3 sd deviations univariately
+ a number. Sizing of grid does not consider outliers outside this limit of e.g. 3 SD deviations univariately.
   }
   \item{cropPointsOutSideLimit}{
-  #if points exceed standard devation limit, they will not be plotted
+  #if points exceed standard deviation limit, they will not be plotted
   }
   \item{kknnGrid.args}{
-  argument list, any possiple arguments to kknn{kknn} \cr
+  argument list, any possible arguments to kknn{kknn} \cr
   These default wrapper arguments can hereby be overwritten: \cr
   wrapper = alist(
     formula=fc~.,      # do not change\cr
@@ -93,7 +91,7 @@ make forestFloor 3D-plot of random forest feature contributions
     kernel="gaussian", #distance kernel, other is e.g. kernel="triangular" \cr
     test=gridX         #do not change \cr
     ) \cr
-  see kknn{kknn} to understand paremters. k is set by default automatically to a half times the square root of observations, which often gives a reasonable balance between robustness and  apdeptness. k neighbors and distance kernel can be changed be passing kknnGrid.args = alist(k=5,kernel="triangular",scale=FALSE), hereby will default k and default kernel be overwritten. Moreover the scale argument was not specified by this wrapper and therefore not conflicting, the argument is simply appended.
+  see kknn{kknn} to understand parameters. k is set by default automatically to a half times the square root of observations, which often gives a reasonable balance between robustness and  adeptness. k neighbors and distance kernel can be changed be passing kknnGrid.args = alist(k=5,kernel="triangular",scale=FALSE), hereby will default k and default kernel be overwritten. Moreover the scale argument was not specified by this wrapper and therefore not conflicting, the argument is simply appended.
   }
   
   \item{plot.rgl.args}{
@@ -108,7 +106,7 @@ make forestFloor 3D-plot of random forest feature contributions
     xlab=names(X)[1], #xlab, label for x axis \cr
     ylab=names(X)[2], #ylab, label for y axis \cr
     zlab=paste(names(X[,FCi]),collapse=" - "), #zlab, label for z axis  \cr 
-    alpha=.4, #points transparancy \cr
+    alpha=.4, #points transparency \cr
     size=3,   #point size \cr
     scale=.7, #z axis scaling \cr
     avoidFreeType = T, #disable freeType=T plug-in. (Postscript labels) \cr
@@ -133,11 +131,11 @@ a numeric vector describing which classes and in what sequence to plot. NULL is 
   }
   
   \item{user.gof.args}{
-argument list passed to internal function ff2, which can modify how goodness-of-fit is computed. Number of neighobers and kernel can be set manually with e.g. list(kmax=40,kernel="gaussion"). Default pars should work already in most cases. Function ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
+argument list passed to internal function ff2, which can modify how goodness-of-fit is computed. Number of neighbors and kernel can be set manually with e.g. list(kmax=40,kernel="gaussian"). Default pars should work already in most cases. Function ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
   }
   
   \item{plot_GOF}{
-Booleen TRUE/FALSE. Should the goodness of fit be computed and plotted is main of 3D plot? If false, no GOF input pars are useful.
+Boolean TRUE/FALSE. Should the goodness of fit be computed and plotted is main of 3D plot? If false, no GOF input pars are useful.
 }
   
   \item{...}{

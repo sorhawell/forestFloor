@@ -47,42 +47,33 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
   the nodestatus of a given node in a given tree
   }
   \item{xbestsplit}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit \cr
-  the split point of numeric variables or the binary split of categorical variables \cr
-  see details help(randomForest::getTree) for details of binary expansion of categorical splits
+  a matrix from a the output of randomForest rfo$forest$xbestsplit. The split point of numeric variables or the binary split of categorical variables. See help file of \code{\link{randomForest::getTree}} for details of binary expansion for categorical splits.
   }
   \item{nodepred}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit
-  the inbag target average for regression mode and the majority target class for classification
+  a matrix from a the output of randomForest rfo$forest$xbestsplit. The inbag target average for regression mode and the majority target class for classification
   }
   \item{bestvar}{
-  a matrix from a the output of randomForest rfo$forest$xbestsplit
-  the inbag target average for regression mode and the majority target class for classification
+  a matrix from a the output of randomForest rfo$forest$xbestsplit the inbag target average for regression mode and the majority target class for classification
   }
   \item{inbag}{
-  a matrix from the output of randomForest rfo$inbag for regression \cr
-  a matrix from the output of cinbag::trimTrees cinbag.out$inbagCounts \cr
-  contains...\cr
-  numbers either 0, out of bag, 1 once or multiple times in bag for randomForest function \cr
-  positive integer og how many times inbag for cinbag function \cr
-  rows represent each observtion of training data and coloumns each tree \cr
+  a matrix as the output of \code{\link{randomForest}} rfo$inbag. Contain counts of how many times a sample was selected for a given tree.
   }
   
   \item{varLevels}{
-  the number of levels of all varibles, 1 for continous and multinomal, >1 forcategorical variables. This is needed     for categorical variables to interpretate binary split from xbestsplit.
+  the number of levels of all variables, 1 for continuous or discrete, >1 for categorical variables. This is needed     for categorical variables to interpret binary split from xbestsplit.
   }
   
   \item{OOBtimes}{
-  number of times a certain observation was out of bag in the forest. Needed to compute feature contributions as    they are the sum local increments over out-of-bag obseravations over features divided by the OOBtimes. In previous implementation featurecontributions is summed all observations and is divived by ntrees.
+  number of times a certain observation was out-of-bag in the forest. Needed to compute cross-validated feature contributions as these are summed local increments over out-of-bag observations over features divided by this number. In previous implementation(rfFC), articles(see references) feature contributions are summed by all observations and is divived by ntrees.
   }
+  
   \item{localIncrements}{
-  an empty matrix to store localIncrements during computation. In the end the localIncrement matrix will become the feature contributions.
+  an empty matrix to store localIncrements during computation. As C++ function returns, the input localIncrement matrix contains the feature contributions.
   }
 
 }
 \details{
-This is function is excuted by the function forestFloor. \cr
-This is a c++/Rcpp implementation computing feature contributions. The main differences from this implementation and the rfFC-package(Rforge), is that these feature contributions are only summed over out-of-bag samples yields a cross-validation. This implementation allows sample replacement, binary and multi-classification.
+This is function is excuted by the function forestFloor. This is a c++/Rcpp implementation computing feature contributions. The main differences from this implementation and the rfFC-package(Rforge), is that these feature contributions are only summed over out-of-bag samples yields a cross-validation. This implementation allows sample replacement, binary and multi-classification.
 }
 
 \value{

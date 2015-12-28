@@ -5,7 +5,7 @@
 forestFloor: visualize the random forest model structure
 }
 \description{
-forrestFloor visualizes randomForests models(RF). Package enables users to understand a non-linear, regression problem or a binary classification problem through RF. Any model can be separated into a series of main effect and interactions with the concept of feature contributions.
+forestFloor visualizes randomForests models(RF). Package enables users to understand a non-linear, regression problem or a binary classification problem through RF. Any model can be separated into a series of main effect and interactions with the concept of feature contributions.
 }
 \details{
 \tabular{ll}{

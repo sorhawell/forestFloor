@@ -3,7 +3,7 @@
 \alias{plot.forestFloor_regression}
 \alias{plot.forestFloor_multiClass}
 \title{
-plot.forestFloor_regrssion
+plot.forestFloor_regression
 }
 \description{
 A method to plot an object of forestFloor-class. Plot partial feature contributions of the most important variables. Colour gradients can be applied to show possible interactions. Fitted function(plot_GOF) describe FC only as a main effect and quantifies 'Goodness Of Fit'.
@@ -40,23 +40,22 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-forestFloor-object, also abbrivated ff. Basicly a list of class="forestFloor" containing feature contributions, features, targets and varaible importance.
+forestFloor-object, also abbreviated ff. Basically a list of class="forestFloor" containing feature contributions, features, targets and variable importance.
 }
 
 \item{plot_seq}{
-a numeric vector describing which variables and in what sequence to plot,
-ordered by importance as default. If orderByImportance = F, then by feature/coloumn order of training data.
+a numeric vector describing which variables and in what sequence to plot. Ordered by importance as default. If orderByImportance = F, then by feature/column order of training data.
 }
 
 \item{label.seq}{
 [only classification] a numeric vector describing which classes and in what sequence to plot. NULL is all classes ordered is in levels in x$Y of forestFloor_mulitClass object x. 
 }
 \item{fig.columns}{
-[]for multi plotting, how many columns per page.
+[only for multiple plotting], how many columns per page.
 default(NULL) is 1 for one plot, 2 for 2, 3 for 3, 2 for 4 and 3 for more. 
 }
 \item{limitY}{
-TRUE/FLASE, constrain all Yaxis to same limits to ensure relevance of low importance features is not overinterpreted
+TRUE/FLASE, constrain all Yaxis to same limits to ensure relevance of low importance features is not over interpreted
 }
 \item{colLists}{
 List of colour vectors of label.seq length. Each element is a colour vector colouring sample class prediction of one class. Vectors should either be of length 1 with one colour for class predictions or of length equal to number of training observations designating colours for all samples. NULL will choose standard one colour per class.
@@ -65,7 +64,7 @@ List of colour vectors of label.seq length. Each element is a colour vector colo
 vector to apply jitter to x-axis in plots. Will refer to variables. Useful to for categorical variables. Default=NULL is no jitter.
 }
 \item{jitter.factor}{
-value to decide howmuch jitter to apply. often between .5 and 3
+value to decide how much jitter to apply. often between .5 and 3
 }
    
 \item{orderByImportance}{
@@ -74,30 +73,30 @@ should plotting and plot_seq be ordered after importance. Most important feature
 }
 
 \item{cropXaxes}{
-a vector of indice numbers of which zooming of x.axis should look away from outliers
+a vector of indices of which zooming of x.axis should look away from outliers
 }
 
 \item{crop_limit}{
-a number often between 1.5 and 5, referring limit in std.devs from the mean defining outliers
+a number often between 1.5 and 5, referring limit in sigmas from the mean defining outliers
 if limit = 2, above selected plots will zoom to +/- 2 std.dev of the respective features.
 }
 
 \item{plot_GOF}{
-Booleen TRUE/FALSE. Should the goodness of fit be plotted as a line?
+Boolean TRUE/FALSE. Should the goodness of fit be plotted as a line?
 }
 
 \item{GOF_args}{
-Graphical arguments fitted lines, see \code{\link{points}} for paramter names.
+Graphical arguments fitted lines, see \code{\link{points}} for parameter names.
 }
 
 \item{speedup_GOF}{
-Should GOF only computed on reasonable subsample of data set to speedup computation.
+Should GOF only computed on reasonable sub sample of data set to speedup computation.
 GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
 }
 
 \item{...}{
 ... other arguments passed to \code{\link{par}} or \code{\link{plot}}\cr.
-e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot. par() arguments are reset imediately as plot function returns.
+e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot. par() arguments are reset immediately as plot function returns.
 }
 
 }
