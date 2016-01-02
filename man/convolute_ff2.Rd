@@ -54,6 +54,9 @@ Soren Havelund Welling
 
 \examples{
 \dontrun{
+library(forestFloor)
+library(randomForest)
+library(rgl)
 #simulate data
 obs=2500
 vars = 6 
