@@ -68,6 +68,7 @@ Soren Havelund Welling
 }
 
 \examples{
+\dontrun{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
 if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
@@ -96,7 +97,7 @@ par(pars) #restore
 for(i in 1:vars) vec.plot(rfo2,X,i,zoom=1.5,limitY=TRUE)
 
 #plotvariable X3 and X4 with vec.plot
-if(!exists("skip") || !skip) { #skips testing sometime, don't mind
-vec.plot(rfo2,X,3:4,zoom=1,grid.lines=100,col=fcol(X,3:4))
+Col = fcol(X,3:4)
+vec.plot(rfo2,X,3:4,zoom=1,grid.lines=100,col=Col)
 }
 }
