@@ -138,7 +138,7 @@ rfo = randomForest(
   keep.inbag = TRUE,  # mandatory,
   importance = TRUE,  # recommended, else ordering by giniImpurity (unstable)
   sampsize = 1500 ,   # optional, reduce tree sizes to compute faster
-  ntree = if(interactive()) 500 else 50 #speedup CRAN testing
+  ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
 )
 
 #compute forestFloor object, often only 5-10\% time of growing forest
@@ -191,7 +191,8 @@ rf = randomForest(
   keep.forest=TRUE,  # mandatory
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
-  importance  = TRUE # recommended, else ordering by giniImpurity (unstable)
+  importance  = TRUE, # recommended, else ordering by giniImpurity (unstable)
+  ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
 )
 
 ff = forestFloor(rf,X)
@@ -227,7 +228,8 @@ rf = randomForest(
   keep.forest=TRUE,  # mandatory
   keep.inbag=TRUE,   # mandatory
   samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
-  importance  = TRUE # recommended, else giniImpurity
+  importance  = TRUE, # recommended, else giniImpurity
+   ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
 )
 
 ff = forestFloor(rf,X,
