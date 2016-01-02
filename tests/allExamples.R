@@ -1,14 +1,14 @@
+if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
 library(devtools)
 library(tools)
+myPackage = "forestFloor"
 
 #remake of devtools::run_examples
-run_examples_simple_no_Roxygenize = function(pkg = ".",
+run_examples_simple_no_Roxygenize = function(
+  pkg = ".",
   topics = NULL,
-  show = TRUE,
-  test = FALSE,
-  run = TRUE,
-  reload = TRUE) {
-
+  run = TRUE
+  ) {
   pkg = as.package(pkg)
   if(is.null(topics)) {
     files = devtools:::rd_files(pkg)
@@ -22,10 +22,11 @@ run_examples_simple_no_Roxygenize = function(pkg = ".",
     files = paste0(path_man,"/",files)
     names(files) = basename(files)
   }
-    void = lapply(files, devtools:::run_example,run=run, show=show, test=test)
+    void = lapply(files, devtools:::run_example,run=run)
   "Done"
 }
 
+#if a package check, jump out of test fold and into check source folder
+if(!interactive()) setwd("../00_pkg_src")
 
-
-run_examples_simple_no_Roxygenize(run=FALSE)
+run_examples_simple_no_Roxygenize(pkg=myPackage, run=FALSE) #override dontrun
