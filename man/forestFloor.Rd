@@ -104,6 +104,7 @@ check out more guides at forestFloor.dk
 }
 
 \examples{
+\dontrun{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
 if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
@@ -229,7 +230,7 @@ plot(ff,col=Col)   #plot features
 #interfacing with rgl::plot3d
 show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5))
 }
-
+}
 
 \keyword{ multivariate }
 \keyword{ models }

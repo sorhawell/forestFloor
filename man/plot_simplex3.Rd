@@ -89,6 +89,7 @@ Soren Havelund Welling
 
 
 \examples{
+\dontrun{
   library(randomForest)
   library(forestFloor)
   require(utils)
@@ -130,4 +131,5 @@ Soren Havelund Welling
     var.col=alist(order=FALSE,alpha=.8),fig3d=FALSE,includeTotal=(I==4),
     auto.alpha=.3,set_pars=FALSE)
   }
+}
 }

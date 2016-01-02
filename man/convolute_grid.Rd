@@ -68,6 +68,7 @@ convolute_grid           (ff,
 }
 
 \examples{
+\dontrun{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
 if(!interactive() && Sys.info()["sysname"]!="Windows") skip=TRUE
@@ -175,6 +176,7 @@ for(i in uni3) {
           this34.plane[,1], add=add,
           col=rgb(count/length(uni3),1-count/length(uni3),0),alpha=0.1)
   
+}
 }
 
 }

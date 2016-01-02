@@ -160,6 +160,7 @@ Soren Havelund Welling
 }
 
 \examples{
+\dontrun{
 ## avoid testing of rgl 3D plot on headless non-windows OS
 ## users can disregard this sentence.
 if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
@@ -204,8 +205,5 @@ show3d(ff,1:2,col=Col,plot.rgl=list(size=5))
 Col = fcol(ff,1:2,X.matrix=TRUE,alpha=0.8) 
 plot(ff,col=Col) 
 show3d(ff,1:2,col=Col,plot.rgl=list(size=5))
-
 }
-
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+}

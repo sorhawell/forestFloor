@@ -111,137 +111,138 @@ Soren Havelund Welling
 }
 
 
-
 \examples{
-## avoid testing of rgl 3D plot on headless non-windows OS
-## users can disregard this sentence.
-if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
-
-###
-#1 - Regression example:
-set.seed(1234)
-library(forestFloor)
-library(randomForest)
-
-#simulate data y = x1^2+sin(x2*pi)+x3*x4 + noise
-obs = 5000 #how many observations/samples
-vars = 6   #how many variables/features
-#create 6 normal distr. uncorr. variables
-X = data.frame(replicate(vars,rnorm(obs)))
-#create target by hidden function
-Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 0.5 * rnorm(obs)) 
-
-#grow a forest
-rfo = randomForest(
-  X, #features, data.frame or matrix. Recommended to name columns.
-  Y, #targets, vector of integers or floats
-  keep.inbag = TRUE,  # mandatory,
-  importance = TRUE,  # recommended, else ordering by giniImpurity (unstable)
-  sampsize = 1500 ,   # optional, reduce tree sizes to compute faster
-  ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
-)
-
-#compute forestFloor object, often only 5-10\% time of growing forest
-ff = forestFloor(
-  rf.fit = rfo,       # mandatory
-  X = X,              # mandatory
-  calc_np = FALSE,    # TRUE or FALSE both works, makes no difference
-  binary_reg = FALSE  # takes no effect here when rfo$type="regression"
-)
-
-#print forestFloor
-print(ff) #prints a text of what an 'forestFloor_regression' object is
-plot(ff)
-
-#plot partial functions of most important variables first
-plot(ff,                       # forestFloor object
-     plot_seq = 1:6,           # optional sequence of features to plot
-     orderByImportance=TRUE    # if TRUE index sequence by importance, else by X column  
-)
-     
-#Non interacting features are well displayed, whereas X3 and X4 are not
-#by applying color gradient, interactions reveal themself 
-#also a k-nearest neighbor fit is applied to evaluate goodness-of-fit
-Col=fcol(ff,3,orderByImportance=FALSE) #create color gradient see help(fcol)
-plot(ff,col=Col,plot_GOF=TRUE) 
-
-#feature contributions of X3 and X4 are well explained in the context of X3 and X4
-# as GOF R^2>.8
-
-show3d(ff,3:4,col=Col,plot_GOF=TRUE,orderByImportance=FALSE)
-
-#if needed, k-nearest neighbor parameters for goodness-of-fit can be accessed through convolute_ff
-#a new fit will be calculated and saved to forstFloor object as ff$FCfit
-ff = convolute_ff(ff,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
-plot(ff,col=Col,plot_GOF=TRUE) #this computed fit is now used in any 2D plotting.
-
-
-###
-#2 - Multi classification example:   (multi is more than two classes)
-set.seed(1234)
-library(forestFloor)
-library(randomForest)
-
-data(iris)
-X = iris[,!names(iris) \%in\% "Species"]
-Y = iris[,"Species"]
-
-rf = randomForest(
-  X,Y,               
-  keep.forest=TRUE,  # mandatory
-  keep.inbag=TRUE,   # mandatory
-  samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
-  importance  = TRUE, # recommended, else ordering by giniImpurity (unstable)
-  ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
-)
-
-ff = forestFloor(rf,X)
-
-plot(ff,plot_GOF=TRUE,cex=.7,
-     colLists=list(c("#FF0000A5"),
-                   c("#00FF0050"),
-                   c("#0000FF35")))
-
-#...and 3D plot, see show3d
-show3d(ff,1:2,1:2,plot_GOF=TRUE)
-
-#...and simplex plot (only for three class problems)
-plot_simplex3(ff)
-plot_simplex3(ff,zoom.fit = TRUE)
-
-#...and 3d simplex plots (rough look, Z-axis is feature)
-plot_simplex3(ff,fig3d = TRUE)
-
-###
-#3 - binary regression example
-#classification of two classes can be seen as regression in 0 to 1 scale
-set.seed(1234)
-library(forestFloor)
-library(randomForest)
-data(iris)
-X = iris[-1:-50,!names(iris) \%in\% "Species"] #drop third class virginica
-Y = iris[-1:-50,"Species"]
-Y = droplevels((Y)) #drop unused level virginica
-
-rf = randomForest(
-  X,Y,               
-  keep.forest=TRUE,  # mandatory
-  keep.inbag=TRUE,   # mandatory
-  samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
-  importance  = TRUE, # recommended, else giniImpurity
-   ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
-)
-
-ff = forestFloor(rf,X,
-                 calc_np=TRUE,    #mandatory to recalculate
-                 binary_reg=TRUE) #binary regression, scale direction is printed
-Col = fcol(ff,1) #color by most important feature
-plot(ff,col=Col)   #plot features 
-
-#interfacing with rgl::plot3d
-show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) 
-
+\dontrun{
+  ## avoid testing of rgl 3D plot on headless non-windows OS
+  ## users can disregard this sentence.
+  if(!interactive() && Sys.info()["sysname"]!="Windows") skipRGL=TRUE
+  
+  ###
+  #1 - Regression example:
+  set.seed(1234)
+  library(forestFloor)
+  library(randomForest)
+  
+  #simulate data y = x1^2+sin(x2*pi)+x3*x4 + noise
+  obs = 5000 #how many observations/samples
+  vars = 6   #how many variables/features
+  #create 6 normal distr. uncorr. variables
+  X = data.frame(replicate(vars,rnorm(obs)))
+  #create target by hidden function
+  Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + 0.5 * rnorm(obs)) 
+  
+  #grow a forest
+  rfo = randomForest(
+    X, #features, data.frame or matrix. Recommended to name columns.
+    Y, #targets, vector of integers or floats
+    keep.inbag = TRUE,  # mandatory,
+    importance = TRUE,  # recommended, else ordering by giniImpurity (unstable)
+    sampsize = 1500 ,   # optional, reduce tree sizes to compute faster
+    ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
+  )
+  
+  #compute forestFloor object, often only 5-10\% time of growing forest
+  ff = forestFloor(
+    rf.fit = rfo,       # mandatory
+    X = X,              # mandatory
+    calc_np = FALSE,    # TRUE or FALSE both works, makes no difference
+    binary_reg = FALSE  # takes no effect here when rfo$type="regression"
+  )
+  
+  #print forestFloor
+  print(ff) #prints a text of what an 'forestFloor_regression' object is
+  plot(ff)
+  
+  #plot partial functions of most important variables first
+  plot(ff,                       # forestFloor object
+       plot_seq = 1:6,           # optional sequence of features to plot
+       orderByImportance=TRUE    # if TRUE index sequence by importance, else by X column  
+  )
+       
+  #Non interacting features are well displayed, whereas X3 and X4 are not
+  #by applying color gradient, interactions reveal themself 
+  #also a k-nearest neighbor fit is applied to evaluate goodness-of-fit
+  Col=fcol(ff,3,orderByImportance=FALSE) #create color gradient see help(fcol)
+  plot(ff,col=Col,plot_GOF=TRUE) 
+  
+  #feature contributions of X3 and X4 are well explained in the context of X3 and X4
+  # as GOF R^2>.8
+  
+  show3d(ff,3:4,col=Col,plot_GOF=TRUE,orderByImportance=FALSE)
+  
+  #if needed, k-nearest neighbor parameters for goodness-of-fit can be accessed through convolute_ff
+  #a new fit will be calculated and saved to forstFloor object as ff$FCfit
+  ff = convolute_ff(ff,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
+  plot(ff,col=Col,plot_GOF=TRUE) #this computed fit is now used in any 2D plotting.
+  
+  
+  ###
+  #2 - Multi classification example:   (multi is more than two classes)
+  set.seed(1234)
+  library(forestFloor)
+  library(randomForest)
+  
+  data(iris)
+  X = iris[,!names(iris) \%in\% "Species"]
+  Y = iris[,"Species"]
+  
+  rf = randomForest(
+    X,Y,               
+    keep.forest=TRUE,  # mandatory
+    keep.inbag=TRUE,   # mandatory
+    samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
+    importance  = TRUE, # recommended, else ordering by giniImpurity (unstable)
+    ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
+  )
+  
+  ff = forestFloor(rf,X)
+  
+  plot(ff,plot_GOF=TRUE,cex=.7,
+       colLists=list(c("#FF0000A5"),
+                     c("#00FF0050"),
+                     c("#0000FF35")))
+  
+  #...and 3D plot, see show3d
+  show3d(ff,1:2,1:2,plot_GOF=TRUE)
+  
+  #...and simplex plot (only for three class problems)
+  plot_simplex3(ff)
+  plot_simplex3(ff,zoom.fit = TRUE)
+  
+  #...and 3d simplex plots (rough look, Z-axis is feature)
+  plot_simplex3(ff,fig3d = TRUE)
+  
+  ###
+  #3 - binary regression example
+  #classification of two classes can be seen as regression in 0 to 1 scale
+  set.seed(1234)
+  library(forestFloor)
+  library(randomForest)
+  data(iris)
+  X = iris[-1:-50,!names(iris) \%in\% "Species"] #drop third class virginica
+  Y = iris[-1:-50,"Species"]
+  Y = droplevels((Y)) #drop unused level virginica
+  
+  rf = randomForest(
+    X,Y,               
+    keep.forest=TRUE,  # mandatory
+    keep.inbag=TRUE,   # mandatory
+    samp=20,           # reduce complexity of mapping structure, with same OOB\%-explained
+    importance  = TRUE, # recommended, else giniImpurity
+     ntree = if(interactive()) 1000 else 25 #speedup CRAN testing
+  )
+  
+  ff = forestFloor(rf,X,
+                   calc_np=TRUE,    #mandatory to recalculate
+                   binary_reg=TRUE) #binary regression, scale direction is printed
+  Col = fcol(ff,1) #color by most important feature
+  plot(ff,col=Col)   #plot features 
+  
+  #interfacing with rgl::plot3d
+  show3d(ff,1:2,col=Col,plot.rgl.args = list(size=2,type="s",alpha=.5)) 
 }
+}
+
 
 
 \keyword{ multivariate }

@@ -104,6 +104,7 @@ Soren Havelund Welling
 }
 
 \examples{
+\dontrun{
 #example 1 - fcol used on data.frame or matrix
 library(forestFloor)
 X = data.frame(matrix(rnorm(1000),nrow=1000,ncol=4))
@@ -128,7 +129,7 @@ plot(X,col=fcol(X,
                 saturation=1,
                 brightness = 0.6))
 
-#couler by one dimensional gradient first PC of multiple variables
+#colour by one dimensional gradient first PC of multiple variables
 plot(X,col=fcol(X,
                 cols=1:2, #colouring by multiple
                 RGB=TRUE, #possible because max.df=1
@@ -172,9 +173,5 @@ plot(ff,col=fcol(ff,1)) #colour not distorted, default: outlier.lim=3
 plot(ff,col=fcol(ff,1,outlier.lim = Inf)) #colour gradient distorted by outlier 
 plot(ff,col=fcol(ff,1,outlier.lim = 0.5)) #too little outlier.lim 
 
-
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+}

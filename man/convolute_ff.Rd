@@ -43,6 +43,7 @@ Soren Havelund Welling
 }
 
 \examples{
+\dontrun{
 library(forestFloor)
 library(randomForest)
 
@@ -73,6 +74,6 @@ for(i in 1:6) {
   points(ff$X[,i],ff$FCfit[,i],col="red",cex=0.2)
 }
 par(pars) #restore graphicals
-
+}
 }
 
