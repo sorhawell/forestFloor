@@ -1,5 +1,2 @@
 language: r
 sudo: required
-
-env:
-  - runTheDontRuns = TRUE

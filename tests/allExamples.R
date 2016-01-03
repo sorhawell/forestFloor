@@ -1,4 +1,4 @@
-if(Sys.getenv("runTheDontRuns")=="TRUE") {
+if(Sys.getenv("USERNAME")=="sorhawell") {
   if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
   library(devtools)
   library(tools)
