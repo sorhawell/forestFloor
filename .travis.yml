@@ -1,2 +1,5 @@
 language: r
 sudo: required
+
+env:
+ -RGL_USE_NULL=TRUE
