@@ -13,9 +13,6 @@
 **todo list:**
 
 - implement some matrix/data.frame checks to avoid crash if non training feature matrix is forwarded to forestFloor()
-- par(mfrow) does not always restore after plot.forestFloor
-- Documentation and examples related to trimTrees::cinbag needs an update
-- Implement a better interface with par(), such that e.g. auto mfrow and mar can be overridden by user
 
 1.9.0-1.9.1 (CRAN)
  - **New Features:**
