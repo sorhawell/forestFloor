@@ -1,4 +1,4 @@
-if(Sys.getenv("USERNAME")=="sorhawell" || Sys.getenv("USER")=="sorhawell") {
+if(Sys.getenv("USERNAME")=="sorhawell" || Sys.getenv("USER")=="=travis") {
   if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
   library(devtools)
   library(tools)
@@ -23,7 +23,7 @@ if(Sys.getenv("USERNAME")=="sorhawell" || Sys.getenv("USER")=="sorhawell") {
       files = paste0(path_man,"/",files)
       names(files) = basename(files)
     }
-      void = lapply(files, devtools:::run_example,run=run)
+    lapply(files, devtools:::run_example,run=run)
     "Done"
   }
   
