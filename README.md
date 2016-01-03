@@ -17,12 +17,19 @@
 - Documentation and examples related to trimTrees::cinbag needs an update
 - Implement a better interface with par(), such that e.g. auto mfrow and mar can be overridden by user
 
-1.9.0 (unfrozen Github)
+1.9.0-1.9.1 (CRAN)
  - **New Features:**
- - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts .Restrictions and error messages removed.
+ - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts as randomForest some time ago started to support inbag counts. Restrictions and error messages removed.
+ - any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args. If conflicts with internal arguments, user provided arguments have priority.
+ - likewise for vec.plot, plot and plot3d through ..., points and surface3d through moreArgs=list()
+ - graphical parameters par() can be set temporarily through dot args plot.forestFloor(,...). Hereby, e.g. mar or mfrow can be set manually and will override standard settings of this function.
+ - testing of most examples are moved to travis as runtime exceeds CRAN policy
+ 
+**Misc:**
+ - Major Xmas induced revision of all docs & examples
  
 
-1.8.9 (CRAN)
+1.8.9
 - **New features:**
 - XY axes can be cropped for outliers also in show3d
 - forestFloor supports class randomForest.formula and will try other subclasses of randomForest
