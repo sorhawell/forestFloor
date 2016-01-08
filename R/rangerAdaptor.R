@@ -61,5 +61,16 @@ ranger_RFadaptor = function(ra,y=NULL) {
   )
   names(rf$forest$xlevels) = ra$forest$independent.variable.names
   class(rf)=c("randomForest_ranger","randomForest")
+  
+  #convert to regression style
+  if(rf$type=="regression") {
+    rf$forest$leftDaughter = treemap[,1,]
+    rf$forest$rightDaughter = treemap[,2,]
+    rf$forest$treemap=NULL
+    rf$forest$nclass=NULL
+    rf$forest$nodestatus[rf$forest$nodestatus==1]=-3
+    rf$forest$ndbigtree = apply(rf$inbag,2,function(x) sum(x!=0))
+  }
+  
   return(rf)
 }
