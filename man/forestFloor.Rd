@@ -35,7 +35,7 @@ boolean, if TRUE binary classification can be changed to "percentage votes" of c
 }
 
 \item{...}{
-does nothing
+For classification it is possible to include majorityTerminal=FALSE, see details. For the randomForest implementation, each tree uses majority vote within terminal nodes, whereas terminal nodes in other implemenations are not reduced by majority vote. Any implementation can also use majority vote on ensemble level.
 }
 
 

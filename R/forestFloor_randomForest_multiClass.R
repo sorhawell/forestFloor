@@ -3,7 +3,8 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
                                      X,
                                      calc_np = FALSE,
                                      binary_reg = FALSE,
-                                     ...) { 
+                                     majorityTerminal = TRUE
+                                     ) { 
 
   #translate binary classification RF-object, to regression mode
   if(rf.fit$typ!="classification") stop("this function only handles type 'classification',
@@ -94,6 +95,7 @@ with randomForest")
     #passed by reference
     X=Xd,  #training data, double matrix [obs,vars] 
     Y=Yd,
+    majorityTerminal = majorityTerminal,
     leftDaughter = ld,  #row indices of left subnodes, integer matrix [nrnodes,ntree] 
     rightDaughter = rd, #...
     nodestatus = ns,    #weather node is terminal or not,      
