@@ -2,8 +2,8 @@
 forestFloor_randomForest_regression <- function(rf.fit,
                                                 X,
                                                 calc_np = FALSE,
-                                                binary_reg = FALSE,
-                                                ...) { 
+                                                binary_reg = FALSE
+                                                ) { 
   
   #check the rf.fitbject have a inbag
   if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
