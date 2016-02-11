@@ -2,7 +2,7 @@ if(Sys.getenv("USERNAME")=="sorhawell" || Sys.getenv("USER")=="travis") {
   if(!interactive()) Sys.setenv(RGL_USE_NULL=TRUE) #disable RGL for headless machines
   library(devtools)
   library(tools)
-  myPackage = "forestFloor"
+  myPackage = "../forestFloor"
   
   #remake of devtools::run_examples
   run_examples_simple_no_Roxygenize = function(
