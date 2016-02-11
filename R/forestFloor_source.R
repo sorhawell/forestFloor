@@ -1,4 +1,3 @@
-
 forestFloor = function(rf.fit,
                        X,
                        calc_np = FALSE,
