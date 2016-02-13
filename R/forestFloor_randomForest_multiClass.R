@@ -110,10 +110,14 @@ with randomForest")
   )
   
 
-  #restructure to feature contributions obs X var X class
+  #restructure feature contributions as cube array (1)obs-(2)vars-(3)classes
   localIncrements = unlist(lapply(c(1:(nClasses-1),0),function(i) {
     localIncrements[(1:length(localIncrements))%%(nClasses)==i]
   }))
+  localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
+  
+  
+  
   
   
   #writing out list
@@ -122,7 +126,7 @@ with randomForest")
              Y=rf.fit$y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
-             FCarray = array(localIncrements,dim=c(obs,vars,nClasses)),
+             FCarray = localIncrements,
              sumOfInbags = apply(rf.fit$inbag,1,sum)
              #  all = mget(ls()) #export everything in list
   )
