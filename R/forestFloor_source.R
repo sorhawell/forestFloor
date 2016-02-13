@@ -2,6 +2,7 @@ forestFloor = function(rf.fit,
                        X,
                        calc_np = FALSE,
                        binary_reg = FALSE,
+                       bootstrapFC = FALSE,
                        ...) {
   Class = class(rf.fit)[1] #read only first class
   
@@ -34,11 +35,13 @@ forestFloor = function(rf.fit,
                                                                        X,
                                                                        calc_np,
                                                                        binary_reg,
+                                                                       bootstrapFC = FALSE,
                                                                        ...)),
            classification = return(forestFloor_randomForest_multiClass(rf.fit,
                                                                        X,
                                                                        calc_np,
                                                                        binary_reg,
+                                                                       bootstrapFC = FALSE,
                                                                        ...)),
            stop("type of randomForest object is neither 'regression' or 'classification', (RF.fit$type==?)"))
   }
@@ -50,7 +53,7 @@ forestFloor = function(rf.fit,
   }
   
   #if not classses recognized
-  stop("this class is not yet supported. Make me a request on email and we can talk about it")
+  stop("This class is not yet supported, is this a random forest model fit?")
 
 }
    
