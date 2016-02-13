@@ -34,8 +34,14 @@ X MUST be the same data.frame as used to train the random forest, see above item
 boolean, if TRUE binary classification can be changed to "percentage votes" of class 1, and thus be treated as regression.
 }
 
+\item{bootstrapFC}{
+boolean, if TRUE an extra column is added to FCmatrix or one extra matrix to FCarray accounting for the minor feature contributions attributed to random bootstraps or stratifications. Mainly useful to check FC row sums actually are equal to OOB-CV predictions, or to tweak randomForest into a "probability forest"-like model.
+}
+
 \item{...}{
-For classification it is possible to include majorityTerminal=FALSE, see details. For the randomForest implementation, each tree uses majority vote within terminal nodes, whereas terminal nodes in other implemenations are not reduced by majority vote. Any implementation can also use majority vote on ensemble level.
+For classification it is possible to manually set majorityTerminal=FALSE. For the randomForest classification implementation majorityTerminal is by default set to TRUE, as each tree uses majority vote within terminal nodes. In other implemenations terminal nodes are not neccesarily reduced by majority voting before aggregetion on ensemble level.
+
+majorityTerminal, does not apply to random forest regressions.
 }
 
 
