@@ -10,11 +10,18 @@ Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + .5 * rnorm(obs))
 
 
 #grow a forest, remeber to include inbag
-rfTest42=randomForest(X,Y,keep.inbag = TRUE,sampsize=1000,ntree=500)
+rfTest42=randomForest(X,Y,keep.inbag = TRUE,sampsize=499,ntree=100)
 
-#compute topology
-ffTest42 = forestFloor(rfTest42,X)
+#compute feature contributions
+ffTest42 = forestFloor(rfTest42,X,bootstrapFC = TRUE)
 
+#test accuracy of feature contributions
+#y_hat_OOB = row sum FC + Y_grandMean
+FC.residuals = rfTest42$predicted - apply(ffTest42$FCmatrix,1,sum) - mean(Y)
+if(max(abs(FC.residuals))>1E-12) stop(
+  paste0("When testing if:  y_hat_OOB = row sum FCmatrix + Y_grandMean
+  one/some FCs error exceeds allowed 1e-12, found.error=",max(abs(FC.residuals)))
+)
 
 #print forestFloor
 print(ffTest42) 
