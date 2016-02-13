@@ -106,18 +106,17 @@ with randomForest")
     inbag = ib,
     varLevels = xl,
     ot,  #oob.times
-    localIncrements = localIncrements #output is written directly to localIncrements from C++
+    localIncrements = localIncrements
+    #local increments are summed directly to double vector localIncrements within multiTree
   )
+  #returning from multiTree. Vector, localIncrements, now contain the feature contributions.
+  #Vector, localIncrements are structured as (1)classes-(2)obs-(3)vars
   
-
-  #restructure feature contributions as cube array (1)obs-(2)vars-(3)classes
+  #Restructure localIncrements as cube array (1)obs-(2)vars-(3)classes
   localIncrements = unlist(lapply(c(1:(nClasses-1),0),function(i) {
     localIncrements[(1:length(localIncrements))%%(nClasses)==i]
   }))
   localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
-  
-  
-  
   
   
   #writing out list
