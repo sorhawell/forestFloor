@@ -2,8 +2,11 @@
 forestFloor_randomForest_regression <- function(rf.fit,
                                                 X,
                                                 calc_np = FALSE,
-                                                binary_reg = FALSE
+                                                binary_reg = FALSE,
+                                                bootstrapFC = FALSE
                                                 ) { 
+  
+  #args_List = list(...)#place extra arguments here
   
   #check the rf.fitbject have a inbag
   if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
@@ -116,11 +119,26 @@ forestFloor_randomForest_regression <- function(rf.fit,
     localIncrements = localIncrements #output is written directly to localIncrements from C++
   )
   
-  
-  
-  
-  
-  
+  if(bootstrapFC) {
+    #local increments from training set to root nodes, by bootstrap/stratificaiton
+    #compute LIs with inbag samples
+    
+    #manual root mean calculation
+    #rootSum = apply(rf.fit$inbag*Y,2,sum) #vector, Y mean in each tree
+    #rootMean = rootSum / apply(inbagCounts,2,sum) # vector root predictions
+    #just fetch from rf object
+    rootMean = rf.fit$forest$nodepred[1,]
+    
+    grandMean = mean(Y) #training set target mean
+    bootStrapLIs = rootMean - grandMean #vector, one LI for each tree
+    
+    #sum LIs over OOB samples
+    OOB.indices = as.matrix(rf.fit$inbag == 0)
+    OOB.indices[!OOB.indices] = NA #ignore samples being inbag
+    OOB.bootStrapLIs = t(t(OOB.indices) * bootStrapLIs) #collect LI for each sample when OOB
+    bootstrapFC.col = apply(OOB.bootStrapLIs,1,mean,na.rm=TRUE) #sum LI into FCs
+    localIncrements = cbind(localIncrements,bootstrapFC=bootstrapFC.col) #bind bootstrap col
+  }
   
   #writing out list
   imp = as.matrix(rf.fit$importance)[,1]
