@@ -12,7 +12,7 @@ forestFloor_randomForest_regression <- function(rf.fit,
                                  ..cinbag is from trimTrees package...
                                  error condition: if(is.null(rf.fit$inbag))")
   
-  #make node status a integer matrix
+  #make node status as integer matrix
   ns = rf.fit$forest$nodestatus
   storage.mode(ns) = "integer"
   
@@ -37,8 +37,8 @@ forestFloor_randomForest_regression <- function(rf.fit,
     }
     if(!calc_np) stop("node predictions must be re-calculated for random forest of type classification, set calc_np=T)
                       error conditions: if(!calc_np && rf.fit$type='classification')")
-    
     if(is.null(rf.fit$inbagCount)) inbag = rf.fit$inbag else inbag = rf.fit$inbagCount
+    
     } else {
       Y=rf.fit$y
       inbag = rf.fit$inbag
@@ -115,6 +115,10 @@ forestFloor_randomForest_regression <- function(rf.fit,
     ot,  #oob.times
     localIncrements = localIncrements #output is written directly to localIncrements from C++
   )
+  
+  
+  
+  
   
   
   
