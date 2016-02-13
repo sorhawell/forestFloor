@@ -3,6 +3,7 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
                                      X,
                                      calc_np = FALSE,
                                      binary_reg = FALSE,
+                                     bootstrapFC = FALSE,
                                      majorityTerminal = TRUE
                                      ) { 
 
