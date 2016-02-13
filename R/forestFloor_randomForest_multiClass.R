@@ -78,7 +78,7 @@ with randomForest")
   obs = length(Yd)
   vars=dim(X)[2]
   
-  #outout variable
+  #outout variable - double vector, structured as cube array (1)nclasses, (2)obs, (3)vars
   localIncrements = rep(0.0,nClasses * obs * vars)
   storage.mode(localIncrements) = "double"
   
