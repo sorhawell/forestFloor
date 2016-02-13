@@ -11,7 +11,8 @@ Computes a cross validated feature contribution matrix from a randomForest model
 }
 
 \usage{
-forestFloor(rf.fit,X,calc_np = FALSE, binary_reg = FALSE,...)
+forestFloor(rf.fit, X, calc_np = FALSE, binary_reg = FALSE,
+            bootstrapFC = FALSE, ...)
 }
 
 \arguments{
