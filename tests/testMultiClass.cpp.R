@@ -9,7 +9,19 @@ X = iris[,!names(iris) %in% "Species"]
 Y = iris[,"Species"]
 as.numeric(Y)
 rf.test42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
-ff.test42 = forestFloor(rf.test42,X,calc_np = F)
+ff.test42 = forestFloor(rf.test42,X,calc_np = F,bootstrapFC = TRUE)
+
+#test accuracy of feature contributions
+#y_hat_OOB = row sum FC + Y_grandMean
+FCc = t(t(apply(ff.test42$FCarray,c(1,3),sum))+as.vector(table(Y)/length(Y)))
+FC.residuals = FCc-predict(rf.test42,type="prob")
+if(max(abs(FC.residuals))>1E-12) stop(
+  paste0("When testing if:  y_hat_OOB = row sum FCmatrix + Y_grandMean
+         one/some FCs error exceeds allowed 1e-12, found.error=",max(abs(FC.residuals)))
+)
+
+
+
 
 pred = sapply(1:3,function(i) apply(ff.test42$FCarray[,,i],1,sum))+1/3
 rfPred = predict(rf.test42,type="vote",norm.votes=T)
