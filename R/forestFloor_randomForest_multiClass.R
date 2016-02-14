@@ -87,7 +87,7 @@ with randomForest")
   # where OOB samples are present. vars, obs and ntree is "passed by number"
   # Anything else is passed by reference. Found increments are imediately
   # summed to localIncrements matrix.
-  multiTree(
+  forestFloor:::multiTree(
     #passed by number
     vars=vars, 
     obs=obs,             
@@ -110,13 +110,61 @@ with randomForest")
     #local increments are summed directly to double vector localIncrements within multiTree
   )
   #returning from multiTree. Vector, localIncrements, now contain the feature contributions.
-  #Vector, localIncrements are structured as (1)classes-(2)obs-(3)vars
+  #Vector, localIncrements are structured as (1)classes-(2)obs-(3)var
   
-  #Restructure localIncrements as cube array (1)obs-(2)vars-(3)classes
-  localIncrements = unlist(lapply(c(1:(nClasses-1),0),function(i) {
-    localIncrements[(1:length(localIncrements))%%(nClasses)==i]
-  }))
-  localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
+  if(bootstrapFC) {
+    #local increments from training set to root nodes, by bootstrap/stratificaiton
+    #compute LIs with inbag samples
+    
+    #function to compute class rates of nClasses
+    getRate = function(Yd,nClasses) {
+      count = sapply((1:nClasses)-1,function(classInd) sum(Yd==classInd))
+      rate = count / length(Yd) #vector of nClasses
+    }
+    
+    #compute rates for trainining and each rootNode
+    base_rate = getRate(Yd,nClasses) #vector of nClasses length
+    
+    #for each tree in a list compute rootNode_rates (vector with class ratios in root node) 
+    rootNode_rates = lapply(1:dim(rf.fit$inbag)[2],function(iTree) {
+      IB_ind = rf.fit$inbag[,iTree]!=0 #get indices of obs used
+      thisIB = Yd[IB_ind] #place obs in vector
+      thisIBcount = rf.fit$inbag[IB_ind,iTree] #get inbagCount for each in inbag
+      thisClassCount = sapply((1:nClasses)-1,function(iClass) { #for each class
+        sum((thisIB==iClass)*thisIBcount)#count obs equal to iClass, multiply with inbagCount
+      }) / sum(thisIBcount) #divide by total obs in node
+    }) #list of vectors of nClasses length
+    #compute bootstrap local increments rootnode_rate minus base_rate 
+    bootStrapLIs = lapply(rootNode_rates,'-',base_rate)
+    
+    #compute FC
+    bootstrapFC_list = lapply(1:length(Yd), #indices of 1 to ntree
+      function(iObs) {
+        OOB.ind = rf.fit$inbag[iObs,]==0
+        iObs_OOB_LIs = bootStrapLIs[OOB.ind]#pick LIs where iObs was OOB
+        iObs_rates_trees = do.call(rbind,iObs_OOB_LIs) #matrix, nClasses*n times OOB
+        iOBS_FC = apply(iObs_rates_trees,2,mean)
+    })
+    bootstrapFC_matrix = do.call(rbind,bootstrapFC_list)
+    
+    #restructure localIncrements as cube array (1)obs-(2)vars-(3)classes
+    #for each obs*vars slice: add column with bootstrapFC
+    localIncrements = unlist(lapply(1:nClasses,function(i) {
+      m = localIncrements[(1:length(localIncrements))%%(nClasses)==(i%%nClasses)]
+      m = matrix(m,nrow=length(Yd))
+      cbind(m,bootstrapFC_matrix[,i]) #extend for each class_matrix with FCbootstrap
+    }))
+    #set as cube array
+    localIncrements = array(localIncrements,dim=c(obs,vars+1,nClasses))
+  
+  } else { #do not include bootStrapFC
+  
+    #just restructure localIncrements as cube array (1)obs-(2)vars-(3)classes
+    localIncrements = unlist(lapply(c(1:(nClasses-1),0),function(i) {
+      localIncrements[(1:length(localIncrements))%%(nClasses)==i]
+    }))
+    localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
+  }
   
   
   #writing out list
