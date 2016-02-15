@@ -14,6 +14,15 @@
 
 - implement some matrix/data.frame checks to avoid crash if non training feature matrix is forwarded to forestFloor()
 
+##### 1.9.2 (development)
+
+Features:
+ * Bootstrapping and stratification can also be seen as local increments and do influence the final RF prediction. To precisely assure, that all feature contributions for each observation do sum to the RF OOB-CV prediction, a new param bootstrapFC has been included. When set to TRUE, one extra column is added to FCmatrix(regression) or n.classes columns to the FCarray(classification). Each tree has a 'bootstrap local increment' (bootstrapLI). bootstrapLI = rootNode_rate - base_rate, where rootNode_rate is the bootstrapped sampled (inbag) class label distribution in root node, and base_rate is the overall class label distribution in training set. bootstrapFC is for a given observation the sum of bootstrapLI in those trees, where that observation was out-of-bag. bootstrapFC=TRUE does not change any visualization.
+
+Bug-fix:
+ * Until now, forestFloor has assumed for not fully grown trees of randomForest classification, that non-unaimous votes would be passed directly to the total ensemble vote. This is for the randomForest implementation incorrect, as majority vote is used both in terminal nodes and as default on ensemble level. A new setting majorityTerminal=TRUE for the low-level method forestFloor_randomForest_multiclass has been implemented. (Bonus info: This new setting can be reverted passing majorityTerminal=FALSE through forestFloor(...) and could probably be used to tweak randomForest into producing 'probability forest' / 'sklearn'-isch predictions.)
+ 
+
 1.9.0-1.9.1 (CRAN)
  - **New Features:**
  - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts as randomForest some time ago started to support inbag counts. Restrictions and error messages removed.
