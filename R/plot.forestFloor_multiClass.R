@@ -4,6 +4,7 @@ plot.forestFloor_multiClass  = function(
   x,
   plot_seq=NULL,
   label.seq=NULL,
+  plotTest = NULL,
   limitY=TRUE,
   colLists = NULL,
   orderByImportance=TRUE,
@@ -17,7 +18,6 @@ plot.forestFloor_multiClass  = function(
  
   #pre-checking graphial parameters, and split into separate lists
   moreArgs = list(...) #args passed to par() if no match, passed instead to plot(,...) 
-  print(moreArgs)
   pars = par(no.readonly = TRUE) #save previous graphical parameters
   toPlotOnly=c("cex","col") #these args always passed to plot(,...)
   #TRUE/FALSE vector, passed to par() (TRUE) or plot() FALSE
@@ -32,6 +32,20 @@ plot.forestFloor_multiClass  = function(
     userArgs.plot = moreArgs[!parArgs.ind]
     userArgs.par  = moreArgs[ parArgs.ind]
   }
+
+  #label.seq must be resolved before cropping training levels
+  if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
+  #if not all test/train is to be plotted remove train or test
+  plotThese = forestFloor:::checkPlotTest(plotTest,x$isTrain)
+  if(!(all(plotThese))) {
+    x = with(x, {
+      #cut to those which should be plotted
+      FCarray = FCarray[plotThese,,]
+      Y = Y[plotThese]
+      X = X[plotThese,]
+      mget(ls())
+    })
+  }
   
   void = with(x,{ #set scope inside x object
     
@@ -40,10 +54,8 @@ plot.forestFloor_multiClass  = function(
       if(length(plot_seq)<=4) c(1,2,3,2)[length(plot_seq)] else 3
     }
     if(orderByImportance) plot_seq = x$imp_ind[plot_seq]
-    if(is.null(label.seq)) label.seq = 1:min(8,length(levels(Y)))
     if(is.null(colLists)) colLists =
       lapply(1:length(label.seq), function(i) factor(rep(i,dim(X)[1])))
-    
     
     #set graphical pars
     n.plots = min(dim(X)[2],length(plot_seq))
@@ -54,10 +66,9 @@ plot.forestFloor_multiClass  = function(
        slaveArgs = list(mfrow=c(plotdims.y,plotdims.x),mar = c(2,2,3,1)) #std args
     )
     par(args.par)
-    
     if(plot_GOF) {
       if(speedup_GOF) { #reduce observatoins to compute forest GOF faster
-        obs = length(x$Y)
+        obs = length(Y)
         reduce.exp = 1 - 0.025  * sum(obs>c(500,700,1000,1500,2500,4500,10000,20000))
         x = with(x,{ #this is a little tricky, global object is overwritten with local
                      #reduced version if speedup true. Not reduced content of x still
