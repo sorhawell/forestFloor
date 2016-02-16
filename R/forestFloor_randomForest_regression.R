@@ -1,6 +1,7 @@
 ##method to compute forestFloor_regression
 forestFloor_randomForest_regression <- function(rf.fit,
                                                 X,
+                                                Xtest=NULL,
                                                 calc_np = FALSE,
                                                 binary_reg = FALSE,
                                                 bootstrapFC = FALSE
@@ -15,10 +16,23 @@ forestFloor_randomForest_regression <- function(rf.fit,
                                  ..cinbag is from trimTrees package...
                                  error condition: if(is.null(rf.fit$inbag))")
   
+  #merge X and Xtest if Xtest is provided
+  if(!is.null(Xtest)) {
+    isTrain       = c(rep(T,dim(X)[1]),rep(F,dim(Xtest)[1])) #mark OOB-CV FC and ext. test FC
+    merged.list = Xtestmerger(X,Xtest,rf.fit$inbag,rf.fit$y) #test for compatability and merge
+    X             = merged.list$bigX     #rbind X and Xtest (specific factor merging)
+    rf.fit$inbag  = merged.list$bigInbag #correct inbag matrix
+    rf.fit$y      = merged.list$bigy     #fill in dummy target values, not used as test is always OOB
+    rf.fit$oob.times  = c(rf.fit$oob.times,rep(rf.fit$ntree,sum(!merged.list$isTrain)))
+    
+  } else {
+    isTrain       = rep(T,dim(X)[1])
+  }
+  
+  
   #make node status as integer matrix
   ns = rf.fit$forest$nodestatus
   storage.mode(ns) = "integer"
-  
   
   #translate binary classification RF-object, to regression mode
   if(rf.fit$type=="classification") {
@@ -46,7 +60,6 @@ forestFloor_randomForest_regression <- function(rf.fit,
       Y=rf.fit$y
       inbag = rf.fit$inbag
     }
-  
   
   #preparing data, indice-correction could be moved to C++
   #a - This should be fethed from RF-object, flat interface
@@ -120,16 +133,16 @@ forestFloor_randomForest_regression <- function(rf.fit,
   )
   
   if(bootstrapFC) {
+    #Compute FC for random bootstrapping or stratification over
     #local increments from training set to root nodes, by bootstrap/stratificaiton
     #compute LIs with inbag samples
     
     #manual root mean calculation
     #rootSum = apply(rf.fit$inbag*Y,2,sum) #vector, Y mean in each tree
     #rootMean = rootSum / apply(inbagCounts,2,sum) # vector root predictions
-    #just fetch from rf object
+    #... or just fetch from rf object
     rootMean = rf.fit$forest$nodepred[1,]
-    
-    grandMean = mean(Y) #training set target mean
+    grandMean = mean(Y[isTrain]) #training set target mean, not including test
     bootStrapLIs = rootMean - grandMean #vector, one LI for each tree
     
     #sum LIs over OOB samples
@@ -146,7 +159,8 @@ forestFloor_randomForest_regression <- function(rf.fit,
              Y=Y,
              importance = imp,
              imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix,
-             FCmatrix = localIncrements
+             FCmatrix = localIncrements,
+             isTrain = isTrain
   )
   class(out) = "forestFloor_regression"
   return(out)

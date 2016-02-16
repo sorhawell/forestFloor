@@ -1,5 +1,6 @@
 forestFloor = function(rf.fit,
                        X,
+                       Xtest = NULL,
                        calc_np = FALSE,
                        binary_reg = FALSE,
                        bootstrapFC = FALSE,
@@ -31,17 +32,25 @@ forestFloor = function(rf.fit,
   
     #dispatch either forestFloor_regression(and binary) or multiClassification
     switch(Type,
-           regression =     return(forestFloor_randomForest_regression(rf.fit,
-                                                                       X,
-                                                                       calc_np,
-                                                                       binary_reg,
-                                                                       bootstrapFC = bootstrapFC)),
-           classification = return(forestFloor_randomForest_multiClass(rf.fit,
-                                                                       X,
-                                                                       calc_np,
-                                                                       binary_reg,
-                                                                       bootstrapFC = bootstrapFC,
-                                                                       ...)),#majorityTerminal
+           regression = return(
+             forestFloor_randomForest_regression(
+               rf.fit      = rf.fit,
+               X           = X,
+               Xtest       = Xtest,
+               calc_np     = calc_np,
+               binary_reg  = bianary_reg,
+               bootstrapFC = bootstrapFC)
+           ),
+           classification = return(
+             forestFloor_randomForest_multiClass(
+               rf.fit      = rf.fit,
+               X           = X,
+               Xtest       = Xtest,
+               calc_np     = calc_np,
+               binary_reg  = binary_reg,
+               bootstrapFC = bootstrapFC,
+               ...)
+           ),#majorityTerminal
            stop("type of randomForest object is neither 'regression' or 'classification', (RF.fit$type==?)"))
   }
   
