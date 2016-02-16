@@ -48,7 +48,11 @@ Xtestmerger = function(X,test,inbag=NULL,y=NULL) {
   return(list(
   bigX     = rbind(X,test),
   bigInbag = if(!is.null(inbag)) rbind(inbag,matrix(0,nrow=dim(test)[1],ncol=dim(inbag)[2])),
-  bigy     = if(!is.null(y))     c(y,rep(y[1],dim(test)[1])), #fill in dummy value a y place
+  bigy     = if(!is.null(y)) {
+    bigy=y
+    bigy[length(y)+(1:dim(test)[1])] = y[1]
+    bigy
+  },
   isTrain  = c(rep(T,dim(X)[1]),rep(F,dim(test)[1]))
   ))
 }
