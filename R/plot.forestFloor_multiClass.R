@@ -36,7 +36,7 @@ plot.forestFloor_multiClass  = function(
   #label.seq must be resolved before cropping training levels
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
   #if not all test/train is to be plotted remove train or test
-  plotThese = forestFloor:::checkPlotTest(plotTest,x$isTrain)
+  plotThese = checkPlotTest(plotTest,x$isTrain)
   if(!(all(plotThese))) {
     x = with(x, {
       #cut to those which should be plotted
