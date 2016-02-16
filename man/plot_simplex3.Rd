@@ -101,7 +101,7 @@ Soren Havelund Welling
   as.numeric(Y)
   rf.test42 = randomForest(X,Y,keep.forest=TRUE,
     replace=FALSE,keep.inbag=TRUE,samp=15,ntree=100)
-  ff.test42 = forestFloor(rf.test42,X,FALSE,FALSE)
+  ff.test42 = forestFloor(rf.test42,X,calc_np=FALSE,binary_reg=FALSE)
   
   plot(ff.test42,plot_GOF=TRUE,cex=.7,
        colLists=list(c("#FF0000A5"),
