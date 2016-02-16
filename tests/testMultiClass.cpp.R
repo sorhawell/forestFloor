@@ -26,10 +26,11 @@ Xtest[1:4] = lapply(iris[1:4],sample,50) #random resample 50 samples
 
 
 #test same results are reached with Xtest
-ff.43 = forestFloor(rf.42,X,Xtest,bootstrapFC = TRUE)
+ff.43 = forestFloor(rf.42,X,Xtest,bootstrapFC = T)
 if(max(abs(ff.43$FCarray[ff.43$isTrain,,]-ff.42$FCarray)) > 1E-12) stop(
   "forestFloor with/without Xtest gives different feature contributions"
 )
+plot(ff.43,speedup_GOF = TRUE,plotTest = F)
 
 
 pred = sapply(1:3,function(i) apply(ff.42$FCarray[,,i],1,sum))+1/3
@@ -43,6 +44,13 @@ plot(ff.42,plot_GOF=T,cex=.7,
                    "#00FF0050",
                    "#0000FF35")
      )
+
+plot(ff.43,plot_GOF=T,cex=.7,
+     colLists=list("#FF0000A5",
+                   "#00FF0050",
+                   "#0000FF35")
+)
+
 
 #try to alter std par
 plot(ff.42,plot_GOF=T,cex=.7,
