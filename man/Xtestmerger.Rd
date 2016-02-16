@@ -50,7 +50,7 @@ X = data.frame(numeric = c(1,5,2,7,-4.3),
                factor2 = factor(c("jill","ann","liz","leila","vicky")))
 y = factor(1:5)
 set.seed(1)
-rf = randomForest(X,y,keep.inbag=T,ntree=7)
+rf = randomForest(X,y,keep.inbag=TRUE,ntree=7)
 #should not raise any error
 test = data.frame(numeric = rnorm(5),
                   factor1 = factor(c("jim","jim","jim","freddy","freddy")),
