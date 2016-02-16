@@ -59,7 +59,6 @@ void follow_path(
   //if majorityTerminal overwrite with majority prediction
   if(nodestatus(this_node,i_tree)==-1 && majorityTerminal) {
     current_pred = nodepred(this_node,i_tree) -1;//0-1
-    Rprintf("%f",current_pred);
   }
   
   
