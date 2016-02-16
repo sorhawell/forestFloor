@@ -1,6 +1,7 @@
 #m2 plot output
 plot.forestFloor_regression = function(x,
-                                       plot_seq=NULL, 
+                                       plot_seq=NULL,
+                                       plotTest = NULL,
                                        limitY=TRUE,
                                        orderByImportance=TRUE, 
                                        cropXaxes=NULL, 
@@ -29,13 +30,11 @@ plot.forestFloor_regression = function(x,
   #crop x(forestFloor) object to only visualize test or train
   plotThese = checkPlotTest(plotTest,x$isTrain)
   if(!(all(plotThese))) {
-    x = with(x, {
       #cut to those which should be plotted
-      FCarray = FCarray[plotThese,,]
-      Y = Y[plotThese]
-      X = X[plotThese,]
-      mget(ls())
-    })
+    x$FCmatrix = x$FCmatrix[plotThese,]
+    x$Y = x$Y[plotThese]
+    x$X = x$X[plotThese,]
+    if(!is.null(x$FCfit)) x$FCfit = x$FCfit[plotThese,]
   }
   
   
@@ -62,7 +61,7 @@ plot.forestFloor_regression = function(x,
     if(is.null(x$FCfit)) x = convolute_ff(x) 
     #retrieve fitted values and compare to actual feature contributions for every variable
   }
-  if(plot_GOF) GOFs = sapply(1:dim(X)[2],function(j) cor(x$FCfit[,j],x$FCmatrix[,j])^2)
+  if(plot_GOF) GOFs = sapply(1:dim(x$FCfit)[2],function(j) cor(x$FCfit[,j],x$FCmatrix[,j])^2)
   
   
   #obsolete

@@ -2,6 +2,7 @@
 fcol = function(ff,
                 cols = NULL,
                 orderByImportance = NULL,
+                plotTest = NULL,
                 X.matrix = TRUE,
                 hue = NULL,
                 saturation = NULL,
@@ -22,6 +23,7 @@ fcol = function(ff,
     stop("cannot colour by feature contributions for object of class
          'forestFloor_multiClass'. Set X.matrix=TRUE")
   
+  #small support functions 1-4
   ##ssf8.1: is between function
   ib <- function(x, low, high) (x -low) * (high-x) > 0
   ##ssf8.2: move center range of vector at mid with new width of span
@@ -37,6 +39,21 @@ fcol = function(ff,
     x[x>high]=high
     x[x<low ]=low
     x
+  }
+  
+  #crop x(forestFloor) object to only visualize test or train
+  plotThese = checkPlotTest(plotTest,ff$isTrain)
+  if(!(all(plotThese))) {
+      #cut to those which should be plotted
+      if(class(ff)=="forestFloor_multiClass") {
+        ff$FCarray = ff$FCarray[plotThese,,]
+      } else { #not FCarray not used, see first stop
+        if(class(ff)=="forestFloor_regression") {
+          ff$FCmatrix = ff$FCmatrix[plotThese,]
+        }
+      }
+      ff$Y = ff$Y[plotThese]
+      ff$X = ff$X[plotThese,]
   }
   
   #get/check data.frame/matrix, convert to df, remove outliers and normalize

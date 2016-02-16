@@ -10,7 +10,7 @@ Y = Y[,drop=T]
 Y
 #test randomForest binary classification, treated as binary classification
 rf.test42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=66,ntree=500)
-ff.test42 = forestFloor(rf.test42,X,T,F)
+ff.test42 = forestFloor(rf.test42,X,binary_reg = F)
 nLevels = length(levels(Y))
 pred = sapply(1:nLevels,function(i) apply(ff.test42$FCarray[,,i],1,sum))+1/nLevels
 rfPred = predict(rf.test42,type="vote",norm.votes=T)
@@ -27,8 +27,17 @@ show3d(ff.test42,1:2,3:4)
 
 ##test randomForest binary classification treated as, regression
 rf.test42 = randomForest(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
-ff.test42 = forestFloor(rf.test42,X,T,T)
-rf.test42 = randomForest(X,Y,keep.forest=T,replace=T,keep.inbag=T,samp=100,ntree=500)
-ff.test42 = forestFloor(rf.test42,X,T,T)
+ff.test42 = forestFloor(rf.test42,X,binary_reg = T,calc_np = F)
+ff.test42 = forestFloor(rf.test42,X,binary_reg = T,calc_np = T)
 plot(ff.test42,col=Y)
 show3d(ff.test42,col=as.numeric(Y))
+
+#make test set
+set.seed(1)
+Xtest = X
+Xtest[] = lapply(X,sample,size=100,replace=T)
+##test test set
+ff.test43 = forestFloor(rf.test42,X,Xtest,binary_reg = T,calc_np = F)
+Col = fcol(ff.test43,1:2)
+plot(ff.test43,col=Col)
+show3d(ff.test43,col=Col)

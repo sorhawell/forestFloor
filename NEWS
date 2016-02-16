@@ -1,6 +1,8 @@
 ##### 1.9.2
 
 Features:
+ * It is possible compute FC contributions of feature test set Xtest. Formula interface not implemented yet. For data.frame X and Xtest, names, classes of columns (numeric/factor) and levels of factors must match. Any used level in any factor of Xtest must have been used at least once in X during training. If Xtest is provided, any visualization will as standard visualize this rather than X. plotTest=F will revert this. plotTest="andTrain" (partial matched) will enable visualization of both test and train.
+
  * Bootstrapping and stratification can also be seen as local increments and do influence the final RF prediction. To precisely assure, that all feature contributions for each observation do sum to the RF OOB-CV prediction, a new param bootstrapFC has been included. When set to TRUE, one extra column is added to FCmatrix(regression) or n.classes columns to the FCarray(classification). Each tree has a 'bootstrap local increment' (bootstrapLI). bootstrapLI = rootNode_rate - base_rate, where rootNode_rate is the bootstrapped sampled (inbag) class label distribution in root node, and base_rate is the overall class label distribution in training set. bootstrapFC is for a given observation the sum of bootstrapLI in those trees, where that observation was out-of-bag. bootstrapFC=TRUE does not change any visualization.
 
 Bug-fix:

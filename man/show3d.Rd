@@ -16,7 +16,8 @@ make forestFloor 3D-plot of random forest feature contributions
       x,
       Xi  = 1:2,
       FCi = NULL,
-      col = "#12345678",    
+      col = "#12345678",
+      plotTest = NULL,
       orderByImportance = TRUE,
       surface=TRUE,   
       combineFC = sum,  
@@ -35,6 +36,7 @@ make forestFloor 3D-plot of random forest feature contributions
       x,
       Xi,
       FCi=NULL,
+      plotTest = NULL,
       label.seq=NULL,
       kknnGrid.args=list(NULL),
       plot.rgl.args=list(),
@@ -57,9 +59,16 @@ make forestFloor 3D-plot of random forest feature contributions
   integer vector of length 1 to p variables
   indices of feature contributions columns
   }
+  
+  
   \item{col}{
   a colour vector. One colour or colour palette(vector).
   }
+  
+  \item{plotTest}{
+  NULL(plot by test set if available), TRUE(plot by test set), FALSE(plot by train),   "andTrain"(plot by both test and train) 
+  }
+  
   \item{orderByImportance}{
   should indices order by 'variable importance' or by matrix/data.frame order?
   }

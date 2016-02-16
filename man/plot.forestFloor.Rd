@@ -12,6 +12,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
 \method{plot}{forestFloor_regression} (
   x,
   plot_seq=NULL, 
+  plotTest = NULL,
   limitY=TRUE,
   orderByImportance=TRUE, 
   cropXaxes=NULL, 
@@ -25,6 +26,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   x,
   plot_seq = NULL,
   label.seq = NULL,
+  plotTest  = NULL,
   limitY = TRUE,
   colLists = NULL,
   orderByImportance = TRUE,
@@ -50,6 +52,11 @@ a numeric vector describing which variables and in what sequence to plot. Ordere
 \item{label.seq}{
 [only classification] a numeric vector describing which classes and in what sequence to plot. NULL is all classes ordered is in levels in x$Y of forestFloor_mulitClass object x. 
 }
+
+\item{plotTest}{
+  NULL(plot by test set if available), TRUE(plot by test set), FALSE(plot by train), "andTrain"(plot by both test and train) 
+}
+
 \item{fig.columns}{
 [only for multiple plotting], how many columns per page.
 default(NULL) is 1 for one plot, 2 for 2, 3 for 3, 2 for 4 and 3 for more. 

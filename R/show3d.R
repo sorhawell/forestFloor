@@ -4,13 +4,30 @@ show3d = function(x,...) {
 
 ##3d plot of forestFloor_multiClass
 show3d.forestFloor_multiClass = function(
-  x,Xi=1:2,FCi=NULL,label.seq=NULL,kknnGrid.args=list(NULL),
+  x,Xi=1:2,FCi=NULL,plotTest = NULL, label.seq=NULL,kknnGrid.args=list(NULL),
   plot.rgl.args=list(),plot_GOF=FALSE,user.gof.args=list(NULL),...) {
   
   skipRGL = exists("skipRGL",envir=.GlobalEnv) && skipRGL==TRUE #RGL override switch
   if(class(x)!="forestFloor_multiClass") stop("class(x) != forestFloor_multiClass")
   if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
+  
+  ## crop x/ff to only plot test or train ... or not and plot both
+  #crop x(forestFloor) object to only visualize test or train
+  plotThese = checkPlotTest(plotTest,x$isTrain)
+  if(!(all(plotThese))) {
+    #cut to those which should be plotted
+    if(class(x)=="forestFloor_multiClass") { #it is always multiclass
+      x$FCarray = x$FCarray[plotThese,,]
+    } else { #not FCarray not used, see first stop
+      if(class(x)=="forestFloor_regression") { #it is never regression
+        x$FCmatrix = x$FCmatrix[plotThese,]
+      }
+    }
+    x$Y = x$Y[plotThese]
+    x$X = x$X[plotThese,]
+  }
+  
   
   #hack to only plot one feature contributions and not the sum of two
   #indice of one feature is duplicated, and contributions are halved
@@ -97,7 +114,8 @@ show3d.forestFloor_regression = function(
   x,
   Xi  = 1:2,
   FCi = NULL,
-  col = "#12345678",    
+  col = "#12345678",
+  plotTest = NULL,
   orderByImportance = TRUE,
   surface=TRUE,   
   combineFC = sum,  
@@ -118,6 +136,23 @@ show3d.forestFloor_regression = function(
     warning("Xi should be of length 2, if 1 first elements is used twice, if >2 only two first elements is used")
     if(length(Xi) > 2) Xi=Xi[1:2] else Xi = Xi[c(1,1)]
   }
+  
+  ## crop x/ff to only plot test or train ... or not and plot both
+  #crop x(forestFloor) object to only visualize test or train
+  plotThese = checkPlotTest(plotTest,x$isTrain)
+  if(!(all(plotThese))) {
+    #cut to those which should be plotted
+    if(class(x)=="forestFloor_multiClass") { #it is never multiclass
+      x$FCarray = x$FCarray[plotThese,,]
+    } else { #not FCarray not used, see first stop
+      if(class(x)=="forestFloor_regression") { #it is always regression
+        x$FCmatrix = x$FCmatrix[plotThese,]
+      }
+    }
+    x$Y = x$Y[plotThese]
+    x$X = x$X[plotThese,]
+  }
+  
   if(!all(Xi %in% 1:dim(x$X)[2]))   stop( "input  Xi points to columns indices out of range of feature matrix x$X")
   if(is.null(FCi)) FCi=Xi
   if(!all(FCi %in% 1:dim(x$FCmatrix)[2]) && length(FCi)>0) stop("input FCi points to columns indices out of range of feature matrix x$X")

@@ -11,7 +11,7 @@ This colour module colour observations by selected variables. PCA decomposes a s
 }
 
 \usage{
-fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE, 
+fcol(ff, cols = NULL, orderByImportance = NULL, plotTest=NULL, X.matrix = TRUE, 
      hue = NULL, saturation = NULL, brightness = NULL,
      hue.range  = NULL, sat.range  = NULL, bri.range  = NULL,
      alpha = NULL, RGB = NULL, byResiduals=FALSE, max.df=3,
@@ -29,6 +29,10 @@ fcol(ff, cols = NULL, orderByImportance = NULL,  X.matrix = TRUE,
   
   \item{orderByImportance}{
   logical, should cols refer to X column order or columns sorted by variable importance. Input must be of forestFloor -class to use this. Set to FALSE if no importance sorting is wanted. Otherwise leave as is.
+  }
+  
+  \item{plotTest}{
+  NULL(plot by test set if available), TRUE(plot by test set), FALSE(plot by train), "andTrain"(plot by both test and train) 
   }
   
   \item{X.matrix}{

@@ -6,7 +6,7 @@ obs=2000
 vars = 6 
 
 X = data.frame(replicate(vars,rnorm(obs)))
-Xtest = data.frame(replicate(vars,rnorm(obs)))
+Xtest = data.frame(replicate(vars,rnorm(obs)*3))
 Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + .5 * rnorm(obs))
 
 
@@ -30,10 +30,6 @@ if(max(abs(ff43$FCmatrix[ff43$isTrain,]-ff42$FCmatrix)) > 1E-12) stop(
 )
 
 
-plot(ff43,plotTest = T)
-
-
-
 #print forestFloor
 print(ff42) 
 
@@ -44,22 +40,37 @@ plot(ff43,orderByImportance=TRUE)
 #Non interacting functions are well displayed, whereas X3 and X4 are not
 #by applying different colourgradient, interactions reveal themself 
 #also a k-nearest neighbor fit is applied to evaluate goodness of fit
-Col=fcol(ff42,3,orderByImportance=FALSE)
-plot(ff42,col=Col,plot_GOF=TRUE,speed=T) 
+Col=fcol(ff43,3,orderByImportance=FALSE)
+plot(ff43,col=Col,plot_GOF=TRUE,speed=T) 
+
+
+##make test set grey tone to show if point of test is extrapolated
+Col=fcol(ff43,3,orderByImportance=FALSE,plotTest="andTrain",alpha=.2)
+Col[ff43$isTrain] = "#000000FF"
+plot(ff43,col=Col,speed=T,plotTest="andTrain",plot_GOF=F) 
+
 
 #if ever needed, k-nearest neighbor parameters for goodness-of-fit can be access through convolute_ff
 #a new fit will be calculated and added to forstFloor object as ff42$FCfit
-ff42 = convolute_ff(ff42,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
-plot(ff42,col=Col,plot_GOF=TRUE)
+ff43 = convolute_ff(ff43,userArgs.kknn=alist(kernel="epanechnikov",kmax=5))
+plot(ff43,col=Col,plot_GOF=TRUE)
 
 #in 3D the interaction between X3 and X reveals itself completely
-show3d(ff42,3:4,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE) 
+show3d(ff43,3:4,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE)
+Col=fcol(ff43,1:2,orderByImportance=FALSE)
+show3d(ff43,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE)
+
+
+Col=fcol(ff43,1:2,plotTest="andTrain",orderByImportance=FALSE)
+show3d(ff43,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE)
+
+
 
 #although no interaction, a joined additive effect of X1 and X2
 #colour by FC-component FC1 and FC2 summed
-Col = fcol(ff42,1:2,orderByImportance=FALSE,X.m=FALSE,RGB=TRUE)
-plot(ff42,col=Col) 
-show3d(ff42,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE) 
+Col = fcol(ff43,1:2,orderByImportance=FALSE,X.m=FALSE,RGB=TRUE,plotTest = "a")
+plot(ff43,col=Col,plotTest = "a") 
+show3d(ff43,1:2,col=Col,plot.rgl=list(size=5),orderByImportance=FALSE,plotTest = "a") 
 
 #...or two-way gradient is formed from FC-component X1 and X2.
 Col = fcol(ff42,1:2,orderByImportance=FALSE,X.matrix=TRUE,alpha=0.8) 
