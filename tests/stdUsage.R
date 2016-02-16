@@ -30,8 +30,7 @@ if(max(abs(ff43$FCmatrix[ff43$isTrain,]-ff42$FCmatrix)) > 1E-12) stop(
 )
 
 
-
-plot(ff42)
+plot(ff43,plotTest = T)
 
 
 
@@ -40,6 +39,7 @@ print(ff42)
 
 #plot partial functions of most important variables first
 plot(ff42,orderByImportance=TRUE) 
+plot(ff43,orderByImportance=TRUE)
 
 #Non interacting functions are well displayed, whereas X3 and X4 are not
 #by applying different colourgradient, interactions reveal themself 

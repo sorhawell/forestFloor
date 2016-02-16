@@ -26,6 +26,19 @@ plot.forestFloor_regression = function(x,
     userArgs.par  = moreArgs[ parArgs.ind]
   }
   
+  #crop x(forestFloor) object to only visualize test or train
+  plotThese = checkPlotTest(plotTest,x$isTrain)
+  if(!(all(plotThese))) {
+    x = with(x, {
+      #cut to those which should be plotted
+      FCarray = FCarray[plotThese,,]
+      Y = Y[plotThese]
+      X = X[plotThese,]
+      mget(ls())
+    })
+  }
+  
+  
   #short for features and feature contribution in object
   X = x$X
   FCs = x$FCmatrix
