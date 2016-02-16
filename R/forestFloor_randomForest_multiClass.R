@@ -104,7 +104,7 @@ with randomForest")
   # where OOB samples are present. vars, obs and ntree is "passed by number"
   # Anything else is passed by reference. Found increments are imediately
   # summed to localIncrements matrix.
-  forestFloor:::multiTree(
+  multiTree(
     #passed by number
     vars=vars, 
     obs=obs,             
