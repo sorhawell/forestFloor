@@ -28,6 +28,7 @@ void follow_path(
 //global R-objects
                  NumericMatrix X,                  // 1  X
                  NumericVector Y,
+                 bool majorityTerminal,
                  IntegerMatrix leftDaughter,       // 6  LD
                  IntegerMatrix rightDaughter,      // 7  RD
                  IntegerMatrix nodestatus,         // 8  nodestatus
@@ -53,6 +54,12 @@ void follow_path(
     }// divide sum of IB_preds with IB_count
   } else { 
     current_pred = nodepred(this_node,i_tree); //reuse node_pred from RF-object, only regression
+  }
+  
+  //if majorityTerminal overwrite with majority prediction
+  if(nodestatus(this_node,i_tree)==-1 && majorityTerminal) {
+    current_pred = nodepred(this_node,i_tree) -1;//0-1
+    Rprintf("%f",current_pred);
   }
   
   
@@ -144,6 +151,7 @@ void follow_path(
 //pointers to global R-objects
         X,                  // 1  X
         Y,
+        majorityTerminal,
         leftDaughter,       // 6  LD
         rightDaughter,      // 7  RD
         nodestatus,         // 8  nodestatus
@@ -171,6 +179,7 @@ void follow_path(
         IBs_rightnode,
         X,                  // 1  X
         Y,
+        majorityTerminal,
         leftDaughter,       // 6  LD
         rightDaughter,      // 7  RD
         nodestatus,         // 8  nodestatus
@@ -205,6 +214,7 @@ void recTree(int  vars,               //local 3  nvar
             bool calculate_node_pred, //should node prediction
             NumericMatrix X,                  // 1  X
             NumericVector Y,
+            bool majorityTerminal,
             IntegerMatrix leftDaughter,       // 6  LD
             IntegerMatrix rightDaughter,      // 7  RD
             IntegerMatrix nodestatus,         // 8  nodestatus
@@ -276,6 +286,7 @@ void recTree(int  vars,               //local 3  nvar
 //pointers to global R-objects
         X,                  // 1  X dataset
         Y,
+        majorityTerminal,
         leftDaughter,       // 6  LD
         rightDaughter,      // 7  RD
         nodestatus,         // 8  nodestatus

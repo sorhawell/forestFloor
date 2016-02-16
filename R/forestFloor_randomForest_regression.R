@@ -4,7 +4,8 @@ forestFloor_randomForest_regression <- function(rf.fit,
                                                 Xtest=NULL,
                                                 calc_np = FALSE,
                                                 binary_reg = FALSE,
-                                                bootstrapFC = FALSE
+                                                bootstrapFC = FALSE,
+                                                majorityTerminal = FALSE
                                                 ) { 
   
   #args_List = list(...)#place extra arguments here
@@ -125,6 +126,7 @@ forestFloor_randomForest_regression <- function(rf.fit,
     #passed by reference
     X=Xd,  #training data, double matrix [obs,vars] 
     Y=Yd,
+    majorityTerminal=majorityTerminal,
     leftDaughter = ld,  #row indices of left subnodes, integer matrix [nrnodes,ntree] 
     rightDaughter = rd, #...
     nodestatus = ns,    #weather node is terminal or not,      
@@ -143,13 +145,15 @@ forestFloor_randomForest_regression <- function(rf.fit,
     #compute LIs with inbag samples
     
     #manual root mean calculation
-    #rootSum = apply(rf.fit$inbag*Y,2,sum) #vector, Y mean in each tree
-    #rootMean = rootSum / apply(inbagCounts,2,sum) # vector root predictions
+    if(binary_reg) {
+    rootSum = apply(rf.fit$inbag*Y,2,sum) #vector, Y mean in each tree
+    rootMean = rootSum / apply(rf.fit$inbag,2,sum) # vector root predictions
+    } else{
     #... or just fetch from rf object
     rootMean = rf.fit$forest$nodepred[1,]
+    }
     grandMean = mean(Y[isTrain]) #training set target mean, not including test
     bootStrapLIs = rootMean - grandMean #vector, one LI for each tree
-    
     #sum LIs over OOB samples
     OOB.indices = as.matrix(rf.fit$inbag == 0)
     OOB.indices[!OOB.indices] = NA #ignore samples being inbag

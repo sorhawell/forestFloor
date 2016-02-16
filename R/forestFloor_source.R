@@ -39,7 +39,8 @@ forestFloor = function(rf.fit,
                Xtest       = Xtest,
                calc_np     = calc_np,
                binary_reg  = binary_reg,
-               bootstrapFC = bootstrapFC)
+               bootstrapFC = bootstrapFC,
+               ...)
            ),
            classification = return(
              forestFloor_randomForest_multiClass(
