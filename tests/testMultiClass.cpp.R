@@ -8,35 +8,44 @@ iris
 X = iris[,!names(iris) %in% "Species"]
 Y = iris[,"Species"]
 as.numeric(Y)
-rf.test42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
-ff.test42 = forestFloor(rf.test42,X,calc_np = F,bootstrapFC = TRUE)
+rf.42 = randomForest(X,Y,keep.forest=T,replace=F,keep.inbag=T,samp=15,ntree=100)
+ff.42 = forestFloor(rf.42,X,calc_np = F,bootstrapFC = TRUE)
 
 #test accuracy of feature contributions
 #y_hat_OOB = row sum FC + Y_grandMean
-FCc = t(t(apply(ff.test42$FCarray,c(1,3),sum))+as.vector(table(Y)/length(Y)))
-FC.residuals = FCc-predict(rf.test42,type="prob")
+FCc = t(t(apply(ff.42$FCarray,c(1,3),sum))+as.vector(table(Y)/length(Y)))
+FC.residuals = FCc-predict(rf.42,type="prob")
 if(max(abs(FC.residuals))>1E-12) stop(
   paste0("When testing if:  y_hat_OOB = row sum FCmatrix + Y_grandMean
          one/some FCs error exceeds allowed 1e-12, found.error=",max(abs(FC.residuals)))
 )
 
+Xtest = iris[1:50,] #copy
+Xtest = Xtest[,-5] #drop Species
+Xtest[1:4] = lapply(iris[1:4],sample,50) #random resample 50 samples
 
 
+#test same results are reached with Xtest
+ff.43 = forestFloor(rf.42,X,Xtest,bootstrapFC = TRUE)
+if(max(abs(ff.43$FCarray[ff.43$isTrain,,]-ff.42$FCarray)) > 1E-12) stop(
+  "forestFloor with/without Xtest gives different feature contributions"
+)
 
-pred = sapply(1:3,function(i) apply(ff.test42$FCarray[,,i],1,sum))+1/3
-rfPred = predict(rf.test42,type="vote",norm.votes=T)
+
+pred = sapply(1:3,function(i) apply(ff.42$FCarray[,,i],1,sum))+1/3
+rfPred = predict(rf.42,type="vote",norm.votes=T)
 rfPred[is.nan(rfPred)] = 1/3
 if(cor(as.vector(rfPred),as.vector(pred))^2<0.99) stop("fail testMultiClass")
-attributes(ff.test42)
+attributes(ff.42)
 args(forestFloor:::plot.forestFloor_multiClass)
-plot(ff.test42,plot_GOF=T,cex=.7,
+plot(ff.42,plot_GOF=T,cex=.7,
      colLists=list("#FF0000A5",
                    "#00FF0050",
                    "#0000FF35")
      )
 
 #try to alter std par
-plot(ff.test42,plot_GOF=T,cex=.7,
+plot(ff.42,plot_GOF=T,cex=.7,
      colLists=list("#FF0000A5",
                    "#00FF0050",
                    "#0000FF35"),
@@ -44,24 +53,24 @@ plot(ff.test42,plot_GOF=T,cex=.7,
 )
 
 
-show3d(ff.test42,1:2,1:2,plot_GOF=T)
-show3d(ff.test42,1:2,1,plot_GOF=T)#test plotting only one feature contribution
+show3d(ff.42,1:2,1:2,plot_GOF=T)
+show3d(ff.42,1:2,1,plot_GOF=T)#test plotting only one feature contribution
 
 
 #plot all effect 2D only
-pars = plot_simplex3(ff.test42,Xi=c(1:3),restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,
+pars = plot_simplex3(ff.42,Xi=c(1:3),restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=2,fig.rows=1,
                fig3d=F,includeTotal=T,auto.alpha=.4,set_pars=T)
-pars = plot_simplex3(ff.test42,Xi=0,restore_par=F,zoom.fit=NULL,var.col=alist(alpha=.3,cols=1:4),
+pars = plot_simplex3(ff.42,Xi=0,restore_par=F,zoom.fit=NULL,var.col=alist(alpha=.3,cols=1:4),
                fig3d=F,includeTotal=T,auto.alpha=.8,set_pars=F)
 
 
 
-for (I in ff.test42$imp_ind[1:4])  {
+for (I in ff.42$imp_ind[1:4])  {
   #plotting partial OOB-CV separation(including interactions effects), coloured by true class
-  pars = plot_simplex3(ff.test42,Xi=I,restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=4,fig.rows=2,
-                 fig3d=F,includeTotal=F,label.col=1:3,auto.alpha=.3,set_pars = (I==ff.test42$imp_ind[1]))
+  pars = plot_simplex3(ff.42,Xi=I,restore_par=F,zoom.fit=NULL,var.col=NULL,fig.cols=4,fig.rows=2,
+                 fig3d=F,includeTotal=F,label.col=1:3,auto.alpha=.3,set_pars = (I==ff.42$imp_ind[1]))
   #plotting partial OOB-CV separation(including interactinos effects), coloured by varaible value
-  pars = plot_simplex3(ff.test42,Xi=I,restore_par=F,zoom.fit=T,var.col=alist(order=F,alpha=.8),
+  pars = plot_simplex3(ff.42,Xi=I,restore_par=F,zoom.fit=T,var.col=alist(order=F,alpha=.8),
                  fig3d=F,includeTotal=(I==4),auto.alpha=.3,set_pars=F)
 }
 
