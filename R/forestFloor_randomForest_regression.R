@@ -52,8 +52,13 @@ forestFloor_randomForest_regression <- function(rf.fit,
            except cinbag() entails a more detailed inbag record, which is
            needed to estimate binary node probabilities.")
     }
-    if(!calc_np) stop("node predictions must be re-calculated for random forest of type classification, set calc_np=T)
-                      error conditions: if(!calc_np && rf.fit$type='classification')")
+    if(!calc_np) {
+      #print("node predictions must be re-calculated for random forest of type classification, set calc_np=T)
+      #error conditions: if(!calc_np && rf.fit$type='classification')")
+      print(" ")
+      print("setting calc_np=TRUE")
+      calc_np=TRUE
+    }
     if(is.null(rf.fit$inbagCount)) inbag = rf.fit$inbag else inbag = rf.fit$inbagCount
     
     } else {
