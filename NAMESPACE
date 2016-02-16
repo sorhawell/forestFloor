@@ -53,5 +53,6 @@ export(
        plot_simplex3,
        recTree,
        show3d,
-       vec.plot
+       vec.plot,
+       Xtestmerger
        )
