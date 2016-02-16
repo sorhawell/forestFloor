@@ -38,7 +38,7 @@ forestFloor = function(rf.fit,
                X           = X,
                Xtest       = Xtest,
                calc_np     = calc_np,
-               binary_reg  = bianary_reg,
+               binary_reg  = binary_reg,
                bootstrapFC = bootstrapFC)
            ),
            classification = return(
