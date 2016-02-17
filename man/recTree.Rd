@@ -1,17 +1,23 @@
 \name{recTree}
 \alias{recTree}
+\alias{multiTree}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 recursiveTree: cross-validated feature contributions
 }
 \description{
-internal C++ function to compute feature contributions for a random Forest
+internal C++ functions to compute feature contributions for a random Forest
 
 }
 \usage{
-recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter, 
+recTree(  vars, obs, ntree, calculate_node_pred, X,Y,majorityTerminal, leftDaughter, 
     rightDaughter, nodestatus, xbestsplit, nodepred, bestvar, 
-    inbag, varLevels, OOBtimes, localIncrements) 
+    inbag, varLevels, OOBtimes, localIncrements)
+
+multiTree(vars, obs, ntree, nClasses,            X,Y,majorityTerminal, leftDaughter,
+    rightDaughter, nodestatus, xbestsplit, nodepred, bestvar,
+    inbag, varLevels, OOBtimes, localIncrements)
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,6 +31,9 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
   \item{ntree}{
   number of trees starting from 1 function should iterate, cannot be higher than columns of inbag
   }
+  \item{nClasses}{
+  number of classes in classification forest
+  }
   \item{calculate_node_pred}{
   should the node predictions be recalculated(true) or reused from nodepred-matrix(false & regression)
   }
@@ -33,6 +42,9 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
   }
   \item{Y}{
   target vector, factor or regression
+  }
+  \item{majorityTerminal}{
+  bool, majority vote in terminal nodes? Default is FALSE for regression. Set only to TRUE when binary_reg=TRUE.
   }
   \item{leftDaughter}{
   a matrix from a the output of randomForest rf$forest$leftDaughter
@@ -66,7 +78,7 @@ recTree(vars, obs, ntree, calculate_node_pred, X, Y, leftDaughter,
   \item{OOBtimes}{
   number of times a certain observation was out-of-bag in the forest. Needed to compute cross-validated feature contributions as these are summed local increments over out-of-bag observations over features divided by this number. In previous implementation(rfFC), articles(see references) feature contributions are summed by all observations and is divived by ntrees.
   }
-  
+
   \item{localIncrements}{
   an empty matrix to store localIncrements during computation. As C++ function returns, the input localIncrement matrix contains the feature contributions.
   }
