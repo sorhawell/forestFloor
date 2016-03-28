@@ -11,5 +11,5 @@ Description: Form visualizations of high dimensional mapping structures of rando
 SystemRequirements: OpenGL, GLU Library, zlib
 License: GPL-2
 URL: http://forestFloor.dk
-Imports: Rcpp (>= 0.11.3), rgl,  kknn
+Imports: Rcpp (>= 0.11.3), rgl, kknn
 LinkingTo: Rcpp
