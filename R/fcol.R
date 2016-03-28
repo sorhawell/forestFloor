@@ -42,19 +42,24 @@ fcol = function(ff,
   }
   
   #crop x(forestFloor) object to only visualize test or train
-  plotThese = checkPlotTest(plotTest,ff$isTrain)
-  if(!(all(plotThese))) {
-      #cut to those which should be plotted
-      if(class(ff)=="forestFloor_multiClass") {
-        ff$FCarray = ff$FCarray[plotThese,,]
-      } else { #not FCarray not used, see first stop
-        if(class(ff)=="forestFloor_regression") {
-          ff$FCmatrix = ff$FCmatrix[plotThese,]
+  
+  if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
+    plotThese = checkPlotTest(plotTest,ff$isTrain)
+    if(!(all(plotThese))) {
+        #cut to those which should be plotted
+        if(class(ff)=="forestFloor_multiClass") {
+          ff$FCarray = ff$FCarray[plotThese,,]
+        } else { #not FCarray not used, see first stop
+          if(class(ff)=="forestFloor_regression") {
+            ff$FCmatrix = ff$FCmatrix[plotThese,]
+          }
         }
-      }
-      ff$Y = ff$Y[plotThese]
-      ff$X = ff$X[plotThese,]
+        ff$Y = ff$Y[plotThese]
+        ff$X = ff$X[plotThese,]
+    }
   }
+  
+  
   
   #get/check data.frame/matrix, convert to df, remove outliers and normalize
   if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
@@ -91,7 +96,12 @@ fcol = function(ff,
   
   #check colM is either data.frame or matrix
   if(!class(colM) %in% c("data.frame","matrix")) {
-    stop(paste(class(colM),"input is neither matrix or data.frame"))
+#    stop(paste(class(colM),"input is neither matrix or data.frame"))
+    tryCatch({colM = matrix(colM,ncol=1)},
+             error = function(e)
+               stop(paste("input ff was neither data.frame or matrix and 
+could not be coerced to matrix:",e$message))
+    )
   }
   
   #convert matrix to data.frame
