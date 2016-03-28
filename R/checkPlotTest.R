@@ -1,8 +1,10 @@
 checkPlotTest = function(plotTest,isTrain) {
-  if(is.null(plotTest)) { #if there is a test set plot that as default, else train
+  if(is.null(plotTest)) { #if plotTest is unspecified/NULL
+    #if all obseravtions of isTrain are TRUE plot train else plot test observations
     plotThese = if(all(isTrain)) isTrain else !isTrain
   } else {
-    matchArg = pmatch(plotTest,c(T,F,"andTrain"))
+    #match with options
+    matchArg = pmatch(plotTest,c(T,F,"andTrain")) #possible arguments are TRUE FALSE and "andTrain"
     if(length(matchArg)<1 || is.na(matchArg)) {
       stop(paste("plotTest= '",plotTest,"' is an incorrect argument"))
     }
