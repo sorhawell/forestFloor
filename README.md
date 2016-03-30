@@ -14,10 +14,10 @@
 
 - implement some matrix/data.frame checks to avoid crash if non training feature matrix is forwarded to forestFloor()
 
-##### 1.9.2 (development)
+##### 1.9.3 (cran)
 
 Features:
- * It is now possible to compute feature contributions of feature test set Xtest. Formula interface not implemented yet. For data.frame X and Xtest, names, classes of columns (numeric/factor) and levels of factors must match. Any used level in any factor of Xtest must have been used at least once in X during training. If Xtest is provided, any visualization will as standard visualize this rather than X. plotTest=F will revert this. plotTest="andTrain" (partial matched) will enable visualization of both test and train.
+ * It is now possible to compute feature contributions of feature test set Xtest. Formula interface not implemented for Xtest yet. For data.frame X and Xtest, names and classes of columns (numeric/factor). Also, levels of factors must match. Any used level in any factor of Xtest must have been used at least once in X during training. If Xtest is provided, any visualization will as standard visualize feature contributions of  Xtest rather than X. plotTest=F will revert this. plotTest="andTrain" (partial matched) will enable visualization of both test and train. In the forestFloor output object, feature contributions for X and Xtest are row binded in the same matrix FCmatrix / FCarray. A booleen vector isTrain describes what rows are train and what are test.
 
  * Bootstrapping and stratification can also be seen as local increments and do influence the final RF prediction. To precisely assure, that all feature contributions for each observation do sum to the RF OOB-CV prediction, a new param bootstrapFC has been included. When set to TRUE, one extra column is added to FCmatrix(regression) or n.classes columns to the FCarray(classification). Each tree has a 'bootstrap local increment' (bootstrapLI). bootstrapLI = rootNode_rate - base_rate, where rootNode_rate is the bootstrapped sampled (inbag) class label distribution in root node, and base_rate is the overall class label distribution in training set. bootstrapFC is for a given observation the sum of bootstrapLI in those trees, where that observation was out-of-bag. bootstrapFC=TRUE does not change any visualization.
 
@@ -25,7 +25,7 @@ Bug-fix:
  * Until now, forestFloor has assumed for not fully grown trees of randomForest classification, that non-unaimous votes would be passed directly to the total ensemble vote. This is for the randomForest implementation incorrect, as majority vote is used both in terminal nodes and as default on ensemble level. A new setting majorityTerminal=TRUE for the low-level method forestFloor_randomForest_multiclass has been implemented. (Bonus info: This new setting can be reverted passing majorityTerminal=FALSE through forestFloor(...) and could probably be used to tweak randomForest into producing 'probability forest' / 'sklearn'-isch predictions.)
  
 
-1.9.0-1.9.1 (CRAN)
+1.9.0-1.9.1
  - **New Features:**
  - user no longer have to use the trimTrees:cinbag to train a classification forest to obtain inbag counts as randomForest some time ago started to support inbag counts. Restrictions and error messages removed.
  - any graphical argument can passed through plot.forestFloor to plot or points. GOF_col arg is changed to GOF_args. If conflicts with internal arguments, user provided arguments have priority.
