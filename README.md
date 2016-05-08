@@ -9,10 +9,12 @@
 ![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
 
 
+##### 1.9.4 (cran)
+Features:
+ * plot.forestFloor_multiClass, now have col= parameter to control colours. Intended to replace the use of the colLists colLists. Interfacing through colLists still possible.
+Bug-fix:
+ * plot.forestFloor_multiclass did not index by variable importance correctly
 
-**todo list:**
-
-- implement some matrix/data.frame checks to avoid crash if non training feature matrix is forwarded to forestFloor()
 
 ##### 1.9.3 (cran)
 
