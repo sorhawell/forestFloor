@@ -28,6 +28,7 @@ A method to plot an object of forestFloor-class. Plot partial feature contributi
   label.seq = NULL,
   plotTest  = NULL,
   limitY = TRUE,
+  col = NULL,
   colLists = NULL,
   orderByImportance = TRUE,
   fig.columns = NULL,
@@ -64,8 +65,11 @@ default(NULL) is 1 for one plot, 2 for 2, 3 for 3, 2 for 4 and 3 for more.
 \item{limitY}{
 TRUE/FLASE, constrain all Yaxis to same limits to ensure relevance of low importance features is not over interpreted
 }
+\item{col}{
+Either a colur vector with one colour per plotted class label or a list of colour vectors. Each element is a colour vector one class. Colour vectors in list are normally either of length 1 with or of length equal to number of training observations. NULL will choose standard one colour per class.
+}
 \item{colLists}{
-List of colour vectors of label.seq length. Each element is a colour vector colouring sample class prediction of one class. Vectors should either be of length 1 with one colour for class predictions or of length equal to number of training observations designating colours for all samples. NULL will choose standard one colour per class.
+Deprecetated, will be replaced by col input
 }
 \item{jitter_these_cols}{
 vector to apply jitter to x-axis in plots. Will refer to variables. Useful to for categorical variables. Default=NULL is no jitter.
@@ -103,7 +107,7 @@ GOF estimation leave-one-out-kNN becomes increasingly slow for +1500 samples.
 
 \item{...}{
 ... other arguments passed to \code{\link{par}} or \code{\link{plot}}\cr.
-e.g. mar=, mfrow=, is passed to par, and cex=, col= is passed to plot. par() arguments are reset immediately as plot function returns.
+e.g. mar=, mfrow=, is passed to par, and cex= is passed to plot. par() arguments are reset immediately as plot function returns.
 }
 
 }
@@ -205,9 +209,8 @@ Soren Havelund Welling
   ff = forestFloor(rf,X)
   
   plot(ff,plot_GOF=TRUE,cex=.7,
-       colLists=list(c("#FF0000A5"),
-                     c("#00FF0050"),
-                     c("#0000FF35")))
+    col=c("#FF0000A5","#00FF0050","#0000FF35") #one col per plotted class
+  )
   
   #...and 3D plot, see show3d
   show3d(ff,1:2,1:2,plot_GOF=TRUE)

@@ -51,6 +51,15 @@ plot(ff.43,plot_GOF=T,cex=.7,
                    "#0000FF35")
 )
 
+#use col interface
+plot(ff.43,plot_GOF=T,cex=.7,
+     col=list("#FF0000A5","#00FF0050","#0000FF35") #one colour per class
+)
+
+plot(ff.43,plot_GOF=T,cex=.7,
+     col=c("#FF0000A5","#00FF0050","#0000FF35") #one colour per class
+)
+
 
 #try to alter std par
 plot(ff.42,plot_GOF=T,cex=.7,
