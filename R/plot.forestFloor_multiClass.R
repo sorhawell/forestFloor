@@ -6,6 +6,7 @@ plot.forestFloor_multiClass  = function(
   label.seq=NULL,
   plotTest = NULL,
   limitY=TRUE,
+  col = NULL,
   colLists = NULL,
   orderByImportance=TRUE,
   fig.columns = NULL,
@@ -58,6 +59,19 @@ plot.forestFloor_multiClass  = function(
   
   #if plot_seq refer to importance ordered features, reorder plot_seq accordingly
   imp_ind = if(orderByImportance) x$imp_ind else 1:ncol(x$X)
+  
+  #interface colLists through col
+  if(!is.null(col)) {
+    if(class(col) == "list") {
+      colLists = col #already a list of colour vectors
+    } else {
+      #only one colour, copy two all colour vectors
+      if(length(col)==1) colLists = as.list(rep(col,length(label.seq))) else {
+        #    
+        colLists = as.list(col[1:length(label.seq)])
+      }
+    }
+  }
   
   #if colLists (list of colour vectors) not provided, make one
   #each class label will get one colour
