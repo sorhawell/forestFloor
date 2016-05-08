@@ -85,7 +85,10 @@ plot.forestFloor_multiClass  = function(
         Y=Y[subSample]
         FCarray=FCarray[subSample,,]
         subSample = subSample
-        colLists = lapply(colLists,function(colVec) colVec[subSample])
+        colLists = lapply(colLists,function(colVec) {
+          #only subsample of colourVector has one colour per sample
+          if(length(colVec) == length(Y)) colVec[subSample] else colVec
+        })
         mget(ls())
       })
     } else x_small = x #no reduction of samples
