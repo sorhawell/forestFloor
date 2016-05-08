@@ -9,7 +9,7 @@
 ![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
 
 
-##### 1.9.4 (cran)
+##### 1.9.4 (github)
 Features:
  * plot.forestFloor_multiClass, now have col= parameter to control colours. Intended to replace the use of the colLists colLists. Interfacing through colLists still possible.
 Bug-fix:
