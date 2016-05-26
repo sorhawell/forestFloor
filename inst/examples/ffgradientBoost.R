@@ -8,24 +8,6 @@ y     = with(X,X1^2+sin(X2*2*pi)+X3*X4) + rnorm(3000)/3
 ytest = with(Xtest,X1^2+sin(X2*6*pi)+X3*X4) + rnorm(3000)/3
 
 #define boosted tree wrapper
-predict.boostTree = function(Fx,X) {
-  class(Fx) = "randomForest"
-  predMatrix = predict(Fx,X,predict.all = T)$individual
-  ntrees = dim(predMatrix)[2]
-  return(apply(predMatrix,1,sum))
-}
-
-plot.boostTree = function(Fx,X,ytest,add=F,...) {
-  class(Fx) = "randomForest"
-  predMatrix = predict(Fx,X,predict.all = T)$individual
-  ntrees = dim(predMatrix)[2]
-  allPreds = apply(predMatrix,1,cumsum)
-  preds = apply(allPreds,1,function(pred) sd(ytest-pred))
-  if(add) plot=points
-  plot(1:ntrees,preds,...)
-  return()
-}
-
 simpleBoost = function(
   X,y,    #training data
   M=100,  #boosting iterations and ntrees
@@ -40,16 +22,35 @@ simpleBoost = function(
     res = y - y_hat              #compute residuals
     hx = randomForest(X,res,ntree=1,keep.inbag=T,...) #grow tree on residuals
     res_hat = predict(hx,X)                           #predict residuals
-    cat("SD=",sd(res),  "\n")
-    hx$forest$nodepred = hx$forest$nodepred * v
-    Fx[[m]] = hx
+    cat("SD=",sd(res),  "\n")    #print
+    hx$forest$nodepred = hx$forest$nodepred * v #multiply nodepredictions by learning rate
+    Fx[[m]] = hx  #append tree to forest
   }
-  Fx = do.call(combine,Fx[])
-  Fx$y = y
-  Fx$oob.times = apply(Fx$inbag,1,function(x) sum(!x))
-  class(Fx) = c("boostTree","randomForest")
+  Fx = do.call(combine,Fx) #combine trees with randomForest::combine()
+  Fx$y = y #append y
+  Fx$oob.times = apply(Fx$inbag,1,function(x) sum(!x)) #update oob.times
+  class(Fx) = c("simpleBoost","randomForest") #make simpleBoost a subclass of randomForest
   return(Fx)
 }
+
+predict.simpleBoost = function(Fx,X) {
+  class(Fx) = "randomForest"
+  predMatrix = predict(Fx,X,predict.all = T)$individual
+  ntrees = dim(predMatrix)[2]
+  return(apply(predMatrix,1,sum))
+}
+
+plot.simpleBoost = function(Fx,X,ytest,add=F,...) { #plots learning curve
+  class(Fx) = "randomForest"
+  predMatrix = predict(Fx,X,predict.all = T)$individual
+  ntrees = dim(predMatrix)[2]
+  allPreds = apply(predMatrix,1,cumsum)
+  preds = apply(allPreds,1,function(pred) sd(ytest-pred))
+  if(add) plot=points
+  plot(1:ntrees,preds,...)
+  return()
+}
+
 
 #build gradient boosted forest
 rb = simpleBoost(X,y,M=300,replace=F,mtry=6,sampsize=500,v=0.005)
