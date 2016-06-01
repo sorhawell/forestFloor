@@ -8,8 +8,10 @@
 ![alt tag](http://cranlogs.r-pkg.org/badges/forestFloor)
 ![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
 
+##### 1.9.5 (github)
+Features: include CITATION link for article, and examples folder with scripts to reproduce article plots etc.
 
-##### 1.9.4 (github)
+##### 1.9.4
 Features:
  * plot.forestFloor_multiClass, now have col= parameter to control colours. Intended to replace the use of the colLists colLists. Interfacing through colLists still possible.
 
