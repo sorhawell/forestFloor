@@ -11,7 +11,7 @@
 ##### 1.9.5 (github)
 Features:
 
- * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [arXiv.org article](Forest Floor Visualizations of Random Forests)
+ * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [Forest Floor Visualizations of Random Forests](http://arxiv.org/abs/1605.09196)
 
 ##### 1.9.4
 Features:
