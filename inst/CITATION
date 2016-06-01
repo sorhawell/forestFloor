@@ -1,0 +1,23 @@
+citHeader("To cite forestFloor in publications use:")
+
+citEntry(entry  = "Article",
+         title  = "Forest Floor Visualizations of Random Forests",
+         author =  personList(
+           person(family="Welling", given="Soren Havelund"),
+           person(family="Refsgaard", given="Hanne Hoffmann Froelund"),
+           person(family="Brockhoff", given="Per Bruun"),
+           person(family="Clemmensen", given="Line Katrine Harder")),
+         journal = "ArXiv e-prints",
+         year    = "2016",
+         month   = "may",
+         url     = "http://arxiv.org/abs/1605.09196",
+         adsnote = "Provided by the SAO/NASA Astrophysics Data System",
+         textVersion = paste(
+           "S. H. Welling, H. H. F. Refsgaard, P. B. Brockhoff and L. K. Clemmensen.",
+           "Forest Floor Visualizations of Random Forests.",
+           "ArXiv e-prints, June 2016."
+         )
+         )
+         
+ 
+
