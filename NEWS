@@ -1,4 +1,4 @@
-##### 1.9.5 (github)
+##### 1.9.5
 Features:
 
  * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [Forest Floor Visualizations of Random Forests](http://arxiv.org/abs/1605.09196)
@@ -11,7 +11,7 @@ Bug-fix:
  * plot.forestFloor_multiclass did not index by variable importance correctly
 
 
-##### 1.9.3 (cran)
+##### 1.9.3
 
 Features:
  * It is now possible to compute feature contributions of feature test set Xtest. Formula interface not implemented for Xtest yet. For data.frame X and Xtest, names and classes of columns (numeric/factor). Also, levels of factors must match. Any used level in any factor of Xtest must have been used at least once in X during training. If Xtest is provided, any visualization will as standard visualize feature contributions of  Xtest rather than X. plotTest=F will revert this. plotTest="andTrain" (partial matched) will enable visualization of both test and train. In the forestFloor output object, feature contributions for X and Xtest are row binded in the same matrix FCmatrix / FCarray. A booleen vector isTrain describes what rows are train and what are test.
