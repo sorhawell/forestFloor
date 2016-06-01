@@ -1,6 +1,4 @@
-library(randomForest)
-library(forestFloor)
-
+library(randomForest);library(forestFloor)
 #simulate data
 X     = data.frame(replicate(6,4*(runif(3000)-.5)))
 Xtest = data.frame(replicate(6,4*(runif(1500)-.5)))
@@ -12,8 +10,7 @@ simpleBoost = function(
   X,y,    #training data
   M=100,  #boosting iterations and ntrees
   v=.1,   #learning rate
-  ...     #other parameters passed to randomForest
-) {
+  ...) {  #other parameters passed to randomForest
   y_hat = y * 0  #latest ensemble prediction
   res_hat = 0    #residuals hereof...
   Fx = list()    #list for trees
@@ -51,12 +48,16 @@ plot.simpleBoost = function(Fx,X,ytest,add=F,...) { #plots learning curve
   return()
 }
 
-
 #build gradient boosted forest
 rb = simpleBoost(X,y,M=300,replace=F,mtry=6,sampsize=500,v=0.005)
 
 #make forestFloor plots
 ffb = forestFloor(rb,X,Xtest)
+#correct for that tree votes of gradient boosts are summed, not averaged.
+#forestFloor will as default divide by the same number as here multiplied with
+ffb$FCmatrix = ffb$FCmatrix * c(rb$oob.times,rep(rb$ntree,sum(!ffb$isTrain)))
+
+#plot forestFloor for OOB-CV feature contributions and regular feature contributions
 plot(ffb,plotTest=T,col=fcol(ffb,3,plotTest = TRUE))
 plot(ffb,plotTest=F,col=fcol(ffb,1,plotTest = FALSE))
 
