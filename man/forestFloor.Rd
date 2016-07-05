@@ -22,14 +22,14 @@ rf.fit, a random forest object as the output from randomForest::randomForest\cr
 
 \item{X}{
 data.frame of input variables, numeric(continuous), discrete(treated as continuous) or factors(categorical).
-n_rows observations and n_columns features
-X MUST be the same data.frame as used to train the random forest, see above item.
+n_rows observations and n_columns features. 
+X MUST be the exact same data.frame as used to train the random forest, see above item. If rows are re-ordered, the observations will not match the inbag-matrix resulting in distorted feature contributions.
 }
 
 \item{Xtest}{
 data.frame of input variables, numeric(continuous), discrete(treated as continuous) or factors(categorical).
 n_rows test_examples and n_columns features
-Xtest MUST have same number and order of columns(variables) as X. Number of rows can vary.
+Xtest MUST have same number and order of columns(variables) as X. Number of rows and order can vary.
 }
 
 \item{calc_np}{
