@@ -140,7 +140,7 @@ a numeric vector describing which classes and in what sequence to plot. NULL is 
   }
   
   \item{user.gof.args}{
-argument list passed to internal function ff2, which can modify how goodness-of-fit is computed. Number of neighbors and kernel can be set manually with e.g. list(kmax=40,kernel="gaussian"). Default pars should work already in most cases. Function ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
+argument list passed to internal function convolute_ff2, which can modify how goodness-of-fit is computed. Number of neighbors and kernel can be set manually with e.g. list(kmax=40,kernel="gaussian"). Default pars should work already in most cases. Function convolute_ff2 computed leave-one-out CV prediction the feature contributions from the chosen context of the visualization.
   }
   
   \item{plot_GOF}{
