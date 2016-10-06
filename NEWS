@@ -1,4 +1,4 @@
-##### 1.9.5
+##### 1.9.5 (github, cran)
 Features:
 
  * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [Forest Floor Visualizations of Random Forests](http://arxiv.org/abs/1605.09196)
@@ -34,22 +34,21 @@ Bug-fix:
  - Major Xmas induced revision of all docs & examples
  
 
-##### 1.8.9
+1.8.9
+- **New features:**
+- XY axes can be cropped for outliers also in show3d
+- forestFloor supports class randomForest.formula and will try other subclasses of randomForest
+- fcol(byResiduals) fcol support color gradients perpendicular to fitted functions
+- ggplot functions has been completely disabled
+- link to webpage forestFloor.dk
+- **Bugs:**
+- Z-label in show3d was sometimes written twice
+- If forestFloor X input is matrix without dimnames, show3d() plot labels were messed up.
 
-New features:
-* XY axes can be cropped for outliers also in show3d
-* forestFloor supports class randomForest.formula and will try other subclasses of randomForest
-* fcol(byResiduals) fcol support color gradients perpendicular to fitted functions
-* ggplot functions has been completely disabled
-* link to webpage forestFloor.dk
 
-Bugs:
- * Z-label in show3d was sometimes written twice
- * If forestFloor X input is matrix without dimnames, show3d() plot labels were messed up.
-
-##### 1.8.7-1.8.8:
-
- * forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
- * fix bug, show3d will produce error of only on feature contribution column is selected
- * fix bug, test input in randomForest functions will prpevent forestFloor from runnig including a   * test input in randomForest (xtest , ytest) make keep.forest default FALSE If forest is missing, error meassage prompts user to force keep.forest=T.
-set Xi=1:2 as default, in show3d.forestFloor_multiClass
+1.8.7-1.8.8:
+- forestFloor will support rfPermute models (easy, as they are 95% a randomForest object)
+- fix bug, show3d will produce error of only on feature contribution column is selected
+- fix bug, test input in randomForest functions will prpevent forestFloor from runnig
+        including a test input in randomForest (xtest , ytest) make keep.forest default FALSE If forest is missing, error meassage prompts user to force keep.forest=T. 
+- set Xi=1:2 as default, in show3d.forestFloor_multiClass
