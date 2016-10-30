@@ -1,4 +1,15 @@
-library(randomForest);library(forestFloor)
+##Soren Welling 2016
+#This script is a proof of concept of feature contributions for gradient boosted trees.
+#The randomForest algorithm is tweaked into a gradient boosting machhine, similar to gbm or xgboost.
+#This gradient boosting implementation was largely inpired by https://en.wikipedia.org/wiki/Gradient_boosting
+#For more information read section section 1.5 off the ancillary file https://arxiv.org/abs/1605.09196
+#Try this direct link https://arxiv.org/src/1605.09196v3/anc/1605.09196_suppl.mat.pdf
+
+
+library(randomForest)
+library(forestFloor)
+
+
 #simulate data
 X     = data.frame(replicate(6,4*(runif(3000)-.5)))
 Xtest = data.frame(replicate(6,4*(runif(1500)-.5)))
