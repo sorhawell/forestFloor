@@ -8,7 +8,10 @@
 ![alt tag](http://cranlogs.r-pkg.org/badges/forestFloor)
 ![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
 
-##### 1.9.5 (github, cran)
+##### 1.10.1
+Bug fix of how importance is extracted from randomForest object to forestFloor object, see issue#21 on github. From now on forestFloor package depends on extractor function randomForest::importance. Arguments can be passed to importance, see forestFloor help file under ... arguments.
+
+##### 1.9.5
 Features:
 
  * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [Forest Floor Visualizations of Random Forests](http://arxiv.org/abs/1605.09196)
