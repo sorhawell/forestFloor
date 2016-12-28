@@ -49,6 +49,8 @@ boolean, if TRUE an extra column is added to FCmatrix or one extra matrix to FCa
 For classification it is possible to manually set majorityTerminal=FALSE. For the randomForest classification implementation majorityTerminal is by default set to TRUE, as each tree uses majority vote within terminal nodes. In other implemenations terminal nodes are not neccesarily reduced by majority voting before aggregetion on ensemble level.
 
 majorityTerminal, does not apply to random forest regressions.
+
+impType = 1 or 2 and impScale = T / F and impClass = "factor level name" can modify what type importance to export from randomForest object to forestFloor object. imp-arguments are passed to \code{\link{importance}}
 }
 
 
@@ -108,7 +110,7 @@ Soren Havelund Welling
 }
 
 \note{
-check out more guides at forestFloor.dk 
+for more information goto forestFloor.dk 
 }
 
 \seealso{

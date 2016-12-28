@@ -1,5 +1,7 @@
 useDynLib(forestFloor)
 
+importFrom(randomForest,importance)
+
 importFrom(Rcpp, evalCpp)
 import(kknn)
 

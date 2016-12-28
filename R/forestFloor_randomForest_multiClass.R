@@ -5,9 +5,11 @@ forestFloor_randomForest_multiClass <- function(rf.fit,
                                      calc_np = TRUE,
                                      binary_reg = FALSE,
                                      bootstrapFC = FALSE,
-                                     majorityTerminal = TRUE
+                                     majorityTerminal = TRUE,
+                                     ...
                                      ) { 
-
+  otherArgs = list(...)
+  
   #translate binary classification RF-object, to regression mode
   if(rf.fit$typ!="classification") stop("this function only handles type 'classification',
  but rf.fit$type!= 'classification'")
@@ -185,8 +187,15 @@ with randomForest")
     localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
   }
   
+  #use extractor from randomForest pacakge to fetch importance
+  imp = randomForest::importance(
+    x     = rf.fit,
+    type  = otherArgs$impType,
+    class = otherArgs$impClass,
+    scale = is.null(otherArgs$impScale) || otherArgs$impScale 
+  )
+  
   #writing out list
-  imp = as.matrix(rf.fit$importance)[,1]
   out = list(X=as.data.frame(X), #cast as data.frame
              Y=rf.fit$y,
              importance = imp,

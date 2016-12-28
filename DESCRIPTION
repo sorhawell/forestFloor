@@ -1,15 +1,15 @@
 Package: forestFloor
 Type: Package
 Title: Visualizes Random Forests with Feature Contributions
-Version: 1.9.5
-Date: 2016-06-01
+Version: 1.10.1
+Date: 2016-12-28
 Author: Soeren Havelund Welling
-Maintainer: Soeren Havelund Welling <SOWE@DTU.DK>
+Maintainer: Soeren Havelund Welling <SORHAWELL@GMAIL.DK>
 Depends:
-Suggests: randomForest, utils, devtools, tools
+Suggests:
 Description: Form visualizations of high dimensional mapping structures of random forests and feature contributions.
 SystemRequirements: OpenGL, GLU Library, zlib
 License: GPL-2
 URL: http://forestFloor.dk
-Imports: Rcpp (>= 0.11.3), rgl, kknn
+Imports: Rcpp (>= 0.11.3), rgl, kknn, randomForest
 LinkingTo: Rcpp

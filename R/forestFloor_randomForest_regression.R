@@ -5,10 +5,13 @@ forestFloor_randomForest_regression <- function(rf.fit,
                                                 calc_np = FALSE,
                                                 binary_reg = FALSE,
                                                 bootstrapFC = FALSE,
-                                                majorityTerminal = FALSE
-                                                ) { 
+                                                majorityTerminal = FALSE,
+                                                ...
+                                                ) {
   
-  #args_List = list(...)#place extra arguments here
+  
+  
+  otherArgs = list(...) #extra arguments
   
   #check the rf.fitbject have a inbag
   if(is.null(rf.fit$inbag)) stop("input randomForest-object have no inbag, set keep.inbag=T,
@@ -162,8 +165,15 @@ forestFloor_randomForest_regression <- function(rf.fit,
     localIncrements = cbind(localIncrements,bootstrapFC=bootstrapFC.col) #bind bootstrap col
   }
   
+  #use extractor from randomForest pacakge to fetch importance
+  imp = randomForest::importance(
+    x     = rf.fit,
+    type  = otherArgs$impType,
+    class = otherArgs$impClass,
+    scale = is.null(otherArgs$impScale) || otherArgs$impScale 
+  )
+  
   #writing out list
-  imp = as.matrix(rf.fit$importance)[,1]
   out = list(X=as.data.frame(X), #cast as data.frame
              Y=Y,
              importance = imp,
