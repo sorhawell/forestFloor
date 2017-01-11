@@ -187,6 +187,12 @@ with randomForest")
     localIncrements = array(localIncrements,dim=c(obs,vars,nClasses))
   }
   
+  #class argument will not work if type is not 1
+  if(!is.null(otherArgs$impClass)) {
+    otherArgs$impType = 1
+    print("class has been set to something, passing along type=1")
+  }
+  
   #use extractor from randomForest pacakge to fetch importance
   imp = randomForest::importance(
     x     = rf.fit,
@@ -205,6 +211,14 @@ with randomForest")
              isTrain = isTrain
              #  all = mget(ls()) #export everything in list
   )
+  
+  #check that only one importance column is exported
+  if(!is.null(dim(out$importance)) && dim(out$importance)[2]!=1) {
+    warning("only one importance measure should be exported, 
+            set type=1, class=NULL, scale=FALSE")
+    out$importance = randomForest::importance(x=rf.fit,type=1,scale=FALSE)
+    out$imp_ind = imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix
+  }
 
   class(out) = "forestFloor_multiClass"
   return(out)

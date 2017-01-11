@@ -165,6 +165,12 @@ forestFloor_randomForest_regression <- function(rf.fit,
     localIncrements = cbind(localIncrements,bootstrapFC=bootstrapFC.col) #bind bootstrap col
   }
   
+  #class argument will not work if type is not 1
+  if(!is.null(otherArgs$impClass)) {
+    otherArgs$impType = 1
+    print("class has been set to something, passing along type=1")
+  }
+  
   #use extractor from randomForest pacakge to fetch importance
   imp = randomForest::importance(
     x     = rf.fit,
@@ -181,6 +187,15 @@ forestFloor_randomForest_regression <- function(rf.fit,
              FCmatrix = localIncrements,
              isTrain = isTrain
   )
+  
+  #check that only one importance column is exported
+  if(!is.null(dim(out$importance)) && dim(out$importance)[2]!=1) {
+    warning("only one importance measure should be exported, 
+            set type=1, class=NULL, scale=FALSE")
+    out$importance = randomForest::importance(x=rf.fit,type=1,scale=FALSE)
+    out$imp_ind = imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix
+  }
+  
   class(out) = "forestFloor_regression"
   return(out)
   }
