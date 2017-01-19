@@ -11,9 +11,29 @@ Y = with(X, X1^2 + sin(X2*pi) + 2 * X3 * X4 + .5 * rnorm(obs))
 
 
 #grow a forest, remeber to include inbag
-rf42=randomForest(X,Y,keep.inbag = TRUE,sampsize=499,ntree=100)
+rf41=randomForest(X,Y,keep.inbag = TRUE,sampsize=499,ntree=100,importance = F)
 #compute feature contributions
-ff42 = forestFloor(rf42,X,bootstrapFC = TRUE)
+out = tryCatch({ff41 = forestFloor(rf41,X,bootstrapFC = TRUE,impType=1)},warning = function(w) w)
+if(out$message != "found nothing of importance, revert to fallback") stop("wrong warning")
+
+#if(colnames(ff41$importance) != "%IncMSE") stop("wrong imp")
+ff41 = forestFloor(rf41,X,bootstrapFC = TRUE,impType=2)
+if(colnames(ff41$importance) != "IncNodePurity") stop("wrong imp")
+ff41 = forestFloor(rf41,X,bootstrapFC = TRUE,impType=NULL)
+if(colnames(ff41$importance) != "IncNodePurity") stop("wrong imp")
+
+#grow a forest, remeber to include inbag
+rf42=randomForest(X,Y,keep.inbag = TRUE,sampsize=499,ntree=100,importance = T)
+#compute feature contributions
+ff42 = forestFloor(rf42,X,bootstrapFC = TRUE,impType=1)
+if(colnames(ff42$importance) != "%IncMSE") stop("wrong imp")
+ff42 = forestFloor(rf42,X,bootstrapFC = TRUE,impType=2)
+if(colnames(ff42$importance) != "IncNodePurity") stop("wrong imp")
+ff42 = forestFloor(rf42,X,bootstrapFC = TRUE,impType=NULL)
+if(colnames(ff42$importance) != "%IncMSE") stop("wrong imp")
+
+
+
 
 #test accuracy of feature contributions
 #y_hat_OOB = row sum FC + Y_grandMean
@@ -83,5 +103,6 @@ show3d(ff42,Xi=1:2,
        FCi=1, #only one feature contribution is chosen
        col=Col,plot.rgl=list(size=5),
        orderByImportance=FALSE,plot_GOF=T)
+
 
 

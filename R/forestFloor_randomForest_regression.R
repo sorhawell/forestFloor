@@ -171,12 +171,14 @@ forestFloor_randomForest_regression <- function(rf.fit,
     print("class has been set to something, passing along type=1")
   }
   
-  #use extractor from randomForest pacakge to fetch importance
-  imp = randomForest::importance(
-    x     = rf.fit,
+  #if(is.null(otherArgs$impType)) otherArgs$impType = 1
+  
+  #randomForest::importance to fetch importance
+  imp = forestFloor:::importanceExportWrapper( #got a lot of funnies, this wrapper should catch them
+    rf     = rf.fit,
     type  = otherArgs$impType,
     class = otherArgs$impClass,
-    scale = is.null(otherArgs$impScale) || otherArgs$impScale 
+    scale = otherArgs$impScale 
   )
   
   #writing out list
@@ -187,12 +189,13 @@ forestFloor_randomForest_regression <- function(rf.fit,
              FCmatrix = localIncrements,
              isTrain = isTrain
   )
+
   
   #check that only one importance column is exported
   if(!is.null(dim(out$importance)) && dim(out$importance)[2]!=1) {
     warning("only one importance measure should be exported, 
-            set type=1, class=NULL, scale=FALSE")
-    out$importance = randomForest::importance(x=rf.fit,type=1,scale=FALSE)
+            set type=NULL, class=NULL, scale=FALSE")
+    out$importance = randomForest::importance(x=rf.fit,type=1,scale=FALSE)[,1]
     out$imp_ind = imp_ind = sort(imp,decreasing=TRUE,index.return=TRUE)$ix
   }
   
