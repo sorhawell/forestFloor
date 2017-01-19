@@ -174,7 +174,7 @@ forestFloor_randomForest_regression <- function(rf.fit,
   #if(is.null(otherArgs$impType)) otherArgs$impType = 1
   
   #randomForest::importance to fetch importance
-  imp = forestFloor:::importanceExportWrapper( #got a lot of funnies, this wrapper should catch them
+  imp = forestFloor::importanceExportWrapper( #got a lot of funnies, this wrapper should catch them
     rf     = rf.fit,
     type  = otherArgs$impType,
     class = otherArgs$impClass,

@@ -27,7 +27,8 @@ importFrom(grDevices,
 importFrom(stats,
            delete.response,
            model.frame,
-           na.fail)
+           na.fail,
+           na.omit)
 
 importFrom(utils,
            capture.output

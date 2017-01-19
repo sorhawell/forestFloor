@@ -195,7 +195,7 @@ with randomForest")
   
   
   #randomForest::importance to fetch importance
-  imp = forestFloor:::importanceExportWrapper( #got a lot of funnies, this wrapper should catch them
+  imp = forestFloor::importanceExportWrapper( #got a lot of funnies, this wrapper should catch them
     rf     = rf.fit,
     type  = otherArgs$impType,
     class = otherArgs$impClass,
