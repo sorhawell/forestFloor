@@ -9,7 +9,7 @@ wrapping randomForest::importance and check if one and only one importance is ex
 
 }
 \usage{
-importanceExportWrapper(rf, impType = NULL,impClass = NULL, impScale = NULL)
+importanceExportWrapper(rf, type = NULL, class = NULL, scale = NULL)
 }
 \arguments{
   \item{rf}{
@@ -21,6 +21,11 @@ type of importance, 1 permutation based, 2 loss function based (gini/least squar
 
 \item{class}{
 character of factor level to get class specific importance, only for type 1 importance for classification random forest
+}
+
+
+\item{class}{
+TRUE FALSE or NULL, passed to randomForest::importance
 }
 
 
