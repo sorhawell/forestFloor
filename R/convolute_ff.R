@@ -6,7 +6,7 @@
 convolute_ff = function(ff,
                         these.vars=NULL,
                         k.fun=function() round(sqrt(n.obs)/2),
-                        userArgs.kknn = alist(kernel="gaussian")
+                        userArgs.kknn = alist(kernel="epanechnikov")
 ) {
   
   n.obs=dim(ff$X)[1]
