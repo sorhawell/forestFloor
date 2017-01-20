@@ -24,7 +24,7 @@ character of factor level to get class specific importance, only for type 1 impo
 }
 
 
-\item{class}{
+\item{scale}{
 TRUE FALSE or NULL, passed to randomForest::importance
 }
 
