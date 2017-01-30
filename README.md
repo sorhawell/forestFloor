@@ -16,6 +16,7 @@ Features:
 
  * include CITATION link for article, and examples folder with scripts to reproduce article plots etc. [Forest Floor Visualizations of Random Forests](http://arxiv.org/abs/1605.09196)
 
+
 ##### 1.9.4
 Features:
  * plot.forestFloor_multiClass, now have col= parameter to control colours. Intended to replace the use of the colLists colLists. Interfacing through colLists still possible.
