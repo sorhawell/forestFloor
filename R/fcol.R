@@ -203,6 +203,7 @@ could not be coerced to matrix:",e$message))
   #output scores is transformed to range [0,1]
   #cols are correect to lower manifold number maxPC
   col.df = length(cols)
+  if(!max.df %in% c(1,2,3)) stop("fcol input 'max.df' must be set to either 1, 2 or 3")
   if(col.df>max.df) {
     len.colM = box.outliers(prcomp(sel.colM)$x[,1:max.df],limit=Inf)
     col.df = max.df
