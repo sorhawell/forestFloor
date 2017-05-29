@@ -2,7 +2,9 @@
 
 rm(list=ls())
 library(caret)
+library(e1071) #caret is quietly  requiring this package...
 library(forestFloor)
+library(randomForest)
 N = 1000
 vars = 15
 noise_factor = .3
@@ -18,7 +20,7 @@ caret_train_obj <- train(
   x = X, y = y, 
   method = "rf",
   keep.inbag = TRUE,  #always set keep.inbag=TRUE passed as ... parameter to randomForest
-  ntree=50, #speed up this example, if set too low, forestFloor will fail
+  ntree=50 #speed up this example, if set too low, forestFloor will fail
 )
 
 rf = caret_train_obj$finalModel #extract model
