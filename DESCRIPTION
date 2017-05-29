@@ -1,12 +1,12 @@
 Package: forestFloor
 Type: Package
 Title: Visualizes Random Forests with Feature Contributions
-Version: 1.10.2
+Version: 1.11.1
 Date: 2017-05-29
 Author: Soeren Havelund Welling
 Maintainer: Soeren Havelund Welling <SORHAWELL@GMAIL.DK>
 Depends:
-Suggests:
+Suggests: caret
 Description: Form visualizations of high dimensional mapping structures of random forests and feature contributions.
 SystemRequirements: OpenGL, GLU Library, zlib
 License: GPL-2

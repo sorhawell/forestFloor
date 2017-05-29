@@ -1,4 +1,4 @@
-#f2 - show vec plot 2D and 3D
+  #f2 - show vec plot 2D and 3D
 vec.plot = function(model,X,i.var,grid.lines=100,VEC.function=mean,zoom=1,limitY=F,moreArgs=list(),...) {
   
   #compute grid range
