@@ -5,8 +5,17 @@ forestFloor = function(rf.fit,
                        binary_reg = FALSE,
                        bootstrapFC = FALSE,
                        ...) {
+  
   Class = class(rf.fit)[1] #read only first class
 
+  #extract random model from caret object
+  if(inherits(rf.fit,"train")) {
+    message("This seems to be an caret object, trying to extracting rf-model...")
+    message("caret support is experimental, see help(forestFloor) for an example with caret")
+            rf.fit = rf.fit$finalModel
+  }
+  
+  
   #convert randomForest.formula
   if(inherits(rf.fit,"randomForest.formula")){
     X <- as.data.frame(X)
@@ -17,6 +26,19 @@ forestFloor = function(rf.fit,
       Xtest <- model.frame(Terms, Xtest, na.action = na.fail)
     }
   }
+  
+  if(any(is.na(rf.fit$predicted))) {
+    warning("forestFloor: NA predictions in rf-object. Try to train with more trees(ntree)")
+    message("forestFloor: NA predictions in rf-object. Try to train with more trees(ntree)")
+    # is.na.ind = which(is.na(rf.fit$predicted))
+    # rf$predicted = rf$predicted[-is.na.ind ]
+    # rf$oob.times = rf$oob.times[-is.na.ind ]
+    # rf$votes     = rf$votes    [-is.na.ind,]
+    # X = X[-is.na.ind,]
+    # #length(rf$y)
+    # #sapply(rf,length)
+  }
+  
 
   #randomForest::randomForest or trimTrees::cinbag or rfPermute::rfPermute
   if(inherits(rf.fit,"randomForest")) {
