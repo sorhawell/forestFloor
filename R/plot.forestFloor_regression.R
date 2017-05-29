@@ -132,11 +132,8 @@ plot.forestFloor_regression = function(x,
       partial.contribution  = FCs[,imp.ind[i]]
       ),
       #the title
-      main = if(!plot_GOF) names(imp)[imp.ind[i]] else {
-        imp=imp
-        imp.ind = imp.ind
-        i=i
-        theName = names(imp)[imp.ind[i]]
+      main = if(!plot_GOF) names(x$X)[imp.ind[i]] else {
+        theName = names(x$X)[imp.ind[i]]
         theNumber = round(GOFs[imp.ind[i]],2)
         paste0(theName,",R^2= ",theNumber)
       },

@@ -36,7 +36,13 @@ plot.forestFloor_multiClass  = function(
   }
   
   #label.seq must be resolved before cropping training levels
-  if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
+  if(is.null(label.seq)) {
+    if(length(levels(x$Y))>8)
+      message("FYI, only plotting first 8 classes to avoid overplotting.
+Use label.seq to select more or other classes")
+    label.seq = 1:min(8,length(levels(x$Y)))
+    
+  }
   #if not all test/train is to be plotted remove train or test
   plotThese = checkPlotTest(plotTest,x$isTrain)
   if(!(all(plotThese))) {

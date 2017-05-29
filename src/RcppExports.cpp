@@ -57,3 +57,14 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
+
+static const R_CallMethodDef CallEntries[] = {
+    {"forestFloor_recTree", (DL_FUNC) &forestFloor_recTree, 17},
+    {"forestFloor_multiTree", (DL_FUNC) &forestFloor_multiTree, 17},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_forestFloor(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
+}

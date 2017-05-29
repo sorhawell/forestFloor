@@ -12,6 +12,8 @@ show3d.forestFloor_multiClass = function(
   if(is.null(FCi)) FCi = Xi
   if(is.null(label.seq)) label.seq = 1:min(8,length(levels(x$Y)))
   
+ 
+  
   ## crop x/ff to only plot test or train ... or not and plot both
   #crop x(forestFloor) object to only visualize test or train
   plotThese = checkPlotTest(plotTest,x$isTrain)
@@ -39,11 +41,18 @@ show3d.forestFloor_multiClass = function(
   
   #compute mean goodness of fit of label surfaces of 3d-plot
   #gof is the squared pearson correlation of any FC and fitted surface
+  
+  #define sub function to fix categorical features
+  as.numeric.factor <- function(x,rearrange=TRUE) {
+    if(is.numeric(x)) return(x) #numeric variables are left unchanged
+    if(rearrange) x = match(x,levels(droplevels(x))) else x = match(x,levels(x))
+    return(x)
+  }
+  x$X[] = lapply(x$X,as.numeric.factor)
+  
   if(plot_GOF) {
     fits = lapply(label.seq, function(label.ind) {
-      forestFloor_obj = list(FCmatrix = x$FCarray[,,label.ind],
-                             X=apply(x$X[,],2,as.numeric.factor)
-      )
+      forestFloor_obj = list(FCmatrix = x$FCarray[,,label.ind],X=x$X)
       class(forestFloor_obj)="forestFloor_multiClass"
       convolute_ff2(forestFloor_obj,
                     Xi=Xi,
@@ -152,6 +161,14 @@ show3d.forestFloor_regression = function(
     x$Y = x$Y[plotThese]
     x$X = x$X[plotThese,]
   }
+  
+  #define sub function to fix categorical features
+  as.numeric.factor <- function(x,rearrange=TRUE) {
+    if(is.numeric(x)) return(x) #numeric variables are left unchanged
+    if(rearrange) x = match(x,levels(droplevels(x))) else x = match(x,levels(x))
+    return(x)
+  }
+  x$X[] = lapply(x$X,as.numeric.factor)
   
   if(!all(Xi %in% 1:dim(x$X)[2]))   stop( "input  Xi points to columns indices out of range of feature matrix x$X")
   if(is.null(FCi)) FCi=Xi
