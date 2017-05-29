@@ -18,12 +18,13 @@ forestFloor(rf.fit, X, Xtest=NULL, calc_np = FALSE, binary_reg = FALSE,
 \arguments{
 \item{rf.fit}{
 rf.fit, a random forest object as the output from randomForest::randomForest\cr
+Train objects from caret::train is also experimentally supported, see how in the last use example
 }
 
 \item{X}{
 data.frame of input variables, numeric(continuous), discrete(treated as continuous) or factors(categorical).
 n_rows observations and n_columns features. 
-X MUST be the exact same data.frame as used to train the random forest, see above item. If rows are re-ordered, the observations will not match the inbag-matrix resulting in distorted feature contributions.
+X MUST be the exact same data.frame as used to train the random forest, see above item. If rows are re-ordered, the observations will not match the inbag-matrix resulting in distorted feature contributions. 
 }
 
 \item{Xtest}{
