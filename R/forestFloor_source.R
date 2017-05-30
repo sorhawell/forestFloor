@@ -10,7 +10,7 @@ forestFloor = function(rf.fit,
 
   #extract random model from caret object
   if(inherits(rf.fit,"train")) {
-    message("This seems to be an caret object. Trying to extracting rf-model...")
+    message("This seems to be an caret object. Trying to extract 'randomForest' model")
     message("caret support is experimental, see help(forestFloor) for an example with caret")
     message("ask/complain freely at https://github.com/sorhawell/forestFloor/issues/27")
             rf.fit = rf.fit$finalModel
