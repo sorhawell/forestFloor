@@ -86,7 +86,7 @@ forestFloor = function(rf.fit,
   }
 
   #other classes not supported...
-  if(Class=="forestFloor_external") {
+  if(inherits(rf.fit,"forestFloor_external")) {
     print("forestFloor_external is a standardised treemodelfit which is not implemented yet")
     return("... cold emptyness")
   }
