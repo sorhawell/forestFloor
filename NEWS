@@ -1,5 +1,6 @@
 ##### 1.11.1
 Experimental support for caret, see last example at help(forestFloor)
+Complain here: https://github.com/sorhawell/forestFloor/issues/27
 
 ##### 1.10.2
 Bug fix in show3d when plotting factors. Conversion of factors to numbers could fail.
