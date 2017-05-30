@@ -6,16 +6,20 @@ forestFloor = function(rf.fit,
                        bootstrapFC = FALSE,
                        ...) {
   
-  Class = class(rf.fit)[1] #read only first class
+  #A very loose initial class check to avoid non-informatives error messsages
+  if(!any(class(rf.fit) %in% c("randomForest","train","forestFloor_external","list"))) {
+    stop("The rf.fit argument is not valid, should be 'randomForest' or 'train'")
+  }
 
   #extract random model from caret object
   if(inherits(rf.fit,"train")) {
     message("This seems to be an caret object. Trying to extract 'randomForest' model")
     message("caret support is experimental, see help(forestFloor) for an example with caret")
     message("ask/complain freely at https://github.com/sorhawell/forestFloor/issues/27")
-            rf.fit = rf.fit$finalModel
+
+    #simple as that...
+    rf.fit = rf.fit$finalModel
   }
-  
   
   #convert randomForest.formula
   if(inherits(rf.fit,"randomForest.formula")){
@@ -28,6 +32,7 @@ forestFloor = function(rf.fit,
     }
   }
   
+  #warn and someday fix not-inbag/not-OOB problems
   if(any(is.na(rf.fit$predicted))) {
     warning("forestFloor: NA predictions in rf-object. Try to train with more trees(ntree)")
     message("forestFloor: NA predictions in rf-object. Try to train with more trees(ntree)")
@@ -40,10 +45,9 @@ forestFloor = function(rf.fit,
     # #sapply(rf,length)
   }
   
-
   #randomForest::randomForest or trimTrees::cinbag or rfPermute::rfPermute
   if(inherits(rf.fit,"randomForest")) {
-    if(Class=="rfPermute") print("class 'rfPermute' supported as 'randomForest'")
+    if(inherits(rf.fit,"rfPermute")) print("class 'rfPermute' supported as 'randomForest'")
     Type = rf.fit$type
     #changed classification to binary regression if requested and only two classes
     if(binary_reg) {
