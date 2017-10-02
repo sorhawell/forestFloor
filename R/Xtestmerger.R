@@ -22,8 +22,8 @@ Xtestmerger = function(X,test,inbag=NULL,y=NULL) {
     #return unmatched levels of test in X
     FUN = function(xl,tl) tl[which(is.na(match(tl,xl)))], #test levels not in x
     #for factor column, get all used levels
-    lapply(lapply(   X[factor.ind],droplevels),levels),#xl
-    lapply(lapply(test[factor.ind],droplevels),levels),#tl
+    lapply(   X[factor.ind],levels),#xl
+    lapply(test[factor.ind],levels),#tl
     SIMPLIFY = FALSE, USE.NAMES = TRUE
   )
   unmatchedLevelsCount = sapply(unmatchedTestLevels,length)
