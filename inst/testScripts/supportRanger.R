@@ -98,7 +98,7 @@ set.seed(1)
 X = data.frame(replicate(6,rnorm(500)))
 y = with(X,X1+X2^2+X3*X4+sin(X5*3))
 Data = data.frame(y,X)
-ra = ranger(y~.,Data,keep.inbag = TRUE,num.trees = 500,importance = "permutation") #some run time error ocours at more trees
+ra = ranger(y~.,Data,keep.inbag = TRUE,num.trees = 500,importance = "permutation")
 ra
 rfra = ranger_RFadaptor(ra,y)
 ffra = forestFloor(rfra,X,calc_np = TRUE)
