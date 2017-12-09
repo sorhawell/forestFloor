@@ -1,7 +1,7 @@
 Package: forestFloor
 Type: Package
 Title: Visualizes Random Forests with Feature Contributions
-Version: 1.11.1
+Version: 1.11.2
 Date: 2017-05-30
 Author: Soeren Havelund Welling
 Maintainer: Soeren Havelund Welling <SORHAWELL@GMAIL.COM>
@@ -13,3 +13,4 @@ License: GPL-2
 URL: http://forestFloor.dk
 Imports: Rcpp (>= 0.11.3), rgl, kknn, randomForest
 LinkingTo: Rcpp
+RoxygenNote: 6.0.1

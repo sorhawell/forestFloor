@@ -56,7 +56,7 @@ Use label.seq to select more or other classes")
   }
   
   #if not plot_seq not chosen, pick up to 9 first plot windows
-  if(is.null(plot_seq)) plot_seq = 1:min(9,dim(X)[2])
+  if(is.null(plot_seq)) plot_seq = 1:min(9,dim(x$X)[2])
   
   #if fig_columns not chosen, set to 1,2 or depeding on number of plots
   fig.columns = if(is.null(fig.columns)) {
