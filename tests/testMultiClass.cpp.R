@@ -31,6 +31,7 @@ if(max(abs(ff.43$FCarray[ff.43$isTrain,,]-ff.42$FCarray)) > 1E-12) stop(
   "forestFloor with/without Xtest gives different feature contributions"
 )
 plot(ff.43,speedup_GOF = TRUE,plotTest = F)
+plot(ff.43)
 
 
 pred = sapply(1:3,function(i) apply(ff.42$FCarray[,,i],1,sum))+1/3
