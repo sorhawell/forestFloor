@@ -194,7 +194,7 @@ void follow_path(
         
         
       //... came back from a right step, all nodes below have been completed
-        nodestatus(this_node,i_tree)==-1;
+        //nodestatus(this_node,i_tree)==-1;
     }
   }
   //got to here as node was terminal or all nodes below have been checked
@@ -548,7 +548,7 @@ void follow_path2(
         
         
       //... came back from a right step, all nodes below have been completed
-        nodestatus(this_node,i_tree)==-1;
+        //nodestatus(this_node,i_tree)==-1;
     }
   }
   //got to here as node was terminal or all nodes below have been checked
