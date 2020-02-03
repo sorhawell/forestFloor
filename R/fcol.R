@@ -19,7 +19,7 @@ fcol = function(ff,
                 outlier.lim = 3,
                 RGB.exp = NULL) {
   
-  if(!X.matrix) if(class(ff)=="forestFloor_multiClass")
+  if(!X.matrix) if(inherits(ff,"forestFloor_multiClass"))
     stop("cannot colour by feature contributions for object of class
          'forestFloor_multiClass'. Set X.matrix=TRUE")
   
@@ -43,14 +43,14 @@ fcol = function(ff,
   
   #crop x(forestFloor) object to only visualize test or train
   
-  if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
+  if(class(ff)[1] %in% c("forestFloor_regression","forestFloor_multiClass")) {
     plotThese = checkPlotTest(plotTest,ff$isTrain)
     if(!(all(plotThese))) {
         #cut to those which should be plotted
-        if(class(ff)=="forestFloor_multiClass") {
+        if(class(ff)[1]=="forestFloor_multiClass") {
           ff$FCarray = ff$FCarray[plotThese,,]
         } else { #not FCarray not used, see first stop
-          if(class(ff)=="forestFloor_regression") {
+          if(class(ff)[1]=="forestFloor_regression") {
             ff$FCmatrix = ff$FCmatrix[plotThese,]
           }
         }
@@ -62,7 +62,7 @@ fcol = function(ff,
   
   
   #get/check data.frame/matrix, convert to df, remove outliers and normalize
-  if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
+  if(class(ff)[1] %in% c("forestFloor_regression","forestFloor_multiClass")) {
     
     #if colouring by residuals to fit
     if(byResiduals) {
@@ -87,7 +87,7 @@ fcol = function(ff,
   }
   
   #reorder colM by importance
-  if(orderByImportance) if(class(ff) %in% c("forestFloor_regression",
+  if(orderByImportance) if(class(ff)[1] %in% c("forestFloor_regression",
                                             "forestFloor_multiClass")) {
     colM = colM[,ff$imp_ind]
   } else {
@@ -95,7 +95,7 @@ fcol = function(ff,
   }
   
   #check colM is either data.frame or matrix
-  if(!class(colM) %in% c("data.frame","matrix")) {
+  if(!inherits(colM, c("data.frame","matrix"))) {
 #    stop(paste(class(colM),"input is neither matrix or data.frame"))
     tryCatch({colM = matrix(colM,ncol=1)},
              error = function(e)
@@ -149,7 +149,7 @@ could not be coerced to matrix:",e$message))
   
   #inflating data by importance
   if(imp.weight && length(cols)>1) {
-    if(class(ff) %in% c("forestFloor_regression","forestFloor_multiClass")) {
+    if(class(ff)[1] %in% c("forestFloor_regression","forestFloor_multiClass")) {
       sel.imp = ff$importance[cols]
       non.negative.imp = sel.imp+min(sel.imp)
       sumnorm.imp =  non.negative.imp / sum(non.negative.imp)
