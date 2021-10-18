@@ -1,13 +1,31 @@
 # forestFloor development
 
+forestFloor is no longer listed on CRAN, as I have been too lazy to fix build checks on some very exotic issues on rare machine R must support also. The Package works fine for the latest R though to install now
 
- get latest stable version on [CRAN forestFloor](https://cran.r-project.org/web/packages/forestFloor)
+```
+#use devtools to locate rtools and install forestFloor from github
+install.packages("devtools")
 
-![alt tag](https://travis-ci.org/sorhawell/forestFloor.svg?branch=master)
-![alt tag](http://cranlogs.r-pkg.org/badges/last-day/forestFloor)
-![alt tag](http://cranlogs.r-pkg.org/badges/forestFloor)
-![alt tag](http://cranlogs.r-pkg.org/badges/grand-total/forestFloor)
+#for windows
+#make sure rtools is installed on your machine
+#https://cran.r-project.org/bin/windows/Rtools/
+devtools::find_rtools()
 
+#for mac xcode must be installed
+
+#For linux a gcc compiler must be available
+
+
+#then this will work
+devtools::install_github("sorhawell/forestFloor")
+
+
+library(forestFloor)
+
+?forestFloor
+```
+ 
+ 
 ##### 1.11.1
 Experimental support for caret, see last example at help(forestFloor)
 Complain here: https://github.com/sorhawell/forestFloor/issues/27
