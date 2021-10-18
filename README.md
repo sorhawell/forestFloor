@@ -1,7 +1,9 @@
 # forestFloor development
 
-forestFloor is no longer listed on CRAN, as I have been too lazy to fix build checks on some very exotic issues on rare machine R must support also. The Package works fine for the latest R though to install now
+forestFloor is no longer listed on CRAN, as I have been too lazy to fix build warnings on some exotic issues. However, the package works fine for the latest R (+4.x.x).
 
+
+#install instructions 
 ```
 #use devtools to locate rtools and install forestFloor from github
 install.packages("devtools")
@@ -11,14 +13,13 @@ install.packages("devtools")
 #https://cran.r-project.org/bin/windows/Rtools/
 devtools::find_rtools()
 
-#for mac xcode must be installed
+#for mac xcode and Xquartz must be installed to support rgl 3D-package
 
-#For linux a gcc compiler must be available
+#For linux a gcc or clang compiler must be available
 
 
 #then this will work
 devtools::install_github("sorhawell/forestFloor")
-
 
 library(forestFloor)
 
